@@ -13,6 +13,23 @@
 import UIKit
 
 /// Extensions for Bundle
+//
+// USAGE
+//
+// Create nib/xib file and class file you want to use, e.g. MyCustomView.xib and MyCustomView.swift
+// Make sure the nib file name and class name are the same
+// Make sure MyCustomView class is set in the nib/xib editor
+//
+// Go to the place in your code where you want to use your nib, e.g.
+//
+// class MyViewController: UIViewController {
+//
+// override func viewDidLoad() {
+//   super.viewDidLoad()
+//     let customView: MyCustomView = Bundle.instantiateNib(owner: self)
+//     ...
+//   }
+// }
 extension Bundle {
   public class func instantiateNib<T>(owner: Any? = nil) -> T {
     guard let instance = Bundle.main.loadNibNamed(String(describing: T.self), owner: owner)?.first as? T else {
