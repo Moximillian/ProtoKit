@@ -26,7 +26,7 @@ extension SegueHandlerType where Self: UIViewController, Segues.RawValue == Stri
     guard
       let identifier = segue.identifier,
       let segueIdentifier = Segues(rawValue: identifier) else {
-        fatalError("Unknown segue: \(segue.identifier)")
+        fatalError("Unknown segue: " + String(describing: segue.identifier))
     }
     return segueIdentifier
   }
