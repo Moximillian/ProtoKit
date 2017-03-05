@@ -56,16 +56,32 @@ extension UITableView: UnifiedCollectionType {
 
 // MARK: - Unified Cell
 
+// Ideally UnifiedCellCollectionable should have been just "extension UITableCell where Self: UnifiedCellType {}",
+// but this is not currently possible. Recheck if/when existentials are available in Swift 4.
+
+/// protocol for generic collection in UnifiedCells
+public protocol UnifiedCellCollectionable {
+  associatedtype Collection: UnifiedCollectionType
+}
+
+extension UITableViewCell: UnifiedCellCollectionable {
+  public typealias Collection = UITableView
+}
+
+extension UICollectionViewCell: UnifiedCellCollectionable {
+  public typealias Collection = UICollectionView
+}
+
 /// protocol for unified UITableViewCell and UICollectionViewCell. This should be conformed with the implemented cell class
-public protocol UnifiedCellType {
+public protocol UnifiedCellType: UnifiedCellCollectionable {
   associatedtype Item
-  func configure(item: Item, collection: UnifiedCollectionType, indexPath: IndexPath)
+  func configure(item: Item, collection: Collection, indexPath: IndexPath)
 }
 
 /// protocol for unified UICollectionReusableView. This should be conformed with the implemented cell class
 public protocol UnifiedTitleType {
   associatedtype Item
-  func configure(item: Item, collection: UnifiedCollectionType, kind: String, indexPath: IndexPath)
+  func configure(item: Item, collection: UICollectionView, kind: String, indexPath: IndexPath)
 }
 
 
@@ -103,7 +119,8 @@ public struct SectionData<Item>: SectionDataType {
 public protocol DataSourceFactoryType {
   associatedtype Cell: UnifiedCellType
   associatedtype Section: SectionDataType
-  typealias Item = Section.Item
+  typealias Item = Cell.Item
+  typealias Collection = Cell.Collection
 
   var sections: [Section] { get }
   var cellType: Cell.Type { get }
@@ -118,7 +135,7 @@ extension DataSourceFactoryType where Cell.Item == Section.Item {
   }
 
   /// Generate cells based on the correct cell type
-  func cell<T: UnifiedCollectionType>(for collection: T, indexPath: IndexPath) -> Cell {
+  func cell(for collection: Collection, indexPath: IndexPath) -> Cell {
     let item = self.item(at: indexPath)
     let cell: Cell = collection.dequeueReusableCell(indexPath: indexPath)
     cell.configure(item: item, collection: collection, indexPath: indexPath)
@@ -138,9 +155,8 @@ extension DataSourceFactoryType where Cell.Item == Section.Item {
 
 /// Factory for creating UITableViewDataSource
 public struct TableDataSourceFactory<Cell: UnifiedCellType, Section: SectionDataType>: DataSourceFactoryType
-where Cell.Item == Section.Item {
+where Cell.Item == Section.Item, Cell.Collection == UITableView {
 
-  public typealias Item = Section.Item
   public var sections: [Section]
   public var cellType: Cell.Type
   private var source: UnifiedDataSource = UnifiedDataSource()
@@ -186,13 +202,12 @@ where Cell.Item == Section.Item {
 
 /// Factory for creating UICollectionViewDataSource
 public struct CollectionDataSourceFactory<Cell: UnifiedCellType, Section: SectionDataType, Title: UnifiedTitleType>: DataSourceFactoryType
-where Cell.Item == Section.Item, Cell.Item == Title.Item {
+where Cell.Item == Section.Item, Cell.Item == Title.Item, Cell.Collection == UICollectionView {
 
-  public typealias Item = Section.Item
   public var sections: [Section]
   public var cellType: Cell.Type
-  private var source: UnifiedDataSource = UnifiedDataSource()
   private var titleType: Title.Type
+  private var source: UnifiedDataSource = UnifiedDataSource()
 
   /// fancy pants convenience init for UICollectionView
   public init(cell cellType: Cell.Type, title titleType: Title.Type, _ sections: Section...) {
@@ -329,7 +344,7 @@ extension UnifiedDataSource: UICollectionViewDataSource {
 
  // ...
 
- public func configure(item: MyData, collection: UnifiedCollectionType, indexPath: IndexPath) {
+ public func configure(item: MyData, collection: UITableView, indexPath: IndexPath) {
  // ...
  textLabel?.text = item.title
  detailTextLabel?.text = String(item.value)
