@@ -23,13 +23,10 @@ import UIKit
 /// protocol for unified UITableView and UICollectionView
 public protocol UnifiedCollectionType {
   func dequeueReusableCell<T: UnifiedCellType>(indexPath: IndexPath) -> T
-  var unifiedDelegate: Any? { get}
 }
 
 /// UICollectionView implementation of UnifiedCollectionType
 extension UICollectionView: UnifiedCollectionType {
-
-  public var unifiedDelegate: Any? { return delegate }
 
   public func dequeueReusableCell<T: UnifiedCellType>(indexPath: IndexPath) -> T {
     guard let cell = dequeueReusableCell(withReuseIdentifier: String(describing: T.self), for: indexPath) as? T else {
@@ -48,8 +45,6 @@ extension UICollectionView: UnifiedCollectionType {
 
 /// UITableView implementation of UnifiedCollectionType
 extension UITableView: UnifiedCollectionType {
-
-  public var unifiedDelegate: Any? { return delegate }
 
   public func dequeueReusableCell<T: UnifiedCellType>(indexPath: IndexPath) -> T {
     guard let cell = dequeueReusableCell(withIdentifier: String(describing: T.self), for: indexPath) as? T else {
