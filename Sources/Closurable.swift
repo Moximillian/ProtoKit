@@ -78,6 +78,11 @@ extension UIGestureRecognizer: Closurable {
     let container = getContainer(for: closure)
     addTarget(container, action: container.action)
   }
+
+  public func addTarget(closure: @escaping (UIGestureRecognizer) -> Void) {
+    let container = getContainer(for: closure)
+    addTarget(container, action: container.action)
+  }
 }
 
 /// extension for UIBarButtonItem - actions with closure
