@@ -154,15 +154,14 @@ extension DataSourceFactoryType where Cell.Item == Section.Item {
 }
 
 /// Factory for creating UITableViewDataSource
-public struct TableDataSourceFactory<Cell: UnifiedCellType, Section: SectionDataType>: DataSourceFactoryType
+public final class TableDataSourceFactory<Cell: UnifiedCellType, Section: SectionDataType>: DataSourceFactoryType
 where Cell.Item == Section.Item, Cell.Collection == UITableView {
 
   public var sections: [Section]
   public var cellType: Cell.Type
-  private var source: UnifiedDataSource = UnifiedDataSource()
 
   /// fancy pants convenience init for UITableView
-  public init(cell cellType: Cell.Type, _ sections: Section...) {
+  public convenience init(cell cellType: Cell.Type, _ sections: Section...) {
     self.init(cell: cellType, sections: sections)
   }
 
@@ -174,13 +173,13 @@ where Cell.Item == Section.Item, Cell.Collection == UITableView {
 
   /// TableViewDataSource from UnifiedDataSource
   public var tableViewDataSource: UITableViewDataSource {
-
-    // store functions as closures in UnifiedDataSource
-    source.numberOfSections = numberOfSections
-    source.numberOfItems = numberOfItems
-    source.headerTitle = headerTitle
-    source.footerTitle = footerTitle
-    source.cellForTable = cellForTable
+    let source = UnifiedDataSource(factory: self)
+    // store functions as closures in UnifiedDataSource. Cannot assign functions directly due to retain cycles
+    source.numberOfSections = { [unowned self] in return self.numberOfSections() }
+    source.numberOfItems = { [unowned self] in return self.numberOfItems($0) }
+    source.headerTitle = { [unowned self] in return self.headerTitle($0) }
+    source.footerTitle = { [unowned self] in return self.footerTitle($0) }
+    source.cellForTable = { [unowned self] in return self.cellForTable(collection: $0, indexPath: $1) }
     return source
   }
 
@@ -201,16 +200,15 @@ where Cell.Item == Section.Item, Cell.Collection == UITableView {
 
 
 /// Factory for creating UICollectionViewDataSource
-public struct CollectionDataSourceFactory<Cell: UnifiedCellType, Section: SectionDataType, Title: UnifiedTitleType>: DataSourceFactoryType
+public final class CollectionDataSourceFactory<Cell: UnifiedCellType, Section: SectionDataType, Title: UnifiedTitleType>: DataSourceFactoryType
 where Cell.Item == Section.Item, Cell.Item == Title.Item, Cell.Collection == UICollectionView {
 
   public var sections: [Section]
   public var cellType: Cell.Type
   private var titleType: Title.Type
-  private var source: UnifiedDataSource = UnifiedDataSource()
 
   /// fancy pants convenience init for UICollectionView
-  public init(cell cellType: Cell.Type, title titleType: Title.Type, _ sections: Section...) {
+  public convenience init(cell cellType: Cell.Type, title titleType: Title.Type, _ sections: Section...) {
     self.init(cell: cellType, title: titleType, sections: sections)
   }
 
@@ -223,12 +221,12 @@ where Cell.Item == Section.Item, Cell.Item == Title.Item, Cell.Collection == UIC
 
   /// CollectionViewSource from UnifiedDataSource
   public var collectionViewDataSource: UICollectionViewDataSource {
-
-    // store functions as closures in UnifiedDataSource
-    source.numberOfSections = numberOfSections
-    source.numberOfItems = numberOfItems
-    source.cellForCollection = cellForCollection
-    source.titleForCollection = titleForCollection
+    let source = UnifiedDataSource(factory: self)
+    // store functions as closures in UnifiedDataSource. Cannot assign functions directly due to retain cycles
+    source.numberOfSections = { [unowned self] in return self.numberOfSections() }
+    source.numberOfItems = { [unowned self] in return self.numberOfItems($0) }
+    source.cellForCollection = { [unowned self] in return self.cellForCollection(collection: $0, indexPath: $1) }
+    source.titleForCollection = { [unowned self] in return self.titleForCollection(collection: $0, kind: $1, indexPath: $2) }
     return source
   }
 
@@ -258,6 +256,9 @@ fileprivate final class UnifiedDataSource: NSObject {
   typealias CollectionType = (UICollectionView, IndexPath) -> UICollectionViewCell
   typealias CollectionTitleType = (UICollectionView, String, IndexPath) -> UICollectionReusableView
 
+  // keep reference to the factory that contains the data & closure functions
+  private let factory: AnyObject
+
   // Objective-C does not allow for class level generics, so store as native closures.
   var numberOfSections: NumberOfSectionsType?
   var numberOfItems: NumberOfItemsType?
@@ -266,6 +267,10 @@ fileprivate final class UnifiedDataSource: NSObject {
   var cellForTable: TableType?
   var cellForCollection: CollectionType?
   var titleForCollection: CollectionTitleType?
+
+  init<T: DataSourceFactoryType>(factory: T) {
+    self.factory = factory as AnyObject
+  }
 }
 
 /// UITableViewDataSource implementation of UnifiedDataSourceType
@@ -337,23 +342,29 @@ extension UnifiedDataSource: UICollectionViewDataSource {
  }
  }
 
- // 2. Hook up your data so that you have a single value or array of Items that use same type as configure function above
+ // 2. In your viewcontroller, add reference variable to the datasource
+ 
+ let dataSource: UITableViewDataSource!
+
+ 
+ // 3. Hook up your data so that you have a single value or array of Items that use same type as configure function above
 
  let items = [MyData(title: "first", value: 5), MyData(title: "second", value: 1)]
 
 
- // 3. In your viewcontroller's viewDidLoad method or similar, create your SectionData by using one or an array of Item values, see above.
+ // 4. In your viewcontroller's viewDidLoad method or similar, create your SectionData by using one or an array of Item values, see above.
 
  let sectionData = SectionData(items: items, headerTitle: "hello", footerTitle: nil)
 
 
- // 3. create factory, provide your cell type to it. Also, in Interface Builder, set your cell identifier as your cell class name e.g. "MyCell" in this example
+ // 5. create factory, provide your cell type to it. Also, in Interface Builder, set your cell identifier as your cell class name e.g. "MyCell" in this example
 
  let factory = TableDataSourceFactory(cell: MyCell.self, sectionData)
 
 
- // 4. provide the datasource to your table view (or collectionview)
+ // 6. provide the datasource to your table view (or collectionview)
 
- tableView.dataSource = factory.tableViewDataSource
+ dataSource = factory.tableViewDataSource  // remember to keep reference to the dataSource in your viewcontroller
+ tableView.dataSource = self.dataSource
  
  */
