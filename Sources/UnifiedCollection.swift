@@ -130,12 +130,12 @@ extension DataSourceFactoryType where Cell.Item == Section.Item {
 
   // Common implementations for factories
 
-  func item(at indexPath: IndexPath) -> Item {
+  fileprivate func item(at indexPath: IndexPath) -> Item {
     return sections[indexPath.section].items[indexPath.row]
   }
 
   /// Generate cells based on the correct cell type
-  func cell(for collection: Collection, indexPath: IndexPath) -> Cell {
+  fileprivate func cell(for collection: Collection, indexPath: IndexPath) -> Cell {
     let item = self.item(at: indexPath)
     let cell: Cell = collection.dequeueReusableCell(indexPath: indexPath)
     cell.configure(item: item, collection: collection, indexPath: indexPath)
@@ -144,11 +144,11 @@ extension DataSourceFactoryType where Cell.Item == Section.Item {
 
   // MARK: - DataSourceFactoryType implementations for common functions
 
-  func numberOfSections() -> Int {
+  fileprivate func numberOfSections() -> Int {
     return sections.count
   }
 
-  func numberOfItems(_ section: Int) -> Int {
+  fileprivate func numberOfItems(_ section: Int) -> Int {
     return sections[section].items.count
   }
 }
@@ -157,8 +157,8 @@ extension DataSourceFactoryType where Cell.Item == Section.Item {
 public final class TableDataSourceFactory<Cell: UnifiedCellType, Section: SectionDataType>: DataSourceFactoryType
 where Cell.Item == Section.Item, Cell.Collection == UITableView {
 
-  public var sections: [Section]
-  public var cellType: Cell.Type
+  private(set) public var sections: [Section]
+  private(set) public var cellType: Cell.Type
 
   /// fancy pants convenience init for UITableView
   public convenience init(cell cellType: Cell.Type, _ sections: Section...) {
@@ -203,8 +203,8 @@ where Cell.Item == Section.Item, Cell.Collection == UITableView {
 public final class CollectionDataSourceFactory<Cell: UnifiedCellType, Section: SectionDataType, Title: UnifiedTitleType>: DataSourceFactoryType
 where Cell.Item == Section.Item, Cell.Item == Title.Item, Cell.Collection == UICollectionView {
 
-  public var sections: [Section]
-  public var cellType: Cell.Type
+  private(set) public var sections: [Section]
+  private(set) public var cellType: Cell.Type
   private var titleType: Title.Type
 
   /// fancy pants convenience init for UICollectionView
