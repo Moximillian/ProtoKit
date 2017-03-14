@@ -249,10 +249,8 @@ where Cell.Item == Section.Item, Cell.Item == Title.Item, Cell.Collection == UIC
 
 // MARK: - Unified Datasource (internal implementation)
 
-
-/// Protocol for unified DataSource
-fileprivate protocol UnifiedDataSourceType {
-
+/// Unified Data Source class with stored closures, which are mapped to native data source APIs
+fileprivate final class UnifiedDataSource: NSObject {
   typealias NumberOfSectionsType = () -> Int
   typealias NumberOfItemsType = (Int) -> Int
   typealias TitleType = (Int) -> String?
@@ -260,69 +258,56 @@ fileprivate protocol UnifiedDataSourceType {
   typealias CollectionType = (UICollectionView, IndexPath) -> UICollectionViewCell
   typealias CollectionTitleType = (UICollectionView, String, IndexPath) -> UICollectionReusableView
 
-  var numberOfSections: NumberOfSectionsType { get }
-  var numberOfItems: NumberOfItemsType { get }
-  var headerTitle: TitleType { get }
-  var footerTitle: TitleType { get }
-  var cellForTable: TableType { get }
-  var cellForCollection: CollectionType { get }
-  var titleForCollection: CollectionTitleType { get }
-}
-
-/// Unified Data Source class with stored closures, which are mapped to native data source APIs
-fileprivate class UnifiedDataSource: NSObject, UnifiedDataSourceType {
-  typealias D = UnifiedDataSourceType
-
-  // Objective-C does not allow for class level generics, so store as native closures. Initialized with empty default closures
-  var numberOfSections: D.NumberOfSectionsType = { return 0 }
-  var numberOfItems: D.NumberOfItemsType = { _ in return 0 }
-  var headerTitle: D.TitleType = { _ in return nil }
-  var footerTitle: D.TitleType = { _ in return nil }
-  var cellForTable: D.TableType = { _, _ in return UITableViewCell() }
-  var cellForCollection: D.CollectionType = { _, _ in return UICollectionViewCell() }
-  var titleForCollection: D.CollectionTitleType = { _, _, _ in return UICollectionReusableView() }
+  // Objective-C does not allow for class level generics, so store as native closures.
+  var numberOfSections: NumberOfSectionsType?
+  var numberOfItems: NumberOfItemsType?
+  var headerTitle: TitleType?
+  var footerTitle: TitleType?
+  var cellForTable: TableType?
+  var cellForCollection: CollectionType?
+  var titleForCollection: CollectionTitleType?
 }
 
 /// UITableViewDataSource implementation of UnifiedDataSourceType
 extension UnifiedDataSource: UITableViewDataSource {
 
   func numberOfSections(in tableView: UITableView) -> Int {
-    return self.numberOfSections()
+    return self.numberOfSections!()
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return self.numberOfItems(section)
+    return self.numberOfItems!(section)
   }
 
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return self.headerTitle(section)
+    return self.headerTitle!(section)
   }
 
   func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-    return self.footerTitle(section)
+    return self.footerTitle!(section)
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    return self.cellForTable(tableView, indexPath)
+    return self.cellForTable!(tableView, indexPath)
   }
 }
 
 /// UICollectionViewDataSource implementation of UnifiedDataSourceType
 extension UnifiedDataSource: UICollectionViewDataSource {
   func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return self.numberOfSections()
+    return self.numberOfSections!()
   }
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return self.numberOfItems(section)
+    return self.numberOfItems!(section)
   }
 
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    return self.titleForCollection(collectionView, kind, indexPath)
+    return self.titleForCollection!(collectionView, kind, indexPath)
   }
 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    return self.cellForCollection(collectionView, indexPath)
+    return self.cellForCollection!(collectionView, indexPath)
   }
 }
 
