@@ -85,18 +85,10 @@ public protocol UnifiedTitleType {
 }
 
 
-// MARK: - Section Data (source data container)
-
-/// Protocol for section data
-public protocol SectionDataType {
-  associatedtype Item
-  var items: [Item] { get set }
-  var headerTitle: String? { get }
-  var footerTitle: String? { get }
-}
+// MARK: - Section data (source data container)
 
 /// Factory valuetype for section protocol
-public struct SectionData<Item>: SectionDataType {
+public struct SectionData<Item> {
   public var items: [Item]
   public let headerTitle: String?
   public let footerTitle: String?
@@ -118,15 +110,15 @@ public struct SectionData<Item>: SectionDataType {
 /// Protocol for data source factories
 public protocol DataSourceFactoryType {
   associatedtype Cell: UnifiedCellType
-  associatedtype Section: SectionDataType
   typealias Item = Cell.Item
   typealias Collection = Cell.Collection
+  typealias Section = SectionData<Item>
 
   var sections: [Section] { get }
   var cellType: Cell.Type { get }
 }
 
-extension DataSourceFactoryType where Cell.Item == Section.Item {
+extension DataSourceFactoryType {
 
   // Common implementations for factories
 
@@ -154,10 +146,10 @@ extension DataSourceFactoryType where Cell.Item == Section.Item {
 }
 
 /// Factory for creating UITableViewDataSource
-public final class TableDataSourceFactory<Cell: UnifiedCellType, Section: SectionDataType>: DataSourceFactoryType
-where Cell.Item == Section.Item, Cell.Collection == UITableView {
+public final class TableDataSourceFactory<Cell: UnifiedCellType>: DataSourceFactoryType
+where Cell.Collection == UITableView {
 
-  private(set) public var sections: [Section]
+  private(set) public var sections: [SectionData<Cell.Item>]
   private(set) public var cellType: Cell.Type
 
   /// fancy pants convenience init for UITableView
@@ -200,10 +192,10 @@ where Cell.Item == Section.Item, Cell.Collection == UITableView {
 
 
 /// Factory for creating UICollectionViewDataSource
-public final class CollectionDataSourceFactory<Cell: UnifiedCellType, Section: SectionDataType, Title: UnifiedTitleType>: DataSourceFactoryType
-where Cell.Item == Section.Item, Cell.Item == Title.Item, Cell.Collection == UICollectionView {
+public final class CollectionDataSourceFactory<Cell: UnifiedCellType, Title: UnifiedTitleType>: DataSourceFactoryType
+where Cell.Item == Title.Item, Cell.Collection == UICollectionView {
 
-  private(set) public var sections: [Section]
+  private(set) public var sections: [SectionData<Cell.Item>]
   private(set) public var cellType: Cell.Type
   private var titleType: Title.Type
 
