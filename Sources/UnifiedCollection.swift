@@ -147,7 +147,7 @@ extension DataSourceFactoryType {
 
 /// Factory for creating UITableViewDataSource
 public final class TableDataSourceFactory<Cell: UnifiedCellType>: DataSourceFactoryType
-where Cell.Collection == UITableView {
+where Cell: UITableViewCell, Cell.Collection == UITableView {
 
   private(set) public var sections: [SectionData<Cell.Item>]
   private(set) public var cellType: Cell.Type
@@ -186,14 +186,14 @@ where Cell.Collection == UITableView {
   }
 
   private func cellForTable(collection: UITableView, indexPath: IndexPath) -> UITableViewCell {
-    return cell(for: collection, indexPath: indexPath) as! UITableViewCell
+    return cell(for: collection, indexPath: indexPath)
   }
 }
 
 
 /// Factory for creating UICollectionViewDataSource
 public final class CollectionDataSourceFactory<Cell: UnifiedCellType, Title: UnifiedTitleType>: DataSourceFactoryType
-where Cell.Item == Title.Item, Cell.Collection == UICollectionView {
+where Cell.Item == Title.Item, Cell: UICollectionViewCell, Cell.Collection == UICollectionView, Title: UICollectionReusableView {
 
   private(set) public var sections: [SectionData<Cell.Item>]
   private(set) public var cellType: Cell.Type
@@ -225,14 +225,14 @@ where Cell.Item == Title.Item, Cell.Collection == UICollectionView {
   // MARK: DataSourceFactoryType implementations for UICollectionView
 
   private func cellForCollection(collection: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
-    return cell(for: collection, indexPath: indexPath) as! UICollectionViewCell
+    return cell(for: collection, indexPath: indexPath)
   }
 
   private func titleForCollection(collection: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView {
     let item = self.item(at: indexPath)
     let view: Title = collection.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
     view.configure(item: item, collection: collection, kind: kind, indexPath: indexPath)
-    return view as! UICollectionReusableView
+    return view
   }
 }
 
