@@ -249,7 +249,7 @@ fileprivate final class UnifiedDataSource: NSObject {
   typealias CollectionTitleType = (UICollectionView, String, IndexPath) -> UICollectionReusableView
 
   // keep reference to the factory that contains the data & closure functions
-  private let factory: AnyObject
+  private let factory: Any
 
   // Objective-C does not allow for class level generics, so store as native closures.
   var numberOfSections: NumberOfSectionsType?
@@ -261,7 +261,7 @@ fileprivate final class UnifiedDataSource: NSObject {
   var titleForCollection: CollectionTitleType?
 
   init<T: DataSourceFactoryType>(factory: T) {
-    self.factory = factory as AnyObject
+    self.factory = factory
   }
 }
 
