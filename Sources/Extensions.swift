@@ -12,6 +12,18 @@
 
 import UIKit
 
+extension RawRepresentable where RawValue == Int {
+  /// Return the amount of elements in Int based enum or option set. Works only for sequentially numbered types.
+  public static var count: Int {
+    for i in 0..<Int.max {
+      guard self.init(rawValue: i) != nil else {
+        return i
+      }
+    }
+    return 0
+  }
+}
+
 /// Extensions for Bundle
 //
 // USAGE
