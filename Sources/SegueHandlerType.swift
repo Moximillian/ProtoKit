@@ -24,9 +24,9 @@ extension SegueHandlerType where Self: UIViewController, Segues.RawValue == Stri
 
   public func identifier(for segue: UIStoryboardSegue) -> Segues {
     guard
-      let identifier = segue.identifier,
+      let identifier: String = segue.identifier,
       let segueIdentifier = Segues(rawValue: identifier) else {
-        fatalError("Unknown segue: " + String(describing: segue.identifier))
+        fatalError("Unknown segue: \(String(describing: segue.identifier))")
     }
     return segueIdentifier
   }

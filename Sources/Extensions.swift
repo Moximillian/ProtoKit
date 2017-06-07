@@ -90,14 +90,14 @@ extension UIColor {
 }
 
 /// UIColor extension for human readable object values
-extension UIColor: CustomReflectable { //, CustomStringConvertible {
+extension UIColor: CustomReflectable {
   public var customMirror: Mirror {
     var red: CGFloat = 0
     var green: CGFloat = 0
     var blue: CGFloat = 0
     var alpha: CGFloat = 0
     self.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-    var rgb = [Int(red*255), Int(green*255), Int(blue*255)]
+    var rgb: [Int] = [Int(red*255), Int(green*255), Int(blue*255)]
     return Mirror(self, children: [
       "RGBA": "(\(rgb[0]), \(rgb[1]), \(rgb[2]), \(alpha))",
       ])
