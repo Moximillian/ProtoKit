@@ -56,9 +56,6 @@ extension UITableView: UnifiedCollectionType {
 
 // MARK: - Unified Cell
 
-// Ideally UnifiedCellCollectionable should have been just "extension UITableCell where Self: UnifiedCellType {}",
-// but this is not currently possible. Recheck if/when existentials are available in Swift 4.
-
 /// protocol for generic collection in UnifiedCells
 public protocol UnifiedCellCollectionable {
   associatedtype Collection: UnifiedCollectionType
@@ -146,8 +143,7 @@ extension DataSourceFactoryType {
 }
 
 /// Factory for creating UITableViewDataSource
-public final class TableDataSourceFactory<Cell: UnifiedCellType>: DataSourceFactoryType
-where Cell: UITableViewCell, Cell.Collection == UITableView {
+public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellType>: DataSourceFactoryType {
 
   private(set) public var sections: [SectionData<Cell.Item>]
   private(set) public var cellType: Cell.Type
@@ -192,8 +188,8 @@ where Cell: UITableViewCell, Cell.Collection == UITableView {
 
 
 /// Factory for creating UICollectionViewDataSource
-public final class CollectionDataSourceFactory<Cell: UnifiedCellType, Title: UnifiedTitleType>: DataSourceFactoryType
-where Cell.Item == Title.Item, Cell: UICollectionViewCell, Cell.Collection == UICollectionView, Title: UICollectionReusableView {
+public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & UnifiedCellType, Title: UICollectionReusableView & UnifiedTitleType>: DataSourceFactoryType
+where Cell.Item == Title.Item {
 
   private(set) public var sections: [SectionData<Cell.Item>]
   private(set) public var cellType: Cell.Type
