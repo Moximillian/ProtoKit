@@ -131,17 +131,11 @@ extension UIImageView {
 extension UILabel {
   public func tabularize() {
     let attributes = font.fontDescriptor.fontAttributes
-    guard attributes[UIFontDescriptorFeatureSettingsAttribute] == nil else { return }
+    guard attributes[.featureSettings] == nil else { return }
 
     /// Change the font layout for numbers to use tabular (monospaced) style
-    let descriptor = font.fontDescriptor.addingAttributes([
-      UIFontDescriptorFeatureSettingsAttribute: [
-        [
-          UIFontFeatureTypeIdentifierKey: kNumberSpacingType,
-          UIFontFeatureSelectorIdentifierKey: kMonospacedNumbersSelector
-        ]
-      ]
-      ])
+    let features: [UIFontDescriptor.FeatureKey: Int] = [.featureIdentifier: kNumberSpacingType, .typeIdentifier: kMonospacedNumbersSelector]
+    let descriptor = font.fontDescriptor.addingAttributes([.featureSettings: [features]])
     font = UIFont(descriptor: descriptor, size: font.pointSize)
   }
 }
