@@ -13,19 +13,9 @@
 		4171FE851E4A2B75009D68A5 /* UnifiedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4171FE841E4A2B75009D68A5 /* UnifiedCollection.swift */; };
 		OBJ_36 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* Error.swift */; };
 		OBJ_39 /* Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* Injectable.swift */; };
-		OBJ_48 /* ProtoKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* ProtoKitTests.swift */; };
-		OBJ_51 /* ProtoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* ProtoKit.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		4171FE751E4A1EF5009D68A5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = OBJ_30;
-			remoteInfo = ProtoKit;
 		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4109AAE11E4F8C1500927D01 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -37,9 +27,7 @@
 		4171FE841E4A2B75009D68A5 /* UnifiedCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnifiedCollection.swift; sourceTree = "<group>"; };
 		OBJ_12 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		OBJ_15 /* Injectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Injectable.swift; sourceTree = "<group>"; };
-		OBJ_18 /* ProtoKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtoKitTests.swift; sourceTree = "<group>"; };
 		OBJ_21 /* ProtoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ProtoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		OBJ_22 /* ProtoKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = ProtoKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -48,14 +36,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_49 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_51 /* ProtoKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,28 +66,10 @@
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_16 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_17 /* ProtoKitTests */,
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
-		OBJ_17 /* ProtoKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_18 /* ProtoKitTests.swift */,
-			);
-			name = ProtoKitTests;
-			path = Tests/ProtoKitTests;
-			sourceTree = SOURCE_ROOT;
-		};
 		OBJ_19 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				OBJ_21 /* ProtoKit.framework */,
-				OBJ_22 /* ProtoKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -118,7 +80,6 @@
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
 				4109AAE01E4F8BF800927D01 /* Supplementary files */,
-				OBJ_16 /* Tests */,
 				OBJ_19 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -150,23 +111,6 @@
 			productReference = OBJ_21 /* ProtoKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		OBJ_43 /* ProtoKitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_44 /* Build configuration list for PBXNativeTarget "ProtoKitTests" */;
-			buildPhases = (
-				OBJ_47 /* Sources */,
-				OBJ_49 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				OBJ_53 /* PBXTargetDependency */,
-			);
-			name = ProtoKitTests;
-			productName = ProtoKitTests;
-			productReference = OBJ_22 /* ProtoKitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -194,7 +138,6 @@
 			projectRoot = "";
 			targets = (
 				OBJ_30 /* ProtoKit */,
-				OBJ_43 /* ProtoKitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -213,23 +156,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_47 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_48 /* ProtoKitTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		OBJ_53 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = OBJ_30 /* ProtoKit */;
-			targetProxy = 4171FE751E4A1EF5009D68A5 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		OBJ_3 /* Debug */ = {
@@ -325,40 +252,6 @@
 			};
 			name = Release;
 		};
-		OBJ_45 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = ProtoKit.xcodeproj/ProtoKitTests_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				TARGET_NAME = ProtoKitTests;
-			};
-			name = Debug;
-		};
-		OBJ_46 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = ProtoKit.xcodeproj/ProtoKitTests_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				TARGET_NAME = ProtoKitTests;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -376,15 +269,6 @@
 			buildConfigurations = (
 				OBJ_32 /* Debug */,
 				OBJ_33 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_44 /* Build configuration list for PBXNativeTarget "ProtoKitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_45 /* Debug */,
-				OBJ_46 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
