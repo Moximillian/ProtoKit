@@ -83,12 +83,19 @@ public protocol UnifiedTitleType {
 
 
 // MARK: - Section data (source data container)
+public protocol SectionType {
+  associatedtype Item
+
+  var items: [Item] { get }
+  var headerTitle: String? { get }
+  var footerTitle: String? { get }
+}
 
 /// Factory valuetype for section protocol
-public struct SectionData<Item> {
+public struct SectionData<Item>: SectionType {
   public var items: [Item]
-  public let headerTitle: String?
-  public let footerTitle: String?
+  private(set) public var headerTitle: String?
+  private(set) public var footerTitle: String?
 
   /// fancy pants convenience init
   public init(_ items: Item..., headerTitle: String? = nil, footerTitle: String? = nil) {
@@ -106,20 +113,19 @@ public struct SectionData<Item> {
 
 /// Protocol for data source factories
 public protocol DataSourceFactoryType {
-  associatedtype Cell: UnifiedCellType
-  typealias Item = Cell.Item
-  typealias Collection = Cell.Collection
-  typealias Section = SectionData<Item>
+  associatedtype Collection
+  associatedtype Cell: UnifiedCellType where Cell.Collection == Collection
+  associatedtype Section: SectionType where Section.Item == Cell.Item
 
+  init(cell cellType: Cell.Type, sections: [Section])
   var sections: [Section] { get }
-  var cellType: Cell.Type { get }
 }
 
 extension DataSourceFactoryType {
 
   // Common implementations for factories
 
-  fileprivate func item(at indexPath: IndexPath) -> Item {
+  fileprivate func item(at indexPath: IndexPath) -> Cell.Item {
     return sections[indexPath.section].items[indexPath.row]
   }
 
@@ -143,10 +149,11 @@ extension DataSourceFactoryType {
 }
 
 /// Factory for creating UITableViewDataSource
-public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellType>: DataSourceFactoryType {
+public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellType, Section: SectionType>: DataSourceFactoryType
+  where Section.Item == Cell.Item {
+  public typealias Collection = UITableView
 
-  private(set) public var sections: [SectionData<Cell.Item>]
-  private(set) public var cellType: Cell.Type
+  private(set) public var sections: [Section]
 
   /// fancy pants convenience init for UITableView
   public convenience init(cell cellType: Cell.Type, _ sections: Section...) {
@@ -156,7 +163,6 @@ public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellTyp
   /// Init for UITableView
   public init(cell cellType: Cell.Type, sections: [Section]) {
     self.sections = sections
-    self.cellType = cellType
   }
 
   /// TableViewDataSource from UnifiedDataSource
@@ -188,12 +194,11 @@ public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellTyp
 
 
 /// Factory for creating UICollectionViewDataSource
-public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & UnifiedCellType, Title: UICollectionReusableView & UnifiedTitleType>: DataSourceFactoryType
-where Cell.Item == Title.Item {
+public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & UnifiedCellType, Title: UICollectionReusableView & UnifiedTitleType, Section: SectionType>: DataSourceFactoryType
+where Cell.Item == Title.Item, Section.Item == Cell.Item  {
+  public typealias Collection = UICollectionView
 
-  private(set) public var sections: [SectionData<Cell.Item>]
-  private(set) public var cellType: Cell.Type
-  private var titleType: Title.Type
+  private(set) public var sections: [Section]
 
   /// fancy pants convenience init for UICollectionView
   public convenience init(cell cellType: Cell.Type, title titleType: Title.Type, _ sections: Section...) {
@@ -203,8 +208,11 @@ where Cell.Item == Title.Item {
   /// Init for UICollectionView
   public init(cell cellType: Cell.Type, title titleType: Title.Type, sections: [Section]) {
     self.sections = sections
-    self.cellType = cellType
-    self.titleType = titleType
+  }
+
+  /// Required Init
+  public init(cell cellType: Cell.Type, sections: [Section]) {
+    self.sections = sections
   }
 
   /// CollectionViewSource from UnifiedDataSource
