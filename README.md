@@ -28,9 +28,10 @@ Current features are:
 
 ## Requirements
 
-* iOS 10+
-* Swift 3.0
-* Xcode 8
+ProtoKit version 2.0 and later require:
+* iOS 11+
+* Swift 4.0
+* Xcode 9
 
 
 ### Protocol naming conventions
