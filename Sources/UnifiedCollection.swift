@@ -83,19 +83,12 @@ public protocol UnifiedTitleType {
 
 
 // MARK: - Section data (source data container)
-public protocol SectionType {
-  associatedtype Item
-
-  var items: [Item] { get }
-  var headerTitle: String? { get }
-  var footerTitle: String? { get }
-}
 
 /// Factory valuetype for section protocol
-public struct SectionData<Item>: SectionType {
+public struct SectionData<Item> {
   public var items: [Item]
-  private(set) public var headerTitle: String?
-  private(set) public var footerTitle: String?
+  public let headerTitle: String?
+  public let footerTitle: String?
 
   /// fancy pants convenience init
   public init(_ items: Item..., headerTitle: String? = nil, footerTitle: String? = nil) {
@@ -115,7 +108,7 @@ public struct SectionData<Item>: SectionType {
 public protocol DataSourceFactoryType {
   associatedtype Collection
   associatedtype Cell: UnifiedCellType where Cell.Collection == Collection
-  associatedtype Section: SectionType where Section.Item == Cell.Item
+  typealias Section = SectionData<Cell.Item>
 
   init(cell cellType: Cell.Type, sections: [Section])
   var sections: [Section] { get }
@@ -149,9 +142,9 @@ extension DataSourceFactoryType {
 }
 
 /// Factory for creating UITableViewDataSource
-public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellType, Section: SectionType>: DataSourceFactoryType
-  where Section.Item == Cell.Item {
+public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellType>: DataSourceFactoryType {
   public typealias Collection = UITableView
+  public typealias Section = SectionData<Cell.Item>
 
   private(set) public var sections: [Section]
 
@@ -194,9 +187,10 @@ public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellTyp
 
 
 /// Factory for creating UICollectionViewDataSource
-public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & UnifiedCellType, Title: UICollectionReusableView & UnifiedTitleType, Section: SectionType>: DataSourceFactoryType
-where Cell.Item == Title.Item, Section.Item == Cell.Item  {
+public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & UnifiedCellType, Title: UICollectionReusableView & UnifiedTitleType>: DataSourceFactoryType
+  where Cell.Item == Title.Item  {
   public typealias Collection = UICollectionView
+  public typealias Section = SectionData<Cell.Item>
 
   private(set) public var sections: [Section]
 
@@ -212,7 +206,7 @@ where Cell.Item == Title.Item, Section.Item == Cell.Item  {
 
   /// Required Init
   public init(cell cellType: Cell.Type, sections: [Section]) {
-    self.sections = sections
+    fatalError("use init(cell: Cell.Type, title: Title.Type, sections: [Section]) instead.")
   }
 
   /// CollectionViewSource from UnifiedDataSource
