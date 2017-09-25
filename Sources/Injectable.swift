@@ -38,6 +38,10 @@ extension Injectable {
       print("INJECTABLE ERROR: Dependencies not defined correctly in type \(DependencyTypes.self) used by class \(type(of: self))")
       exit(1)
     }
+    checkMissingDependencies(for: types)
+  }
+
+  private func checkMissingDependencies(for types: [String]) {
     let obj = Mirror(reflecting: self.dependencies)
     for var dependencyType in types {
       var found = false

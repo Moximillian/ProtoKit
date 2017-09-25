@@ -37,7 +37,7 @@
 extension RawRepresentable where RawValue == Int {
   /// Return the amount of elements in Int based enum or option set. Works only for sequentially numbered types.
   public static var count: Int {
-    for i in 0..<Int.max {
+    for i in 0... {
       guard self.init(rawValue: i) != nil else {
         return i
       }
