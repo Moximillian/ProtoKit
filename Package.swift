@@ -6,8 +6,11 @@ let package = Package(
   products: [
     .library(name: "ProtoKit", targets: ["ProtoKit"])
   ],
-  dependencies: [],
+  dependencies: [
+    .package(url: "https://github.com/devxoul/Then.git", from: "2.2.0")
+  ],
   targets: [
-    .target(name: "ProtoKit", dependencies: [], path: ".", sources: ["Sources"])
-  ]
+    .target(name: "ProtoKit", dependencies: ["Then"], path: ".", sources: ["Sources"])
+  ],
+  swiftLanguageVersions: [4]
 )
