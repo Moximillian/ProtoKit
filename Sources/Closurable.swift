@@ -10,7 +10,15 @@
 //  Released under an MIT license: http://opensource.org/licenses/MIT
 //
 
-import UIKit
+#if os(iOS) || os(tvOS)
+  import UIKit
+  public typealias Button = UIButton
+  public typealias GestureRecognizer = UIGestureRecognizer
+#elseif os(macOS)
+  import AppKit
+  public typealias Button = NSButton
+  public typealias GestureRecognizer = NSGestureRecognizer
+#endif
 
 /// Closurable protocol
 public protocol Closurable: class {}
@@ -52,14 +60,22 @@ public final class ClosureContainer<T: Closurable> {
 
 
 /// extension for UIButton - actions with closure
-extension UIButton: Closurable {
-
-  public func addTarget(forControlEvents: UIControlEvents = .touchUpInside, closure: @escaping (UIButton) -> Void) {
+extension Button: Closurable {
+#if os(iOS) || os(tvOS)
+  public func addTarget(forControlEvents: UIControlEvents = .touchUpInside, closure: @escaping (Button) -> Void) {
     let container = getContainer(for: closure)
     addTarget(container, action: container.action, for: forControlEvents)
   }
+#elseif os(macOS)
+  public func addTarget(closure: @escaping (Button) -> Void) {
+    let container = getContainer(for: closure)
+    target = container
+    action = container.action
+  }
+#endif
 }
 
+#if os(iOS) || os(tvOS)
 /// extension for UIPageControl - actions with closure
 extension UIPageControl: Closurable {
 
@@ -68,23 +84,35 @@ extension UIPageControl: Closurable {
     addTarget(container, action: container.action, for: forControlEvents)
   }
 }
+#endif
 
 
 /// extension for UIGestureRecognizer - actions with closure
-extension UIGestureRecognizer: Closurable {
+extension GestureRecognizer: Closurable {
 
-  public convenience init(closure: @escaping (UIGestureRecognizer) -> Void) {
+  public convenience init(closure: @escaping (GestureRecognizer) -> Void) {
     self.init()
     let container = getContainer(for: closure)
+#if os(iOS) || os(tvOS)
     addTarget(container, action: container.action)
+#elseif os(macOS)
+    target = container
+    action = container.action
+#endif
   }
 
-  public func addTarget(closure: @escaping (UIGestureRecognizer) -> Void) {
+  public func addTarget(closure: @escaping (GestureRecognizer) -> Void) {
     let container = getContainer(for: closure)
+#if os(iOS) || os(tvOS)
     addTarget(container, action: container.action)
+#elseif os(macOS)
+    target = container
+    action = container.action
+#endif
   }
 }
 
+#if os(iOS) || os(tvOS)
 /// extension for UIBarButtonItem - actions with closure
 extension UIBarButtonItem: Closurable {
 
@@ -102,3 +130,4 @@ extension UIBarButtonItem: Closurable {
     action = container.action
   }
 }
+#endif

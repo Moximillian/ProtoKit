@@ -10,7 +10,29 @@
 //  Released under an MIT license: http://opensource.org/licenses/MIT
 //
 
-import UIKit
+#if os(iOS) || os(tvOS)
+  import UIKit
+  public typealias Application = UIApplication
+  public typealias Color = UIColor
+  public typealias Image = UIImage
+  public typealias ImageView = UIImageView
+  public typealias Label = UILabel
+  public typealias Font = UIFont
+  public typealias FontDescriptor = UIFontDescriptor
+  public typealias Storyboard = UIStoryboard
+  public typealias ViewController = UIViewController
+#elseif os(macOS)
+  import AppKit
+  public typealias Application = NSApplication
+  public typealias Color = NSColor
+  public typealias Image = NSImage
+  public typealias ImageView = NSImageView
+  public typealias Label = NSTextField
+  public typealias Font = NSFont
+  public typealias FontDescriptor = NSFontDescriptor
+  public typealias Storyboard = NSStoryboard
+  public typealias ViewController = NSViewController
+#endif
 
 extension RawRepresentable where RawValue == Int {
   /// Return the amount of elements in Int based enum or option set. Works only for sequentially numbered types.
@@ -44,9 +66,17 @@ extension RawRepresentable where RawValue == Int {
 // }
 extension Bundle {
   public class func instantiateNib<T>(owner: Any? = nil) -> T {
+#if os(iOS) || os(tvOS)
     guard let instance = Bundle.main.loadNibNamed(String(describing: T.self), owner: owner)?.first as? T else {
       fatalError("Could not instantiate from nib: \(T.self)")
     }
+#elseif os(macOS)
+    var objects: NSArray?
+    Bundle.main.loadNibNamed(.init(String(describing: T.self)), owner: owner, topLevelObjects: &objects)
+    guard let instance = objects?.first as? T else {
+      fatalError("Could not instantiate from nib: \(T.self)")
+    }
+#endif
     return instance
   }
 }
@@ -57,18 +87,18 @@ extension CGRect {
   public var mid: CGPoint { return CGPoint(x: self.midX, y: self.midY) } // computed property, calculated every time
 }
 
-
-/// Extensions for UIApplication
-extension UIApplication {
+#if os(iOS)
+/// Extensions for UIApplication (iOS only feature)
+extension Application {
   public static var statusbarHeight: CGFloat {
-    let statusBarSize = UIApplication.shared.statusBarFrame.size
+    let statusBarSize = Application.shared.statusBarFrame.size
     return min(CGFloat(statusBarSize.width), CGFloat(statusBarSize.height))
   }
 }
-
+#endif
 
 /// Extensions for UIColor
-extension UIColor {
+extension Color {
   /// Create UIColor with 0-255 value range (RGBA)
   public convenience init(_ r: Int, _ g: Int, _ b: Int, _ a: CGFloat) {
     self.init(red:CGFloat(r) / 255.0, green:CGFloat(g) / 255.0, blue:CGFloat(b) / 255.0, alpha:a)
@@ -90,7 +120,7 @@ extension UIColor {
 }
 
 /// UIColor extension for human readable object values
-extension UIColor: CustomReflectable {
+extension Color: CustomReflectable {
   public var customMirror: Mirror {
     var red: CGFloat = 0
     var green: CGFloat = 0
@@ -113,30 +143,46 @@ extension UIColor: CustomReflectable {
 }
 
 /// UIImage assets
-extension UIImage {
+extension Image {
 
   // extensions cannot store properties, has to use computed property, calculated every time
-  public var templateImage: UIImage { return withRenderingMode(.alwaysTemplate) }
+  public var templateImage: Image {
+#if os(iOS) || os(tvOS)
+    return withRenderingMode(.alwaysTemplate)
+#elseif os(macOS)
+    isTemplate = true
+    return self
+#endif
+  }
 }
 
 /// UIImageView assets
-extension UIImageView {
+extension ImageView {
 
   // extensions cannot store properties, has to use computed property, calculated every time
-  public var templateView: UIImageView { return UIImageView(image: image?.templateImage) }
+  @available(iOS 10.0, macOS 10.12, *)
+  public var templateView: ImageView {
+    guard let image = image else { return self }
+    return ImageView(image: image.templateImage)
+  }
 }
 
 
 /// Extensions for UILabel
-extension UILabel {
+extension Label {
   public func tabularize() {
-    let attributes = font.fontDescriptor.fontAttributes
+    guard let tabularFont = font else { return }
+    let attributes = tabularFont.fontDescriptor.fontAttributes
     guard attributes[.featureSettings] == nil else { return }
 
     /// Change the font layout for numbers to use tabular (monospaced) style
-    let features: [UIFontDescriptor.FeatureKey: Int] = [.featureIdentifier: kNumberSpacingType, .typeIdentifier: kMonospacedNumbersSelector]
-    let descriptor = font.fontDescriptor.addingAttributes([.featureSettings: [features]])
-    font = UIFont(descriptor: descriptor, size: font.pointSize)
+#if os(iOS) || os(tvOS)
+    let features: [FontDescriptor.FeatureKey: Int] = [.featureIdentifier: kNumberSpacingType, .typeIdentifier: kMonospacedNumbersSelector]
+#elseif os(macOS)
+    let features: [FontDescriptor.FeatureKey: Int] = [.selectorIdentifier: kNumberSpacingType, .typeIdentifier: kMonospacedNumbersSelector]
+#endif
+    let descriptor = tabularFont.fontDescriptor.addingAttributes([.featureSettings: [features]])
+    font = Font(descriptor: descriptor, size: tabularFont.pointSize)
   }
 }
 
@@ -149,17 +195,25 @@ extension UILabel {
 //
 //  let myVC = myStoryboard.instantiate(MyViewController.self)
 //
-extension UIStoryboard {
+extension Storyboard {
 
   /// instantiate view Controller
-  public func instantiate<T: UIViewController>(_: T.Type) -> T {
+  public func instantiate<T: ViewController>(_: T.Type) -> T {
 
+#if os(iOS) || os(tvOS)
     guard let vc = self.instantiateViewController(withIdentifier: String(describing: T.self)) as? T else {
       fatalError("Couldn’t instantiate view controller with identifier \(String(describing: T.self)) ")
     }
+#elseif os(macOS)
+  guard let vc = self.instantiateController(withIdentifier: .init(String(describing: T.self))) as? T else {
+    fatalError("Couldn’t instantiate view controller with identifier \(String(describing: T.self)) ")
+  }
+#endif
     return vc
   }
 }
+
+#if os(iOS) || os(tvOS)
 
 /// Extensions for UITableView
 extension UITableView {
@@ -210,3 +264,4 @@ extension UICollectionView {
     register(T.self, forSupplementaryViewOfKind: kind, withReuseIdentifier: String(describing: T.self))
   }
 }
+#endif

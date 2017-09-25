@@ -15,10 +15,15 @@
  * Inspired by Jesse Squires: https://www.skilled.io/u/swiftsummit/pushing-the-limits-of-protocol-oriented-programming
  */
 
-
-import UIKit
+#if os(iOS) || os(tvOS)
+  import UIKit
+#elseif os(macOS)
+  import AppKit
+#endif
 
 // MARK: - Unified Collection
+
+#if os(iOS) || os(tvOS)
 
 /// protocol for unified UITableView and UICollectionView
 public protocol UnifiedCollectionType {
@@ -306,7 +311,7 @@ extension UnifiedDataSource: UICollectionViewDataSource {
   }
 }
 
-
+#endif
 
 
 /*

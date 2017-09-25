@@ -10,7 +10,11 @@
 //  Released under an MIT license: http://opensource.org/licenses/MIT
 //
 
-import UIKit
+#if os(iOS) || os(tvOS)
+  import UIKit
+#elseif os(macOS)
+  import AppKit
+#endif
 
 /// Base protocol for the Dependency container
 public protocol DependencyStorage {
@@ -66,12 +70,12 @@ private let swizzling: (AnyClass, Selector, Selector) -> () = { forClass, origin
   method_exchangeImplementations(originalMethod, swizzledMethod)
 }
 
-extension UIViewController {
+extension ViewController {
 
   public static let classInit: Void = {
     let originalSelector = #selector(viewDidLoad)
     let swizzledSelector = #selector(swizzled_viewDidLoad)
-    swizzling(UIViewController.self, originalSelector, swizzledSelector)
+    swizzling(ViewController.self, originalSelector, swizzledSelector)
   }()
 
   @objc func swizzled_viewDidLoad() {

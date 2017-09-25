@@ -28,10 +28,12 @@ Current features are:
 
 ## Requirements
 
-ProtoKit version 2.0 and later require:
-* iOS 11+
+ProtoKit version 2.0 and later requires:
+* iOS 11+ or tvOS 11+
 * Swift 4.0
 * Xcode 9
+* may work also for MacOS 10.11+, does not have support for Unified Collection
+* watchOS is not supported
 
 
 ### Protocol naming conventions
@@ -54,7 +56,7 @@ Unified Collection inspired by
 
 `ProtoKit` is released under an [MIT License][mitLink]. See `LICENSE` for details.
 
->**Copyright &copy; 2015-present Mox Soini.**
+>**Copyright &copy; 2017-present Mox Soini.**
 
 *Please provide attribution, it is greatly appreciated.*
 
