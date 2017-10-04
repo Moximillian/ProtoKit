@@ -17,14 +17,14 @@ import Then
 
 // MARK: – Core Data Protocols and extensions
 
-protocol SortableManagedObject: NSFetchRequestResult {
+public protocol SortableManagedObject: NSFetchRequestResult {
   static var defaultSortDescriptors: [NSSortDescriptor] { get }
 }
 
 extension SortableManagedObject where Self: NSManagedObject {
 
   @available(iOS 10.0, macOS 10.12, *)
-  static func sortedFetchRequest() -> NSFetchRequest<Self> {
+  public static func sortedFetchRequest() -> NSFetchRequest<Self> {
     let request = Self.fetchRequest() as! NSFetchRequest<Self>
     request.sortDescriptors = defaultSortDescriptors
     return request
@@ -35,7 +35,7 @@ extension SortableManagedObject where Self: NSManagedObject {
 }
 @available(iOS 10.0, macOS 10.12, *)
 extension NSPersistentContainer {
-  func getQueryGenerationViewContext() throws -> NSManagedObjectContext {
+  public func getQueryGenerationViewContext() throws -> NSManagedObjectContext {
     let context = viewContext
     try context.setQueryGenerationFrom(NSQueryGenerationToken.current)
     return context
@@ -46,14 +46,14 @@ extension NSPersistentContainer {
 // check also https://developer.apple.com/videos/play/wwdc2016/242/
 
 public final class CoreDataStack {
-  let name: String
+  private let name: String
 
   public required init(name: String) {
     self.name = name
   }
 
   @available(iOS 10.0, macOS 10.12, *)
-  lazy var persistentContainer: NSPersistentContainer = NSPersistentContainer(name: name).then {
+  public lazy var persistentContainer: NSPersistentContainer = NSPersistentContainer(name: name).then {
     /*
      The persistent container for the application. This implementation
      creates and returns a container, having loaded the store for the
@@ -76,7 +76,7 @@ public final class CoreDataStack {
 
   // MARK: - Core Data Saving support
   @available(iOS 10.0, macOS 10.12, *)
-  func saveContext() {
+  public func saveContext() {
     let context = persistentContainer.viewContext
     if context.hasChanges {
       do {
