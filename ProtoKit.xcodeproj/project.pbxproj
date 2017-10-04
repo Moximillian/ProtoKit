@@ -7,21 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		OBJ_31 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
-		OBJ_37 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* Package.swift */; };
-		OBJ_43 /* Closurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* Closurable.swift */; };
-		OBJ_44 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* CoreDataStack.swift */; };
-		OBJ_45 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* Error.swift */; };
-		OBJ_46 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* Extensions.swift */; };
-		OBJ_47 /* Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* Injectable.swift */; };
-		OBJ_48 /* SegueHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* SegueHandlerType.swift */; };
-		OBJ_49 /* UnifiedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* UnifiedCollection.swift */; };
-		OBJ_51 /* Then.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Then::Then::Product" /* Then.framework */; };
-		OBJ_58 /* Then.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* Then.swift */; };
+		OBJ_32 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_38 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* Package.swift */; };
+		OBJ_44 /* Closurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* Closurable.swift */; };
+		OBJ_45 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* CoreDataStack.swift */; };
+		OBJ_46 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* Error.swift */; };
+		OBJ_47 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* Extensions.swift */; };
+		OBJ_48 /* Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* Injectable.swift */; };
+		OBJ_49 /* SegueHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* SegueHandlerType.swift */; };
+		OBJ_50 /* UnifiedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* UnifiedCollection.swift */; };
+		OBJ_52 /* Then.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Then::Then::Product" /* Then.framework */; };
+		OBJ_59 /* Then.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* Then.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		418A3D2E1F78F196009F46F5 /* PBXContainerItemProxy */ = {
+		418A3D371F7970C0009F46F5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
@@ -38,23 +38,23 @@
 		OBJ_14 /* Injectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Injectable.swift; sourceTree = "<group>"; };
 		OBJ_15 /* SegueHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueHandlerType.swift; sourceTree = "<group>"; };
 		OBJ_16 /* UnifiedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedCollection.swift; sourceTree = "<group>"; };
-		OBJ_21 /* Then.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Then.swift; sourceTree = "<group>"; };
-		OBJ_22 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/mox.soini/Code/ProtoKit/.build/checkouts/Then.git--5832777467679266491/Package.swift"; sourceTree = "<group>"; };
+		OBJ_22 /* Then.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Then.swift; sourceTree = "<group>"; };
+		OBJ_23 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/mox.soini/Code/ProtoKit/.build/checkouts/Then-9147344704269568239/Package.swift"; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		"ProtoKit::ProtoKit::Product" /* ProtoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ProtoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Then::Then::Product" /* Then.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Then.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		OBJ_50 /* Frameworks */ = {
+		OBJ_51 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_51 /* Then.framework in Frameworks */,
+				OBJ_52 /* Then.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_59 /* Frameworks */ = {
+		OBJ_60 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
@@ -64,33 +64,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		OBJ_18 /* Dependencies */ = {
+		OBJ_19 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_19 /* Then 2.2.0 */,
+				OBJ_20 /* Then 2.2.0 */,
 			);
 			name = Dependencies;
 			sourceTree = "<group>";
 		};
-		OBJ_19 /* Then 2.2.0 */ = {
+		OBJ_20 /* Then 2.2.0 */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_20 /* Then */,
-				OBJ_22 /* Package.swift */,
+				OBJ_21 /* Then */,
+				OBJ_23 /* Package.swift */,
 			);
 			name = "Then 2.2.0";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_20 /* Then */ = {
+		OBJ_21 /* Then */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_21 /* Then.swift */,
+				OBJ_22 /* Then.swift */,
 			);
 			name = Then;
-			path = ".build/checkouts/Then.git--5832777467679266491/Sources/Then";
+			path = ".build/checkouts/Then-9147344704269568239/Sources/Then";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_23 /* Products */ = {
+		OBJ_24 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				"ProtoKit::ProtoKit::Product" /* ProtoKit.framework */,
@@ -99,15 +99,14 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
 				OBJ_9 /* Sources */,
-				OBJ_18 /* Dependencies */,
-				OBJ_23 /* Products */,
+				OBJ_19 /* Dependencies */,
+				OBJ_24 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_9 /* Sources */ = {
@@ -129,15 +128,15 @@
 /* Begin PBXNativeTarget section */
 		"ProtoKit::ProtoKit" /* ProtoKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_39 /* Build configuration list for PBXNativeTarget "ProtoKit" */;
+			buildConfigurationList = OBJ_40 /* Build configuration list for PBXNativeTarget "ProtoKit" */;
 			buildPhases = (
-				OBJ_42 /* Sources */,
-				OBJ_50 /* Frameworks */,
+				OBJ_43 /* Sources */,
+				OBJ_51 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				OBJ_52 /* PBXTargetDependency */,
+				OBJ_53 /* PBXTargetDependency */,
 			);
 			name = ProtoKit;
 			productName = ProtoKit;
@@ -146,9 +145,9 @@
 		};
 		"ProtoKit::SwiftPMPackageDescription" /* ProtoKitPackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_27 /* Build configuration list for PBXNativeTarget "ProtoKitPackageDescription" */;
+			buildConfigurationList = OBJ_28 /* Build configuration list for PBXNativeTarget "ProtoKitPackageDescription" */;
 			buildPhases = (
-				OBJ_30 /* Sources */,
+				OBJ_31 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -160,9 +159,9 @@
 		};
 		"Then::SwiftPMPackageDescription" /* ThenPackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_33 /* Build configuration list for PBXNativeTarget "ThenPackageDescription" */;
+			buildConfigurationList = OBJ_34 /* Build configuration list for PBXNativeTarget "ThenPackageDescription" */;
 			buildPhases = (
-				OBJ_36 /* Sources */,
+				OBJ_37 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -174,10 +173,10 @@
 		};
 		"Then::Then" /* Then */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_54 /* Build configuration list for PBXNativeTarget "Then" */;
+			buildConfigurationList = OBJ_55 /* Build configuration list for PBXNativeTarget "Then" */;
 			buildPhases = (
-				OBJ_57 /* Sources */,
-				OBJ_59 /* Frameworks */,
+				OBJ_58 /* Sources */,
+				OBJ_60 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -203,8 +202,8 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
-			productRefGroup = OBJ_23 /* Products */;
+			mainGroup = OBJ_5;
+			productRefGroup = OBJ_24 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -217,56 +216,56 @@
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		OBJ_30 /* Sources */ = {
+		OBJ_31 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_31 /* Package.swift in Sources */,
+				OBJ_32 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_36 /* Sources */ = {
+		OBJ_37 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_37 /* Package.swift in Sources */,
+				OBJ_38 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_42 /* Sources */ = {
+		OBJ_43 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_43 /* Closurable.swift in Sources */,
-				OBJ_44 /* CoreDataStack.swift in Sources */,
-				OBJ_45 /* Error.swift in Sources */,
-				OBJ_46 /* Extensions.swift in Sources */,
-				OBJ_47 /* Injectable.swift in Sources */,
-				OBJ_48 /* SegueHandlerType.swift in Sources */,
-				OBJ_49 /* UnifiedCollection.swift in Sources */,
+				OBJ_44 /* Closurable.swift in Sources */,
+				OBJ_45 /* CoreDataStack.swift in Sources */,
+				OBJ_46 /* Error.swift in Sources */,
+				OBJ_47 /* Extensions.swift in Sources */,
+				OBJ_48 /* Injectable.swift in Sources */,
+				OBJ_49 /* SegueHandlerType.swift in Sources */,
+				OBJ_50 /* UnifiedCollection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_57 /* Sources */ = {
+		OBJ_58 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_58 /* Then.swift in Sources */,
+				OBJ_59 /* Then.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		OBJ_52 /* PBXTargetDependency */ = {
+		OBJ_53 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Then::Then" /* Then */;
-			targetProxy = 418A3D2E1F78F196009F46F5 /* PBXContainerItemProxy */;
+			targetProxy = 418A3D371F7970C0009F46F5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		OBJ_28 /* Debug */ = {
+		OBJ_29 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD = /usr/bin/true;
@@ -274,15 +273,6 @@
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
-		};
-		OBJ_29 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
 		};
 		OBJ_3 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -298,7 +288,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "-DXcode -Xfrontend -warn-long-function-bodies=200 -Xfrontend -warn-long-expression-type-checking=200";
+				OTHER_SWIFT_FLAGS = "-DXcode -Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=200";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
@@ -309,7 +299,16 @@
 			};
 			name = Debug;
 		};
-		OBJ_34 /* Debug */ = {
+		OBJ_30 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		OBJ_35 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD = /usr/bin/true;
@@ -318,7 +317,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_35 /* Release */ = {
+		OBJ_36 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD = /usr/bin/true;
@@ -339,7 +338,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				OTHER_SWIFT_FLAGS = "-DXcode";
+				OTHER_SWIFT_FLAGS = "-DXcode -Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=200";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
@@ -350,7 +349,7 @@
 			};
 			name = Release;
 		};
-		OBJ_40 /* Debug */ = {
+		OBJ_41 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -371,7 +370,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_41 /* Release */ = {
+		OBJ_42 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -392,7 +391,7 @@
 			};
 			name = Release;
 		};
-		OBJ_55 /* Debug */ = {
+		OBJ_56 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -413,7 +412,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_56 /* Release */ = {
+		OBJ_57 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -446,38 +445,38 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_27 /* Build configuration list for PBXNativeTarget "ProtoKitPackageDescription" */ = {
+		OBJ_28 /* Build configuration list for PBXNativeTarget "ProtoKitPackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_28 /* Debug */,
-				OBJ_29 /* Release */,
+				OBJ_29 /* Debug */,
+				OBJ_30 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_33 /* Build configuration list for PBXNativeTarget "ThenPackageDescription" */ = {
+		OBJ_34 /* Build configuration list for PBXNativeTarget "ThenPackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_34 /* Debug */,
-				OBJ_35 /* Release */,
+				OBJ_35 /* Debug */,
+				OBJ_36 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_39 /* Build configuration list for PBXNativeTarget "ProtoKit" */ = {
+		OBJ_40 /* Build configuration list for PBXNativeTarget "ProtoKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_40 /* Debug */,
-				OBJ_41 /* Release */,
+				OBJ_41 /* Debug */,
+				OBJ_42 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_54 /* Build configuration list for PBXNativeTarget "Then" */ = {
+		OBJ_55 /* Build configuration list for PBXNativeTarget "Then" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_55 /* Debug */,
-				OBJ_56 /* Release */,
+				OBJ_56 /* Debug */,
+				OBJ_57 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -1,24 +1,32 @@
 #!/bin/sh
 
 TRG=11.0
-
+PKG=ProtoKit
+COMMONARGS="-configuration Release -project $PKG.xcodeproj -target $PKG IPHONEOS_DEPLOYMENT_TARGET=$TRG"
 rm -rf ./.build
 
-# Build ProtoKit
-export BUILDDIR="./.build"
-xcodebuild -target ProtoKit -configuration Release -destination "platform=iOS Simulator,OS=$TRG,name=iPhone 6" IPHONEOS_DEPLOYMENT_TARGET=$TRG TARGET_BUILD_DIR=$BUILDDIR clean build
+swift package resolve
 
-export BUILDDIR="./.build/build-x86"
-xcodebuild -target ProtoKit -arch x86_64 -sdk iphonesimulator -configuration Release -destination "platform=iOS Simulator,OS=$TRG,name=iPhone 6" IPHONEOS_DEPLOYMENT_TARGET=$TRG TARGET_BUILD_DIR=$BUILDDIR VALID_ARCHS=x86_64 clean build
+# Build ProtoKit
+
+BUILDDIR="./.build"
+SDK=iphoneos
+ARCH=arm64
+xcodebuild -arch $ARCH -sdk $SDK $COMMONARGS TARGET_BUILD_DIR=$BUILDDIR FRAMEWORK_SEARCH_PATHS=$BUILDDIR VALID_ARCHS=$ARCH build
+
+BUILDDIR="./.build/build-x86"
+SDK=iphonesimulator
+ARCH=x86_64
+xcodebuild -arch $ARCH -sdk $SDK $COMMONARGS TARGET_BUILD_DIR=$BUILDDIR FRAMEWORK_SEARCH_PATHS=$BUILDDIR VALID_ARCHS=$ARCH build
 
 # copy x86_64 module maps
-cp ./.build/build-x86/ProtoKit.framework/Modules/ProtoKit.swiftmodule/* ./.build/ProtoKit.framework/Modules/ProtoKit.swiftmodule/
+cp ./.build/build-x86/$PKG.framework/Modules/$PKG.swiftmodule/* ./.build/$PKG.framework/Modules/$PKG.swiftmodule/
 
 # lipo archs together
-cd ./.build/ProtoKit.framework/
-mv ProtoKit ProtoKit-arm
-lipo -create -output ProtoKit ProtoKit-arm ../build-x86/ProtoKit.framework/ProtoKit
-rm ProtoKit-arm
+cd ./.build/$PKG.framework/
+mv $PKG ${PKG}-arm
+lipo -create -output $PKG ${PKG}-arm ../build-x86/$PKG.framework/$PKG
+rm ${PKG}-arm
 cd ../..
 
 # Clean up intermediary build files

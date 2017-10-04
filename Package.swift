@@ -7,7 +7,7 @@ let package = Package(
     .library(name: "ProtoKit", targets: ["ProtoKit"])
   ],
   dependencies: [
-    .package(url: "https://github.com/devxoul/Then.git", from: "2.2.0")
+    .package(url: "https://github.com/devxoul/Then", from: "2.2.0")
   ],
   targets: [
     .target(name: "ProtoKit", dependencies: ["Then"], path: ".", sources: ["Sources"])
