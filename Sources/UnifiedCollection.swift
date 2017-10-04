@@ -113,7 +113,7 @@ public struct SectionData<Item> {
 public protocol DataSourceFactoryType {
   associatedtype Collection
   associatedtype Cell: UnifiedCellType where Cell.Collection == Collection
-  typealias Section = SectionData<Cell.Item>
+  associatedtype Section where Section == SectionData<Cell.Item>
 
   init(cell cellType: Cell.Type, sections: [Section])
   var sections: [Section] { get }

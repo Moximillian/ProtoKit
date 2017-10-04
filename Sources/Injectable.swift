@@ -32,8 +32,9 @@ public protocol Injectable: DependencyStorage, Assertable {
 
 extension Injectable {
   public func assertDependencies() {
-    let typeDescriptions: [Substring] = "\(DependencyTypes.self)".split(separator: " ").filter { $0.contains("Dependency") }
-    let types: [String] = typeDescriptions.map { return $0.replacingOccurrences(of: "Dependency", with: "") }
+    let typeDescriptions: [Substring] = "\(DependencyTypes.self)".split(separator: " ")
+    let filteredDescriptions: [Substring] = typeDescriptions.filter { $0.contains("Dependency") }
+    let types: [String] = filteredDescriptions.map { return $0.replacingOccurrences(of: "Dependency", with: "") }
     guard types.count > 0 else {
       print("INJECTABLE ERROR: Dependencies not defined correctly in type \(DependencyTypes.self) used by class \(type(of: self))")
       exit(1)
