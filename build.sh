@@ -3,7 +3,7 @@
 TRG=11.0
 PKG=ProtoKit
 THEN=Then
-COMMONARGS="-configuration Release -project $PKG.xcodeproj -target $PKG IPHONEOS_DEPLOYMENT_TARGET=$TRG"
+COMMONARGS="-configuration Release -project $PKG.xcodeproj -target $PKG IPHONEOS_DEPLOYMENT_TARGET=$TRG CODE_SIGNING_ALLOWED=NO"
 rm -rf ./.build
 
 swift package resolve
