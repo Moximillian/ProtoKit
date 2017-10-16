@@ -167,24 +167,10 @@ public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellTyp
     // store functions as closures in UnifiedDataSource. Cannot assign functions directly due to retain cycles
     source.numberOfSections = { [unowned self] in return self.numberOfSections() }
     source.numberOfItems = { [unowned self] in return self.numberOfItems($0) }
-    source.headerTitle = { [unowned self] in return self.headerTitle($0) }
-    source.footerTitle = { [unowned self] in return self.footerTitle($0) }
-    source.cellForTable = { [unowned self] in return self.cellForTable(collection: $0, indexPath: $1) }
+    source.headerTitle = { [unowned self] in return self.sections[$0].headerTitle }
+    source.footerTitle = { [unowned self] in return self.sections[$0].footerTitle }
+    source.cellForTable = { [unowned self] in return self.cell(for: $0, indexPath: $1) }
     return source
-  }
-
-  // MARK: - DataSourceFactoryType implementations for UITableView
-
-  private func headerTitle(_ section: Int) -> String? {
-    return sections[section].headerTitle
-  }
-
-  private func footerTitle(_ section: Int) -> String? {
-    return sections[section].footerTitle
-  }
-
-  private func cellForTable(collection: UITableView, indexPath: IndexPath) -> UITableViewCell {
-    return cell(for: collection, indexPath: indexPath)
   }
 }
 
@@ -217,16 +203,12 @@ public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & Unif
     // store functions as closures in UnifiedDataSource. Cannot assign functions directly due to retain cycles
     source.numberOfSections = { [unowned self] in return self.numberOfSections() }
     source.numberOfItems = { [unowned self] in return self.numberOfItems($0) }
-    source.cellForCollection = { [unowned self] in return self.cellForCollection(collection: $0, indexPath: $1) }
+    source.cellForCollection = { [unowned self] in return self.cell(for: $0, indexPath: $1) }
     source.titleForCollection = { [unowned self] in return self.titleForCollection(collection: $0, kind: $1, indexPath: $2) }
     return source
   }
 
   // MARK: DataSourceFactoryType implementations for UICollectionView
-
-  private func cellForCollection(collection: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
-    return cell(for: collection, indexPath: indexPath)
-  }
 
   private func titleForCollection(collection: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView {
     let item = self.item(at: indexPath)
