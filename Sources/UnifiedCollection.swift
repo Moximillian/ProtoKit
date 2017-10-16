@@ -114,7 +114,6 @@ public protocol DataSourceFactoryType {
   associatedtype Cell: UnifiedCellType
   associatedtype Section where Section == SectionData<Cell.Item>
 
-  init(cell cellType: Cell.Type, sections: [Section])
   var sections: [Section] { get }
 }
 
@@ -152,12 +151,12 @@ public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellTyp
   private(set) public var sections: [Section]
 
   /// fancy pants convenience init for UITableView
-  public convenience init(cell cellType: Cell.Type, _ sections: Section...) {
-    self.init(cell: cellType, sections: sections)
+  public convenience init(_ sections: Section...) {
+    self.init(sections: sections)
   }
 
   /// Init for UITableView
-  public init(cell cellType: Cell.Type, sections: [Section]) {
+  public required init(sections: [Section]) {
     self.sections = sections
   }
 
@@ -183,18 +182,13 @@ public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & Unif
   private(set) public var sections: [Section]
 
   /// fancy pants convenience init for UICollectionView
-  public convenience init(cell cellType: Cell.Type, title titleType: Title.Type, _ sections: Section...) {
-    self.init(cell: cellType, title: titleType, sections: sections)
+  public convenience init(_ sections: Section...) {
+    self.init(sections: sections)
   }
 
   /// Init for UICollectionView
-  public init(cell cellType: Cell.Type, title titleType: Title.Type, sections: [Section]) {
+  public required init(sections: [Section]) {
     self.sections = sections
-  }
-
-  /// Required Init
-  public init(cell cellType: Cell.Type, sections: [Section]) {
-    fatalError("use init(cell: Cell.Type, title: Title.Type, sections: [Section]) instead.")
   }
 
   /// CollectionViewSource from UnifiedDataSource
@@ -311,7 +305,7 @@ extension UnifiedDataSource: UICollectionViewDataSource {
  public func configure(item: MyData, collection: UITableView, indexPath: IndexPath) {
  // ...
  textLabel?.text = item.title
- detailTextLabel?.text = String(item.value)
+ detailTextLabel?.text = "\(item.value)"
  // ...
  }
  }
@@ -333,7 +327,7 @@ extension UnifiedDataSource: UICollectionViewDataSource {
 
  // 5. create factory, provide your cell type to it. Also, in Interface Builder, set your cell identifier as your cell class name e.g. "MyCell" in this example
 
- let factory = TableDataSourceFactory(cell: MyCell.self, sectionData)
+ let factory = TableDataSourceFactory<MyCell>(sectionData)
 
 
  // 6. provide the datasource to your table view (or collectionview)
