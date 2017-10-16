@@ -130,14 +130,6 @@ extension DataSourceFactoryType {
     cell.configure(item: item(at: indexPath), collection: collection, indexPath: indexPath)
     return cell
   }
-
-  fileprivate func numberOfSections() -> Int {
-    return sections.count
-  }
-
-  fileprivate func numberOfItems(_ section: Int) -> Int {
-    return sections[section].items.count
-  }
 }
 
 /// Factory for creating UITableViewDataSource
@@ -160,8 +152,8 @@ public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellTyp
   public var tableViewDataSource: UITableViewDataSource {
     let source = UnifiedDataSource(factory: self)
     // store functions as closures in UnifiedDataSource. Cannot assign functions directly due to retain cycles
-    source.numberOfSections = { [unowned self] in return self.numberOfSections() }
-    source.numberOfItems = { [unowned self] in return self.numberOfItems($0) }
+    source.numberOfSections = { [unowned self] in return self.sections.count }
+    source.numberOfItems = { [unowned self] in return self.sections[$0].items.count }
     source.headerTitle = { [unowned self] in return self.sections[$0].headerTitle }
     source.footerTitle = { [unowned self] in return self.sections[$0].footerTitle }
     source.cellForTable = { [unowned self] in return self.cell(for: $0, indexPath: $1) }
@@ -191,8 +183,8 @@ public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & Unif
   public var collectionViewDataSource: UICollectionViewDataSource {
     let source = UnifiedDataSource(factory: self)
     // store functions as closures in UnifiedDataSource. Cannot assign functions directly due to retain cycles
-    source.numberOfSections = { [unowned self] in return self.numberOfSections() }
-    source.numberOfItems = { [unowned self] in return self.numberOfItems($0) }
+    source.numberOfSections = { [unowned self] in return self.sections.count }
+    source.numberOfItems = { [unowned self] in return self.sections[$0].items.count }
     source.cellForCollection = { [unowned self] in return self.cell(for: $0, indexPath: $1) }
     source.titleForCollection = { [unowned self] in return self.titleForCollection(collection: $0, kind: $1, indexPath: $2) }
     return source
