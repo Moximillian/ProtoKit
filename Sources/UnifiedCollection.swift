@@ -119,21 +119,17 @@ public protocol DataSourceFactoryType {
 
 extension DataSourceFactoryType {
 
-  // Common implementations for factories
+  // MARK: - DataSourceFactoryType implementations for common functions
 
   fileprivate func item(at indexPath: IndexPath) -> Cell.Item {
     return sections[indexPath.section].items[indexPath.row]
   }
 
-  /// Generate cells based on the correct cell type
   fileprivate func cell(for collection: Cell.Collection, indexPath: IndexPath) -> Cell {
-    let item = self.item(at: indexPath)
     let cell: Cell = collection.dequeueReusableCell(indexPath: indexPath)
-    cell.configure(item: item, collection: collection, indexPath: indexPath)
+    cell.configure(item: item(at: indexPath), collection: collection, indexPath: indexPath)
     return cell
   }
-
-  // MARK: - DataSourceFactoryType implementations for common functions
 
   fileprivate func numberOfSections() -> Int {
     return sections.count
@@ -205,9 +201,8 @@ public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & Unif
   // MARK: DataSourceFactoryType implementations for UICollectionView
 
   private func titleForCollection(collection: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView {
-    let item = self.item(at: indexPath)
     let view: Title = collection.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
-    view.configure(item: item, collection: collection, kind: kind, indexPath: indexPath)
+    view.configure(item: item(at: indexPath), collection: collection, kind: kind, indexPath: indexPath)
     return view
   }
 }
@@ -245,42 +240,42 @@ fileprivate final class UnifiedDataSource: NSObject {
 extension UnifiedDataSource: UITableViewDataSource {
 
   func numberOfSections(in tableView: UITableView) -> Int {
-    return self.numberOfSections!()
+    return numberOfSections!()
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return self.numberOfItems!(section)
+    return numberOfItems!(section)
   }
 
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return self.headerTitle!(section)
+    return headerTitle!(section)
   }
 
   func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-    return self.footerTitle!(section)
+    return footerTitle!(section)
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    return self.cellForTable!(tableView, indexPath)
+    return cellForTable!(tableView, indexPath)
   }
 }
 
 /// UICollectionViewDataSource implementation of UnifiedDataSourceType
 extension UnifiedDataSource: UICollectionViewDataSource {
   func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return self.numberOfSections!()
+    return numberOfSections!()
   }
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return self.numberOfItems!(section)
+    return numberOfItems!(section)
   }
 
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    return self.titleForCollection!(collectionView, kind, indexPath)
+    return titleForCollection!(collectionView, kind, indexPath)
   }
 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    return self.cellForCollection!(collectionView, indexPath)
+    return cellForCollection!(collectionView, indexPath)
   }
 }
 
