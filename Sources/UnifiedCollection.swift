@@ -111,8 +111,7 @@ public struct SectionData<Item> {
 
 /// Protocol for data source factories
 public protocol DataSourceFactoryType {
-  associatedtype Collection
-  associatedtype Cell: UnifiedCellType where Cell.Collection == Collection
+  associatedtype Cell: UnifiedCellType
   associatedtype Section where Section == SectionData<Cell.Item>
 
   init(cell cellType: Cell.Type, sections: [Section])
@@ -128,7 +127,7 @@ extension DataSourceFactoryType {
   }
 
   /// Generate cells based on the correct cell type
-  fileprivate func cell(for collection: Collection, indexPath: IndexPath) -> Cell {
+  fileprivate func cell(for collection: Cell.Collection, indexPath: IndexPath) -> Cell {
     let item = self.item(at: indexPath)
     let cell: Cell = collection.dequeueReusableCell(indexPath: indexPath)
     cell.configure(item: item, collection: collection, indexPath: indexPath)
@@ -148,7 +147,6 @@ extension DataSourceFactoryType {
 
 /// Factory for creating UITableViewDataSource
 public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellType>: DataSourceFactoryType {
-  public typealias Collection = UITableView
   public typealias Section = SectionData<Cell.Item>
 
   private(set) public var sections: [Section]
@@ -194,7 +192,6 @@ public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellTyp
 /// Factory for creating UICollectionViewDataSource
 public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & UnifiedCellType, Title: UICollectionReusableView & UnifiedTitleType>: DataSourceFactoryType
   where Cell.Item == Title.Item  {
-  public typealias Collection = UICollectionView
   public typealias Section = SectionData<Cell.Item>
 
   private(set) public var sections: [Section]
