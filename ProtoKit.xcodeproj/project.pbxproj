@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4146A1201FA8893A0023A2CB /* Castable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4146A11F1FA8893A0023A2CB /* Castable.swift */; };
 		OBJ_32 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_38 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* Package.swift */; };
 		OBJ_44 /* Closurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* Closurable.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4146A11F1FA8893A0023A2CB /* Castable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Castable.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Closurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Closurable.swift; sourceTree = "<group>"; };
 		OBJ_11 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		OBJ_12 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 		OBJ_9 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				4146A11F1FA8893A0023A2CB /* Castable.swift */,
 				OBJ_10 /* Closurable.swift */,
 				OBJ_11 /* CoreDataStack.swift */,
 				OBJ_12 /* Error.swift */,
@@ -236,6 +239,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				4146A1201FA8893A0023A2CB /* Castable.swift in Sources */,
 				OBJ_44 /* Closurable.swift in Sources */,
 				OBJ_45 /* CoreDataStack.swift in Sources */,
 				OBJ_46 /* Error.swift in Sources */,
