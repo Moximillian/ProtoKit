@@ -38,7 +38,7 @@ extension RawRepresentable where RawValue == Int {
   /// Return the amount of elements in Int based enum or option set. Works only for sequentially numbered types.
   public static var count: Int {
     for i in 0... {
-      guard self.init(rawValue: i) != nil else {
+      guard Self(rawValue: i) != nil else {
         return i
       }
     }
@@ -171,9 +171,9 @@ extension ImageView {
 /// Extensions for UILabel
 extension Label {
   public func tabularize() {
-    guard let tabularFont = font else { return }
-    let attributes = tabularFont.fontDescriptor.fontAttributes
-    guard attributes[.featureSettings] == nil else { return }
+    guard
+      let tabularFont = font,
+      tabularFont.fontDescriptor.fontAttributes[.featureSettings] == nil else { return }
 
     /// Change the font layout for numbers to use tabular (monospaced) style
 #if os(iOS) || os(tvOS)
