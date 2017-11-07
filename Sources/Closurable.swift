@@ -129,5 +129,11 @@ extension UIBarButtonItem: Closurable {
     target = container
     action = container.action
   }
+
+  public func addTarget(closure: @escaping (UIBarButtonItem) -> Void) {
+    let container = getContainer(for: closure)
+    target = container
+    action = container.action
+  }
 }
 #endif
