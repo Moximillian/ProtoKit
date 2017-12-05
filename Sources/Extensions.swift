@@ -168,25 +168,6 @@ extension ImageView {
 }
 
 
-/// Extensions for UILabel
-extension Label {
-  public func tabularize() {
-    guard
-      let tabularFont = font,
-      tabularFont.fontDescriptor.fontAttributes[.featureSettings] == nil else { return }
-
-    /// Change the font layout for numbers to use tabular (monospaced) style
-#if os(iOS) || os(tvOS)
-    let features: [FontDescriptor.FeatureKey: Int] = [.featureIdentifier: kNumberSpacingType, .typeIdentifier: kMonospacedNumbersSelector]
-#elseif os(macOS)
-    let features: [FontDescriptor.FeatureKey: Int] = [.selectorIdentifier: kNumberSpacingType, .typeIdentifier: kMonospacedNumbersSelector]
-#endif
-    let descriptor = tabularFont.fontDescriptor.addingAttributes([.featureSettings: [features]])
-    font = Font(descriptor: descriptor, size: tabularFont.pointSize)
-  }
-}
-
-
 /// Extension for UIStoryboard
 //
 //  USAGE: 
