@@ -21,33 +21,61 @@
   import AppKit
 #endif
 
-// MARK: - Unified Collection
-
 #if os(iOS) || os(tvOS)
 
 // MARK: - Unified Cell Type
 
-/// protocol defining the capability to have Collection
-public protocol HasCollection {
-  associatedtype Collection
+/// protocol for unified UITableViewCell and UICollectionViewCell
+public protocol UnifiedCellType {
+  associatedtype Collection: UnifiedCollectionType
 }
 
-extension UITableViewCell: HasCollection {
+extension UITableViewCell: UnifiedCellType {
   public typealias Collection = UITableView
 }
 
-extension UICollectionViewCell: HasCollection {
+extension UICollectionViewCell: UnifiedCellType {
   public typealias Collection = UICollectionView
 }
 
-/// protocol for unified UITableViewCell and UICollectionViewCell. This should be conformed with the implemented cell class
-public protocol UnifiedCellType: HasCollection {
+// MARK: - Unified Collection Type
+
+/// protocol for unified UITableView and UICollectionView
+public protocol UnifiedCollectionType {
+  /// unified generic way to queue a table/collection cell of specific type
+  func dequeueReusableCell<T: UnifiedCellType>(for indexPath: IndexPath) -> T
+}
+
+extension UITableView: UnifiedCollectionType {
+  /// unified generic way to queue a UITableViewCell of specific type
+  public func dequeueReusableCell<T: UnifiedCellType>(for indexPath: IndexPath) -> T {
+    guard let cell = dequeueReusableCell(withIdentifier: String(describing: T.self), for: indexPath) as? T else {
+      fatalError("Could not dequeue tableview cell with identifier: \(T.self)")
+    }
+    return cell
+  }
+}
+
+extension UICollectionView: UnifiedCollectionType {
+  /// unified generic way to queue a UICollectionViewCell of specific type
+  public func dequeueReusableCell<T: UnifiedCellType>(for indexPath: IndexPath) -> T {
+    guard let cell = dequeueReusableCell(withReuseIdentifier: String(describing: T.self), for: indexPath) as? T else {
+      fatalError("Could not dequeue collectionview cell with identifier: \(T.self)")
+    }
+    return cell
+  }
+}
+
+// MARK: - Unified Cell Configurable
+
+/// protocol for configuring UnifiedCellType. This should be conformed with the implemented cell class
+public protocol UnifiedCellConfigurable: UnifiedCellType {
   associatedtype Item
   func configure(item: Item, collection: Collection, indexPath: IndexPath)
 }
 
 /// protocol for unified UICollectionReusableView. This should be conformed with the implemented cell class
-public protocol UnifiedTitleType {
+public protocol UnifiedTitleConfigurable {
   associatedtype Item
   func configure(item: Item, collection: UICollectionView, kind: String, indexPath: IndexPath)
 }
@@ -77,30 +105,31 @@ public struct SectionData<Item> {
 
 /// Protocol for data source factories
 public protocol DataSourceFactoryType {
-  associatedtype Cell: UnifiedCellType
+  associatedtype Cell: UnifiedCellConfigurable
   associatedtype Section where Section == SectionData<Cell.Item>
 
   var sections: [Section] { get }
-  func dequeCell(for collection: Cell.Collection, indexPath: IndexPath) -> Cell
 }
 
-extension DataSourceFactoryType {
+// MARK: - common extensions for Unified Datasource Factories
 
-  // MARK: - DataSourceFactoryType implementations for common functions
+extension DataSourceFactoryType {
 
   fileprivate func item(at indexPath: IndexPath) -> Cell.Item {
     return sections[indexPath.section].items[indexPath.row]
   }
 
   fileprivate func cell(for collection: Cell.Collection, indexPath: IndexPath) -> Cell {
-    let cell: Cell = dequeCell(for: collection, indexPath: indexPath)
+    let cell: Cell = collection.dequeueReusableCell(for: indexPath)
     cell.configure(item: item(at: indexPath), collection: collection, indexPath: indexPath)
     return cell
   }
 }
 
+// MARK: - UITableViewDataSource implementation of Unified Datasource Factory
+
 /// Factory for creating UITableViewDataSource
-public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellType>: DataSourceFactoryType {
+public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellConfigurable>: DataSourceFactoryType {
   public typealias Section = SectionData<Cell.Item>
 
   private(set) public var sections: [Section]
@@ -126,15 +155,12 @@ public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellTyp
     source.cellForTable = { [unowned self] in return self.cell(for: $0, indexPath: $1) }
     return source
   }
-
-  public func dequeCell(for collection: Cell.Collection, indexPath: IndexPath) -> Cell {
-    return collection.dequeueReusableCell(for: indexPath)  // UITableView extension
-  }
 }
 
+// MARK: - UICollectionViewDataSource implementation of Unified Datasource Factory
 
 /// Factory for creating UICollectionViewDataSource
-public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & UnifiedCellType, Title: UICollectionReusableView & UnifiedTitleType>: DataSourceFactoryType
+public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & UnifiedCellConfigurable, Title: UICollectionReusableView & UnifiedTitleConfigurable>: DataSourceFactoryType
   where Cell.Item == Title.Item  {
   public typealias Section = SectionData<Cell.Item>
 
@@ -159,12 +185,6 @@ public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & Unif
     source.cellForCollection = { [unowned self] in return self.cell(for: $0, indexPath: $1) }
     source.titleForCollection = { [unowned self] in return self.titleForCollection(collection: $0, kind: $1, indexPath: $2) }
     return source
-  }
-
-  // MARK: DataSourceFactoryType implementations for UICollectionView
-
-  public func dequeCell(for collection: Cell.Collection, indexPath: IndexPath) -> Cell {
-    return collection.dequeueReusableCell(for: indexPath)  // UICollectionView extension
   }
 
   private func titleForCollection(collection: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView {
@@ -252,24 +272,24 @@ extension UnifiedDataSource: UICollectionViewDataSource {
 /*
  //  -------- USAGE ----------
 
- // 1. create your cell (e.g. MyCell) and conform to UnifiedCellType by providing configure -method. In the method, provide your actual class/struct type of your Items (here is MyData Struct as simple example).
+ // 1. create your cell (e.g. MyCell) and conform to UnifiedCellConfigurable by providing configure -method. In the method, provide your actual class/struct type of your Items (here is MyData Struct as simple example).
 
  struct MyData {
- var title: String
- var value: Int
+   var title: String
+   var value: Int
  }
 
 
- final class MyCell: UITableViewCell, UnifiedCellType {
+ final class MyCell: UITableViewCell, UnifiedCellConfigurable {
 
- // ...
+   // ...
 
- public func configure(item: MyData, collection: UITableView, indexPath: IndexPath) {
- // ...
- textLabel?.text = item.title
- detailTextLabel?.text = "\(item.value)"
- // ...
- }
+   public func configure(item: MyData, collection: UITableView, indexPath: IndexPath) {
+     // ...
+     textLabel?.text = item.title
+     detailTextLabel?.text = "\(item.value)"
+     // ...
+   }
  }
 
  // 2. In your viewcontroller, add reference variable to the datasource

@@ -198,14 +198,7 @@ extension Storyboard {
 
 /// Extensions for UITableView
 extension UITableView {
-  public func dequeueReusableCell<T: UITableViewCell>(for indexPath: IndexPath) -> T {
-    guard let cell = dequeueReusableCell(withIdentifier: String(describing: T.self), for: indexPath) as? T else {
-      fatalError("Could not dequeue tableview cell with identifier: \(T.self)")
-    }
-    return cell
-  }
-
-  public func dequeueReusableHeaderFooterView<T: UITableViewHeaderFooterView>(type: T.Type) -> T {
+  public func dequeueReusableHeaderFooterView<T: UITableViewHeaderFooterView>() -> T {
     guard let cell = dequeueReusableHeaderFooterView(withIdentifier: String(describing: T.self)) as? T else {
       fatalError("Could not dequeue tableview header/footer view with identifier: \(T.self)")
     }
@@ -223,13 +216,6 @@ extension UITableView {
 
 /// Extensions for UICollectionView
 extension UICollectionView {
-  public func dequeueReusableCell<T: UICollectionViewCell>(for indexPath: IndexPath) -> T {
-    guard let cell = dequeueReusableCell(withReuseIdentifier: String(describing: T.self), for: indexPath) as? T else {
-      fatalError("Could not dequeue collectionview cell with identifier: \(T.self)")
-    }
-    return cell
-  }
-
   public func dequeueReusableSupplementaryView<T: UICollectionReusableView>(ofKind kind: String, for indexPath: IndexPath) -> T {
     guard let view = dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: T.self), for: indexPath) as? T else {
       fatalError("Could not dequeue collectionview supplementary view with identifier: \(T.self)")
