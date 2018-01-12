@@ -174,12 +174,12 @@ extension ImageView {
 //  1. In storyboard, set viewcontroller's class as well as identifier to the class name (e.g. MyViewController)
 //  2. In code, instantiate viewcontroller with:
 //
-//  let myVC = myStoryboard.instantiate(MyViewController.self)
+//  let myVC: MyViewController = myStoryboard.instantiate()
 //
 extension Storyboard {
 
   /// instantiate view Controller
-  public func instantiate<T: ViewController>(_: T.Type) -> T {
+  public func instantiate<T: ViewController>() -> T {
 
 #if os(iOS) || os(tvOS)
     guard let vc = self.instantiateViewController(withIdentifier: String(describing: T.self)) as? T else {
