@@ -83,8 +83,15 @@ public protocol UnifiedTitleConfigurable {
 
 // MARK: - Section data (source data container)
 
+public protocol SectionDataType {
+  associatedtype Item
+  var items: [Item] { get }
+  var headerTitle: String? { get }
+  var footerTitle: String? { get }
+}
+
 /// Factory valuetype for section protocol
-public struct SectionData<Item> {
+public struct SectionData<Item>: SectionDataType {
   public var items: [Item]
   public let headerTitle: String?
   public let footerTitle: String?
@@ -103,18 +110,20 @@ public struct SectionData<Item> {
 
 // MARK: - Unified Datasource Factory
 
-/// Protocol for data source factories
-public protocol DataSourceFactoryType {
+/// "Parent" protocol to DataSourceFactoryType
+// only define associated types, avoids "used within own type" errors in conforming implementations
+public protocol HasFactoryTypes where Section.Item == Cell.Item {
   associatedtype Cell: UnifiedCellConfigurable
-  associatedtype Section where Section == SectionData<Cell.Item>
+  associatedtype Section: SectionDataType = SectionData<Cell.Item>    // Set default value for the "Section" associated type, SectionDataType exposes the variables to conformers
+}
 
+/// Protocol for data source factories
+public protocol DataSourceFactoryType: HasFactoryTypes {
   var sections: [Section] { get }
 }
 
-// MARK: - common extensions for Unified Datasource Factories
-
+// Common extensions for Unified Datasource Factories
 extension DataSourceFactoryType {
-
   fileprivate func item(at indexPath: IndexPath) -> Cell.Item {
     return sections[indexPath.section].items[indexPath.row]
   }
@@ -130,7 +139,6 @@ extension DataSourceFactoryType {
 
 /// Factory for creating UITableViewDataSource
 public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellConfigurable>: DataSourceFactoryType {
-  public typealias Section = SectionData<Cell.Item>
 
   private(set) public var sections: [Section]
 
@@ -162,7 +170,6 @@ public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellCon
 /// Factory for creating UICollectionViewDataSource
 public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & UnifiedCellConfigurable, Title: UICollectionReusableView & UnifiedTitleConfigurable>: DataSourceFactoryType
   where Cell.Item == Title.Item  {
-  public typealias Section = SectionData<Cell.Item>
 
   private(set) public var sections: [Section]
 
