@@ -21,8 +21,9 @@ Current features are:
     * UIStoryboard
     * UITableView
   * Closurable (UIControl, UIButton, UIBarButtonItem, UIPageControl, UIGestureRecognizer)
+  * CoreDataStack
   * SourcedError (Custom ErrorType)
-  * Injectable
+  * Observer / TypedNotification (way to pass data via observing/notifying)
   * SegueHandlerType
   * Unified Collection (factory and related methods for creating UITableViewDataSources and UICollectionViewDataSources)
 
