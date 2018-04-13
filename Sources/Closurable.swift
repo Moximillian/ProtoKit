@@ -12,11 +12,11 @@
 
 #if os(iOS) || os(tvOS)
   import UIKit
-  public typealias Button = UIButton
+  public typealias Control = UIControl
   public typealias GestureRecognizer = UIGestureRecognizer
 #elseif os(macOS)
   import AppKit
-  public typealias Button = NSButton
+  public typealias Control = NSControl
   public typealias GestureRecognizer = NSGestureRecognizer
 #endif
 
@@ -58,16 +58,19 @@ public final class ClosureContainer<T: Closurable> {
   public var action: Selector { return #selector(processHandler) }
 }
 
+// MARK: - closurable for UIControl and NSControl
 
-/// extension for UIButton - actions with closure
-extension Button: Closurable {
+// Extend protocol instead of the class directly, to target closure parameter to specific subclass, not the parent class.
+
+/// extension for UIControl (including UIButton and UIPageControl) - actions with closure
+extension Closurable where Self: Control {
 #if os(iOS) || os(tvOS)
-  public func addTarget(forControlEvents: UIControlEvents = .touchUpInside, closure: @escaping (Button) -> Void) {
+  public func addTarget(for controlEvents: UIControlEvents, closure: @escaping (Self) -> Void) {
     let container = getContainer(for: closure)
-    addTarget(container, action: container.action, for: forControlEvents)
+    addTarget(container, action: container.action, for: controlEvents)
   }
 #elseif os(macOS)
-  public func addTarget(closure: @escaping (Button) -> Void) {
+  public func addTarget(closure: @escaping (Self) -> Void) {
     let container = getContainer(for: closure)
     target = container
     action = container.action
@@ -75,17 +78,10 @@ extension Button: Closurable {
 #endif
 }
 
-#if os(iOS) || os(tvOS)
-/// extension for UIPageControl - actions with closure
-extension UIPageControl: Closurable {
+// activate protocol extensions
+extension Control: Closurable {}
 
-  public func addTarget(forControlEvents: UIControlEvents = .valueChanged, closure: @escaping (UIPageControl) -> Void) {
-    let container = getContainer(for: closure)
-    addTarget(container, action: container.action, for: forControlEvents)
-  }
-}
-#endif
-
+// MARK: - closurable for UIGestureRecognizer
 
 /// extension for UIGestureRecognizer - actions with closure
 extension GestureRecognizer: Closurable {
@@ -111,6 +107,8 @@ extension GestureRecognizer: Closurable {
 #endif
   }
 }
+
+// MARK: - closurable for UIBarButtonItem
 
 #if os(iOS) || os(tvOS)
 /// extension for UIBarButtonItem - actions with closure
