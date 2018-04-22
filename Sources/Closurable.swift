@@ -85,12 +85,15 @@ extension Closurable where Self: Control {
 extension Control: Closurable {}
 
 
+#if os(iOS) || os(tvOS)
+// Only needed for iOS/tvOS
 extension Button {
   /// Associates a target closure with the control. This specialized version assumes control event is .touchUpInside.
   public func addTarget(closure: @escaping (Button) -> Void) {
     addTarget(for: .touchUpInside, closure: closure)
   }
 }
+#endif
 
 // MARK: - closurable for UIGestureRecognizer
 

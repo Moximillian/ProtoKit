@@ -72,7 +72,7 @@ extension Bundle {
     }
 #elseif os(macOS)
     var objects: NSArray?
-    Bundle.main.loadNibNamed("\(T.self)", owner: owner, topLevelObjects: &objects)
+    Bundle.main.loadNibNamed(NSNib.Name(rawValue: "\(T.self)"), owner: owner, topLevelObjects: &objects)
     guard let instance = objects?.first as? T else {
       fatalError("Could not instantiate from nib: \(T.self)")
     }
