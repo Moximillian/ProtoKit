@@ -37,7 +37,7 @@ extension SortableManagedObject where Self: NSManagedObject {
 extension NSPersistentContainer {
   public func getQueryGenerationViewContext() throws -> NSManagedObjectContext {
     let context = viewContext
-    try context.setQueryGenerationFrom(NSQueryGenerationToken.current)
+    try context.setQueryGenerationFrom(.current)
     return context
   }
 }
