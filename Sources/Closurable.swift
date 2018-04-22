@@ -13,10 +13,12 @@
 #if os(iOS) || os(tvOS)
   import UIKit
   public typealias Control = UIControl
+  public typealias Button = UIButton
   public typealias GestureRecognizer = UIGestureRecognizer
 #elseif os(macOS)
   import AppKit
   public typealias Control = NSControl
+  public typealias Button = NSButton
   public typealias GestureRecognizer = NSGestureRecognizer
 #endif
 
@@ -61,15 +63,16 @@ public final class ClosureContainer<T: Closurable> {
 // MARK: - closurable for UIControl and NSControl
 
 // Extend protocol instead of the class directly, to target closure parameter to specific subclass, not the parent class.
-
-/// extension for UIControl (including UIButton and UIPageControl) - actions with closure
+// Extension for UIControl (including UIButton and UIPageControl) - actions with closure
 extension Closurable where Self: Control {
 #if os(iOS) || os(tvOS)
+  /// Associates a target closure with the control.
   public func addTarget(for controlEvents: UIControlEvents, closure: @escaping (Self) -> Void) {
     let container = getContainer(for: closure)
     addTarget(container, action: container.action, for: controlEvents)
   }
 #elseif os(macOS)
+  /// Associates a target closure with the control.
   public func addTarget(closure: @escaping (Self) -> Void) {
     let container = getContainer(for: closure)
     target = container
@@ -80,6 +83,14 @@ extension Closurable where Self: Control {
 
 // activate protocol extensions
 extension Control: Closurable {}
+
+
+extension Button {
+  /// Associates a target closure with the control. This specialized version assumes control event is .touchUpInside.
+  public func addTarget(closure: @escaping (Button) -> Void) {
+    addTarget(for: .touchUpInside, closure: closure)
+  }
+}
 
 // MARK: - closurable for UIGestureRecognizer
 
