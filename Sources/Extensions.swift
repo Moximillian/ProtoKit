@@ -67,12 +67,12 @@ extension RawRepresentable where RawValue == Int {
 extension Bundle {
   public class func instantiateNib<T>(owner: Any? = nil) -> T {
 #if os(iOS) || os(tvOS)
-    guard let instance = Bundle.main.loadNibNamed(String(describing: T.self), owner: owner)?.first as? T else {
+    guard let instance = Bundle.main.loadNibNamed("\(T.self)", owner: owner)?.first as? T else {
       fatalError("Could not instantiate from nib: \(T.self)")
     }
 #elseif os(macOS)
     var objects: NSArray?
-    Bundle.main.loadNibNamed(.init(String(describing: T.self)), owner: owner, topLevelObjects: &objects)
+    Bundle.main.loadNibNamed("\(T.self)", owner: owner, topLevelObjects: &objects)
     guard let instance = objects?.first as? T else {
       fatalError("Could not instantiate from nib: \(T.self)")
     }
@@ -182,12 +182,12 @@ extension Storyboard {
   public func instantiate<T: ViewController>() -> T {
 
 #if os(iOS) || os(tvOS)
-    guard let vc = self.instantiateViewController(withIdentifier: String(describing: T.self)) as? T else {
-      fatalError("Couldn’t instantiate view controller with identifier \(String(describing: T.self)) ")
+    guard let vc = self.instantiateViewController(withIdentifier: "\(T.self)") as? T else {
+      fatalError("Couldn’t instantiate view controller with identifier \(T.self) ")
     }
 #elseif os(macOS)
-  guard let vc = self.instantiateController(withIdentifier: .init(String(describing: T.self))) as? T else {
-    fatalError("Couldn’t instantiate view controller with identifier \(String(describing: T.self)) ")
+  guard let vc = self.instantiateController(withIdentifier: "\(T.self)") as? T else {
+    fatalError("Couldn’t instantiate view controller with identifier \(T.self) ")
   }
 #endif
     return vc
@@ -199,36 +199,36 @@ extension Storyboard {
 /// Extensions for UITableView
 extension UITableView {
   public func dequeueReusableHeaderFooterView<T: UITableViewHeaderFooterView>() -> T {
-    guard let cell = dequeueReusableHeaderFooterView(withIdentifier: String(describing: T.self)) as? T else {
+    guard let cell = dequeueReusableHeaderFooterView(withIdentifier: "\(T.self)") as? T else {
       fatalError("Could not dequeue tableview header/footer view with identifier: \(T.self)")
     }
     return cell
   }
 
   public func register<T: UITableViewCell>(cell: T.Type) {
-    register(T.self, forCellReuseIdentifier: String(describing: T.self))
+    register(T.self, forCellReuseIdentifier: "\(T.self)")
   }
 
   public func register<T: UITableViewHeaderFooterView>(headerFooterView: T.Type) {
-    register(T.self, forHeaderFooterViewReuseIdentifier: String(describing: T.self))
+    register(T.self, forHeaderFooterViewReuseIdentifier: "\(T.self)")
   }
 }
 
 /// Extensions for UICollectionView
 extension UICollectionView {
   public func dequeueReusableSupplementaryView<T: UICollectionReusableView>(ofKind kind: String, for indexPath: IndexPath) -> T {
-    guard let view = dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: T.self), for: indexPath) as? T else {
+    guard let view = dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(T.self)", for: indexPath) as? T else {
       fatalError("Could not dequeue collectionview supplementary view with identifier: \(T.self)")
     }
     return view
   }
 
   public func register<T: UICollectionViewCell>(cell: T.Type) {
-    register(T.self, forCellWithReuseIdentifier: String(describing: T.self))
+    register(T.self, forCellWithReuseIdentifier: "\(T.self)")
   }
 
   public func register<T: UICollectionReusableView>(supplementaryView: T.Type, ofKind kind: String) {
-    register(T.self, forSupplementaryViewOfKind: kind, withReuseIdentifier: String(describing: T.self))
+    register(T.self, forSupplementaryViewOfKind: kind, withReuseIdentifier: "\(T.self)")
   }
 }
 #endif
