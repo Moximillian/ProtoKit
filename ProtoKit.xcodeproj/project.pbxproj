@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		41076BE0208CFA9C0081D5E6 /* Instantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41076BDF208CFA9C0081D5E6 /* Instantiable.swift */; };
 		4198A8232019DD9500A7772A /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4198A8222019DD9500A7772A /* Observer.swift */; };
 		OBJ_32 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_38 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* Package.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		41076BDF208CFA9C0081D5E6 /* Instantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instantiable.swift; sourceTree = "<group>"; };
 		4198A8222019DD9500A7772A /* Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Closurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Closurable.swift; sourceTree = "<group>"; };
 		OBJ_11 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				OBJ_11 /* CoreDataStack.swift */,
 				OBJ_12 /* Error.swift */,
 				OBJ_13 /* Extensions.swift */,
+				41076BDF208CFA9C0081D5E6 /* Instantiable.swift */,
 				4198A8222019DD9500A7772A /* Observer.swift */,
 				OBJ_15 /* SegueHandlerType.swift */,
 				OBJ_16 /* UnifiedCollection.swift */,
@@ -239,6 +242,7 @@
 				4198A8232019DD9500A7772A /* Observer.swift in Sources */,
 				OBJ_44 /* Closurable.swift in Sources */,
 				OBJ_45 /* CoreDataStack.swift in Sources */,
+				41076BE0208CFA9C0081D5E6 /* Instantiable.swift in Sources */,
 				OBJ_46 /* Error.swift in Sources */,
 				OBJ_47 /* Extensions.swift in Sources */,
 				OBJ_49 /* SegueHandlerType.swift in Sources */,

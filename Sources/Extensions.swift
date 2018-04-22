@@ -19,8 +19,6 @@
   public typealias Label = UILabel
   public typealias Font = UIFont
   public typealias FontDescriptor = UIFontDescriptor
-  public typealias Storyboard = UIStoryboard
-  public typealias ViewController = UIViewController
 #elseif os(macOS)
   import AppKit
   public typealias Application = NSApplication
@@ -30,8 +28,6 @@
   public typealias Label = NSTextField
   public typealias Font = NSFont
   public typealias FontDescriptor = NSFontDescriptor
-  public typealias Storyboard = NSStoryboard
-  public typealias ViewController = NSViewController
 #endif
 
 extension RawRepresentable where RawValue == Int {
@@ -167,32 +163,6 @@ extension ImageView {
   }
 }
 
-
-/// Extension for UIStoryboard
-//
-//  USAGE: 
-//  1. In storyboard, set viewcontroller's class as well as identifier to the class name (e.g. MyViewController)
-//  2. In code, instantiate viewcontroller with:
-//
-//  let myVC: MyViewController = myStoryboard.instantiate()
-//
-extension Storyboard {
-
-  /// instantiate view Controller
-  public func instantiate<T: ViewController>() -> T {
-
-#if os(iOS) || os(tvOS)
-    guard let vc = self.instantiateViewController(withIdentifier: "\(T.self)") as? T else {
-      fatalError("Couldn’t instantiate view controller with identifier \(T.self) ")
-    }
-#elseif os(macOS)
-  guard let vc = self.instantiateController(withIdentifier: "\(T.self)") as? T else {
-    fatalError("Couldn’t instantiate view controller with identifier \(T.self) ")
-  }
-#endif
-    return vc
-  }
-}
 
 #if os(iOS) || os(tvOS)
 
