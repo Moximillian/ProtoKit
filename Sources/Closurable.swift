@@ -10,12 +10,12 @@
 //  Released under an MIT license: http://opensource.org/licenses/MIT
 //
 
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
   import UIKit
   public typealias Control = UIControl
   public typealias Button = UIButton
   public typealias GestureRecognizer = UIGestureRecognizer
-#elseif os(macOS)
+#elseif canImport(AppKit)
   import AppKit
   public typealias Control = NSControl
   public typealias Button = NSButton
@@ -69,13 +69,13 @@ public final class ClosureContainer<T: Closurable> {
 // Extend protocol instead of the class directly, to target closure parameter to specific subclass, not the parent class.
 // Extension for UIControl (including UIButton and UIPageControl) - actions with closure
 extension Closurable where Self: Control {
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
   /// Associates a target closure with the control.
   public func addTarget(for controlEvents: UIControlEvents, closure: @escaping (Self) -> Void) {
     let container = getContainer(for: closure)
     addTarget(container, action: container.action, for: controlEvents)
   }
-#elseif os(macOS)
+#elseif canImport(AppKit)
   /// Associates a target closure with the control.
   public func addTarget(closure: @escaping (Self) -> Void) {
     let container = getContainer(for: closure)
@@ -89,7 +89,7 @@ extension Closurable where Self: Control {
 extension Control: Closurable {}
 
 
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
 // Only needed for iOS/tvOS
 extension Button {
   /// Associates a target closure with the control. This specialized version assumes control event is .touchUpInside.
@@ -107,9 +107,9 @@ extension GestureRecognizer: Closurable {
   public convenience init(closure: @escaping (GestureRecognizer) -> Void) {
     self.init()
     let container = getContainer(for: closure)
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
     addTarget(container, action: container.action)
-#elseif os(macOS)
+#elseif canImport(AppKit)
     target = container
     action = container.action
 #endif
@@ -117,9 +117,9 @@ extension GestureRecognizer: Closurable {
 
   public func addTarget(closure: @escaping (GestureRecognizer) -> Void) {
     let container = getContainer(for: closure)
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
     addTarget(container, action: container.action)
-#elseif os(macOS)
+#elseif canImport(AppKit)
     target = container
     action = container.action
 #endif
@@ -128,7 +128,7 @@ extension GestureRecognizer: Closurable {
 
 // MARK: - closurable for UIBarButtonItem
 
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
 /// extension for UIBarButtonItem - actions with closure
 extension UIBarButtonItem: Closurable {
 

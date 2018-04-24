@@ -15,9 +15,9 @@
  * Inspired by Jesse Squires: https://www.skilled.io/u/swiftsummit/pushing-the-limits-of-protocol-oriented-programming
  */
 
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
   import UIKit
-#elseif os(macOS)
+#elseif canImport(AppKit)
   import AppKit
 #else
   #if swift (>=4.2)
@@ -25,7 +25,7 @@
   #endif
 #endif
 
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
 
 // MARK: - Unified Cell Type
 

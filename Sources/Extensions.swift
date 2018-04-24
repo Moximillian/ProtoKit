@@ -10,7 +10,7 @@
 //  Released under an MIT license: http://opensource.org/licenses/MIT
 //
 
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
   import UIKit
   public typealias Application = UIApplication
   public typealias Color = UIColor
@@ -19,7 +19,7 @@
   public typealias Label = UILabel
   public typealias Font = UIFont
   public typealias FontDescriptor = UIFontDescriptor
-#elseif os(macOS)
+#elseif canImport(AppKit)
   import AppKit
   public typealias Application = NSApplication
   public typealias Color = NSColor
@@ -45,6 +45,7 @@ extension RawRepresentable where RawValue == Int {
     return 0
   }
 }
+#endif
 
 /// Extensions for Bundle
 //
@@ -66,11 +67,11 @@ extension RawRepresentable where RawValue == Int {
 // }
 extension Bundle {
   public class func instantiateNib<T>(owner: Any? = nil) -> T {
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
     guard let instance = Bundle.main.loadNibNamed("\(T.self)", owner: owner)?.first as? T else {
       fatalError("Could not instantiate from nib: \(T.self)")
     }
-#elseif os(macOS)
+#elseif canImport(AppKit)
     var objects: NSArray?
     Bundle.main.loadNibNamed(NSNib.Name(rawValue: "\(T.self)"), owner: owner, topLevelObjects: &objects)
     guard let instance = objects?.first as? T else {
@@ -147,9 +148,9 @@ extension Image {
 
   // extensions cannot store properties, has to use computed property, calculated every time
   public var templateImage: Image {
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
     return withRenderingMode(.alwaysTemplate)
-#elseif os(macOS)
+#elseif canImport(AppKit)
     isTemplate = true
     return self
 #endif
@@ -168,7 +169,7 @@ extension ImageView {
 }
 
 
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
 
 /// Extensions for UITableView
 extension UITableView {

@@ -10,11 +10,11 @@
 //  Released under an MIT license: http://opensource.org/licenses/MIT
 //
 
-#if os(iOS) || os(tvOS)
-#elseif os(macOS)
+#if canImport(UIKit)
   import UIKit
   public typealias Storyboard = UIStoryboard
   public typealias ViewController = UIViewController
+#elseif canImport(AppKit)
   import AppKit
   public typealias Storyboard = NSStoryboard
   public typealias ViewController = NSViewController
@@ -41,12 +41,12 @@ public protocol Instantiable: class {
 extension Instantiable where Self: ViewController {
   /// instantiate Self from Storyboard
   public static func instantiate(storyboardName name: String) -> Self {
-    #if os(iOS) || os(tvOS)
+    #if canImport(UIKit)
     let storyboard = Storyboard(name: name, bundle: nil)
     guard let vc = storyboard.instantiateViewController(withIdentifier: "\(Self.self)") as? Self else {
       fatalError("Couldn’t instantiate view controller with identifier \(Self.self) ")
     }
-    #elseif os(macOS)
+    #elseif canImport(AppKit)
     let storyboard = Storyboard(name: .init(name), bundle: nil)
     guard let vc = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "\(Self.self)")) as? Self else {
       fatalError("Couldn’t instantiate view controller with identifier \(Self.self) ")

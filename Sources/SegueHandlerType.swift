@@ -10,10 +10,10 @@
 //  Released under an MIT license: http://opensource.org/licenses/MIT
 //
 
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
   import UIKit
   public typealias StoryboardSegue = UIStoryboardSegue
-#elseif os(macOS)
+#elseif canImport(AppKit)
   import AppKit
   public typealias StoryboardSegue = NSStoryboardSegue
 #else
@@ -29,17 +29,17 @@ public protocol SegueHandlerType {
 
 extension SegueHandlerType where Self: ViewController, Segues.RawValue == String {
   public func perform(segue: Segues, sender: Any? = nil) {
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
     performSegue(withIdentifier: segue.rawValue, sender: sender)
-#elseif os(macOS)
+#elseif canImport(AppKit)
     performSegue(withIdentifier: .init(segue.rawValue), sender: sender)
 #endif
   }
 
   public func identifier(for segue: StoryboardSegue) -> Segues {
-#if os(iOS) || os(tvOS)
+#if canImport(UIKit)
     let identifier: String? = segue.identifier
-#elseif os(macOS)
+#elseif canImport(AppKit)
     let identifier: String? = segue.identifier?.rawValue
 #endif
     guard
