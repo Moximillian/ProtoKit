@@ -19,6 +19,10 @@
   import UIKit
 #elseif os(macOS)
   import AppKit
+#else
+  #if swift (>=4.2)
+    #error("Unsupported platform.")
+  #endif
 #endif
 
 #if os(iOS) || os(tvOS)

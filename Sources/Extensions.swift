@@ -28,6 +28,10 @@
   public typealias Label = NSTextField
   public typealias Font = NSFont
   public typealias FontDescriptor = NSFontDescriptor
+#else
+  #if swift (>=4.2)
+    #error("Unsupported platform.")
+  #endif
 #endif
 
 extension RawRepresentable where RawValue == Int {

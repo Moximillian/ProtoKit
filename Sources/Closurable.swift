@@ -20,6 +20,10 @@
   public typealias Control = NSControl
   public typealias Button = NSButton
   public typealias GestureRecognizer = NSGestureRecognizer
+#else
+  #if swift (>=4.2)
+    #error("Unsupported platform.")
+  #endif
 #endif
 
 /// Closurable protocol

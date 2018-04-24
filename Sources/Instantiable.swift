@@ -11,13 +11,17 @@
 //
 
 #if os(iOS) || os(tvOS)
-import UIKit
-public typealias Storyboard = UIStoryboard
-public typealias ViewController = UIViewController
 #elseif os(macOS)
-import AppKit
-public typealias Storyboard = NSStoryboard
-public typealias ViewController = NSViewController
+  import UIKit
+  public typealias Storyboard = UIStoryboard
+  public typealias ViewController = UIViewController
+  import AppKit
+  public typealias Storyboard = NSStoryboard
+  public typealias ViewController = NSViewController
+#else
+  #if swift (>=4.2)
+    #error("Unsupported platform.")
+  #endif
 #endif
 
 /// Extension for ViewController
