@@ -34,6 +34,9 @@
   #endif
 #endif
 
+#if swift (>=4.2)
+   #error("Remove enum count and use CaseIterable conformance instead")
+#else
 extension RawRepresentable where RawValue == Int {
   /// Return the amount of elements in Int based enum or option set. Works only for sequentially numbered types.
   public static var count: Int {
