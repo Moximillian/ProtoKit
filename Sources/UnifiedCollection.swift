@@ -124,6 +124,7 @@ public protocol HasFactoryTypes where Section.Item == Cell.Item {
 /// Protocol for data source factories
 public protocol DataSourceFactoryType: HasFactoryTypes {
   var sections: [Section] { get }
+  init(sections: [Section])
 }
 
 // Common extensions for Unified Datasource Factories
@@ -147,8 +148,8 @@ public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellCon
   private(set) public var sections: [Section]
 
   /// fancy pants convenience init for UITableView
-  public convenience init(_ sections: Section...) {
-    self.init(sections: sections)
+  public convenience init(_ variadicSections: Section...) {
+    self.init(sections: variadicSections)
   }
 
   /// Init for UITableView
@@ -178,8 +179,8 @@ public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & Unif
   private(set) public var sections: [Section]
 
   /// fancy pants convenience init for UICollectionView
-  public convenience init(_ sections: Section...) {
-    self.init(sections: sections)
+  public convenience init(_ variadicSections: Section...) {
+    self.init(sections: variadicSections)
   }
 
   /// Init for UICollectionView
