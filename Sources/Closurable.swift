@@ -30,14 +30,21 @@
 public protocol Closurable: class {}
 // restrict protocol to only classes => can refer to the class instance in the protocol extension
 
-extension Closurable {
+extension Closurable where Self: NSObject {
 
   // Create container for closure, store it and return it
   public func getContainer(for closure: @escaping (Self) -> Void) -> ClosureContainer<Self> {
     weak var weakSelf = self
     let container = ClosureContainer(closure: closure, caller: weakSelf)
+
     // store the container so that it can be called later, we do not need to explicitly retrieve it.
+    #if canImport(UIKit)
+    accessibilityElements = accessibilityElements ?? []
+    accessibilityElements!.append(container)
+    #elseif canImport(AppKit)
+    // AppKit can only have one target at a time
     objc_setAssociatedObject(self, Unmanaged.passUnretained(self).toOpaque(), container, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    #endif
     return container
   }
 }
