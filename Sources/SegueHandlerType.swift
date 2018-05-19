@@ -24,10 +24,10 @@
 
 /// Protocol for Segue Identifiers
 public protocol SegueHandlerType {
-  associatedtype Segues: RawRepresentable
+  associatedtype Segues: RawRepresentable where Segues.RawValue == String
 }
 
-extension SegueHandlerType where Self: ViewController, Segues.RawValue == String {
+extension SegueHandlerType where Self: ViewController {
   public func perform(segue: Segues, sender: Any? = nil) {
 #if canImport(UIKit)
     performSegue(withIdentifier: segue.rawValue, sender: sender)
