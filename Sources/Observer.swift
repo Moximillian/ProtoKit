@@ -49,7 +49,9 @@ extension Observer {
   /// add listening notification that acts on predefined (typed) value
   public func add<T>(_ typedNotification: TypedNotification<T>, using block: @escaping (T) -> Void) {
     add(typedNotification.name) { notification in
-      guard let value = notification.userInfo?[typedNotification.name] as? T else { fatalError("Observer: invalid TypedNotification value type") }
+      guard let value = notification.userInfo?[typedNotification.name] as? T else {
+        fatalError("Observer: invalid TypedNotification value type")
+      }
       block(value)
     }
   }

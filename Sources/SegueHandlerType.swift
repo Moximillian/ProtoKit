@@ -43,8 +43,8 @@ extension SegueHandlerType where Self: ViewController {
     let identifier: String? = segue.identifier?.rawValue
 #endif
     guard
-      let i = identifier,
-      let segueIdentifier = Segues(rawValue: i) else {
+      let rawValue = identifier,
+      let segueIdentifier = Segues(rawValue: rawValue) else {
         fatalError("Unknown segue: \(String(describing: segue.identifier))")
     }
     return segueIdentifier

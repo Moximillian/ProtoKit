@@ -40,9 +40,9 @@
 extension RawRepresentable where RawValue == Int {
   /// Return the amount of elements in Int based enum or option set. Works only for sequentially numbered types.
   public static var count: Int {
-    for i in 0... {
-      guard Self(rawValue: i) != nil else {
-        return i
+    for idx in 0... {
+      guard Self(rawValue: idx) != nil else {
+        return idx
       }
     }
     return 0
@@ -85,7 +85,6 @@ extension Bundle {
   }
 }
 
-
 /// Extension for CGRect
 extension CGRect {
   public var mid: CGPoint { return CGPoint(x: self.midX, y: self.midY) } // computed property, calculated every time
@@ -104,13 +103,13 @@ extension Application {
 /// Extensions for UIColor
 extension Color {
   /// Create UIColor with 0-255 value range (RGBA)
-  public convenience init(_ r: Int, _ g: Int, _ b: Int, _ a: CGFloat) {
-    self.init(red:CGFloat(r) / 255.0, green:CGFloat(g) / 255.0, blue:CGFloat(b) / 255.0, alpha:a)
+  public convenience init(_ red: Int, _ green: Int, _ blue: Int, _ alpha: CGFloat) {
+    self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: alpha)
   }
 
   /// Create UIColor with 0-255 value range (gray + alpha)
-  public convenience init(_ g: Int, _ a: CGFloat) {
-    self.init(white:CGFloat(g) / 255.0, alpha:a)
+  public convenience init(_ gray: Int, _ alpha: CGFloat) {
+    self.init(white: CGFloat(gray) / 255.0, alpha: alpha)
   }
 
   /// Create UIColor from hex string (#FF00FF)
@@ -119,7 +118,7 @@ extension Color {
     let scanner = Scanner(string: hex)
     scanner.scanLocation = 1  // bypass '#'
     scanner.scanHexInt32(&rgbValue)
-    self.init(red:CGFloat((rgbValue & 0xFF0000) >> 16)/255.0, green:CGFloat((rgbValue & 0xFF00) >> 8)/255.0, blue:CGFloat(rgbValue & 0xFF)/255.0, alpha: 1.0)
+    self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16)/255.0, green: CGFloat((rgbValue & 0xFF00) >> 8)/255.0, blue: CGFloat(rgbValue & 0xFF)/255.0, alpha: 1.0)
   }
 }
 
@@ -133,7 +132,7 @@ extension Color: CustomReflectable {
     self.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
     var rgb: [Int] = [Int(red*255), Int(green*255), Int(blue*255)]
     return Mirror(self, children: [
-      "RGBA": "(\(rgb[0]), \(rgb[1]), \(rgb[2]), \(alpha))",
+      "RGBA": "(\(rgb[0]), \(rgb[1]), \(rgb[2]), \(alpha))"
       ])
   }
 
@@ -170,7 +169,6 @@ extension ImageView {
     return ImageView(image: image.templateImage)
   }
 }
-
 
 #if canImport(UIKit)
 

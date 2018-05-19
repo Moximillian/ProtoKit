@@ -84,7 +84,6 @@ public protocol UnifiedTitleConfigurable {
   func configure(item: Item, collection: UICollectionView, kind: String, indexPath: IndexPath)
 }
 
-
 // MARK: - Section data (source data container)
 
 public protocol SectionDataType {
@@ -118,7 +117,8 @@ public struct SectionData<Item>: SectionDataType {
 // only define associated types, avoids "used within own type" errors in conforming implementations
 public protocol HasFactoryTypes where Section.Item == Cell.Item {
   associatedtype Cell: UnifiedCellConfigurable
-  associatedtype Section: SectionDataType = SectionData<Cell.Item>    // Set default value for the "Section" associated type, SectionDataType exposes the variables to conformers
+  // Set default value for the "Section" associated type, SectionDataType exposes the variables to conformers
+  associatedtype Section: SectionDataType = SectionData<Cell.Item>
 }
 
 /// Protocol for data source factories
@@ -174,7 +174,7 @@ public final class TableDataSourceFactory<Cell: UITableViewCell & UnifiedCellCon
 
 /// Factory for creating UICollectionViewDataSource
 public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & UnifiedCellConfigurable, Title: UICollectionReusableView & UnifiedTitleConfigurable>: DataSourceFactoryType
-  where Cell.Item == Title.Item  {
+  where Cell.Item == Title.Item {
 
   private(set) public var sections: [Section]
 
@@ -205,7 +205,6 @@ public final class CollectionDataSourceFactory<Cell: UICollectionViewCell & Unif
     return view
   }
 }
-
 
 // MARK: - Unified Datasource (internal implementation)
 
@@ -279,7 +278,6 @@ extension UnifiedDataSource: UICollectionViewDataSource {
 }
 
 #endif
-
 
 /*
  //  -------- USAGE ----------

@@ -95,7 +95,6 @@ extension Closurable where Self: Control {
 // activate protocol extensions
 extension Control: Closurable {}
 
-
 #if canImport(UIKit)
 // Only needed for iOS/tvOS
 extension Button {

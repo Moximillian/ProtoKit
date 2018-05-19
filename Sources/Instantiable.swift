@@ -43,16 +43,16 @@ extension Instantiable where Self: ViewController {
   public static func instantiate(storyboardName name: String) -> Self {
     #if canImport(UIKit)
     let storyboard = Storyboard(name: name, bundle: nil)
-    guard let vc = storyboard.instantiateViewController(withIdentifier: "\(Self.self)") as? Self else {
+    guard let viewController = storyboard.instantiateViewController(withIdentifier: "\(Self.self)") as? Self else {
       fatalError("Couldn’t instantiate view controller with identifier \(Self.self) ")
     }
     #elseif canImport(AppKit)
     let storyboard = Storyboard(name: .init(name), bundle: nil)
-    guard let vc = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "\(Self.self)")) as? Self else {
+    guard let viewController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "\(Self.self)")) as? Self else {
       fatalError("Couldn’t instantiate view controller with identifier \(Self.self) ")
     }
     #endif
-    return vc
+    return viewController
   }
 }
 
