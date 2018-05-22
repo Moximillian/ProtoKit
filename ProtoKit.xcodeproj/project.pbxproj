@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		41076BE0208CFA9C0081D5E6 /* Instantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41076BDF208CFA9C0081D5E6 /* Instantiable.swift */; };
+		417AF12120B1658C000306F8 /* KVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417AF12020B1658C000306F8 /* KVO.swift */; };
 		417AF12320B16AE3000306F8 /* AssociatedObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417AF12220B16AE3000306F8 /* AssociatedObjectStore.swift */; };
 		4198A8232019DD9500A7772A /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4198A8222019DD9500A7772A /* Observer.swift */; };
 		OBJ_32 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		41076BDF208CFA9C0081D5E6 /* Instantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instantiable.swift; sourceTree = "<group>"; };
+		417AF12020B1658C000306F8 /* KVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVO.swift; sourceTree = "<group>"; };
 		417AF12220B16AE3000306F8 /* AssociatedObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociatedObjectStore.swift; sourceTree = "<group>"; };
 		4198A8222019DD9500A7772A /* Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Closurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Closurable.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				417AF12220B16AE3000306F8 /* AssociatedObjectStore.swift */,
+				417AF12020B1658C000306F8 /* KVO.swift */,
 				OBJ_10 /* Closurable.swift */,
 				OBJ_11 /* CoreDataStack.swift */,
 				OBJ_12 /* Error.swift */,
@@ -244,6 +247,7 @@
 			files = (
 				4198A8232019DD9500A7772A /* Observer.swift in Sources */,
 				OBJ_44 /* Closurable.swift in Sources */,
+				417AF12120B1658C000306F8 /* KVO.swift in Sources */,
 				OBJ_45 /* CoreDataStack.swift in Sources */,
 				41076BE0208CFA9C0081D5E6 /* Instantiable.swift in Sources */,
 				OBJ_46 /* Error.swift in Sources */,
