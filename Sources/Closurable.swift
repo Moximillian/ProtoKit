@@ -34,17 +34,8 @@ extension Closurable where Self: NSObject {
 
   // Create container for closure, store it and return it
   public func getContainer(for closure: @escaping (Self) -> Void) -> ClosureContainer<Self> {
-    weak var weakSelf = self
-    let container = ClosureContainer(closure: closure, caller: weakSelf)
-
-    // store the container so that it can be called later, we do not need to explicitly retrieve it.
-    #if canImport(UIKit)
-    accessibilityElements = accessibilityElements ?? []
-    accessibilityElements!.append(container)
-    #elseif canImport(AppKit)
-    // AppKit can only have one target at a time
-    objc_setAssociatedObject(self, Unmanaged.passUnretained(self).toOpaque(), container, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-    #endif
+    let container = ClosureContainer(closure: closure, caller: self)
+    store(associatedObject: container)
     return container
   }
 }
@@ -53,7 +44,7 @@ extension Closurable where Self: NSObject {
 public final class ClosureContainer<T: Closurable> {
 
   var closure: (T) -> Void
-  var caller: T?
+  weak var caller: T?
 
   init(closure: @escaping (T) -> Void, caller: T?) {
     self.closure = closure
