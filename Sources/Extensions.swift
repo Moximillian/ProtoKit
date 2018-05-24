@@ -50,41 +50,6 @@ extension RawRepresentable where RawValue == Int {
 }
 #endif
 
-/// Extensions for Bundle
-//
-// USAGE
-//
-// Create nib/xib file and class file you want to use, e.g. MyCustomView.xib and MyCustomView.swift
-// Make sure the nib file name and class name are the same
-// Make sure MyCustomView class is set in the nib/xib editor
-//
-// Go to the place in your code where you want to use your nib, e.g.
-//
-// class MyViewController: UIViewController {
-//
-// override func viewDidLoad() {
-//   super.viewDidLoad()
-//     let customView: MyCustomView = Bundle.instantiateNib(owner: self)
-//     ...
-//   }
-// }
-extension Bundle {
-  public class func instantiateNib<T>(owner: Any? = nil) -> T {
-#if canImport(UIKit)
-    guard let instance = Bundle.main.loadNibNamed("\(T.self)", owner: owner)?.first as? T else {
-      fatalError("Could not instantiate from nib: \(T.self)")
-    }
-#elseif canImport(AppKit)
-    var objects: NSArray?
-    Bundle.main.loadNibNamed(NSNib.Name(rawValue: "\(T.self)"), owner: owner, topLevelObjects: &objects)
-    guard let instance = objects?.first as? T else {
-      fatalError("Could not instantiate from nib: \(T.self)")
-    }
-#endif
-    return instance
-  }
-}
-
 /// Extension for CGRect
 extension CGRect {
   public var mid: CGPoint { return CGPoint(x: self.midX, y: self.midY) } // computed property, calculated every time

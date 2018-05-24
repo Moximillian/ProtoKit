@@ -14,10 +14,12 @@
   import UIKit
   public typealias Storyboard = UIStoryboard
   public typealias ViewController = UIViewController
+  public typealias View = UIView
 #elseif canImport(AppKit)
   import AppKit
   public typealias Storyboard = NSStoryboard
   public typealias ViewController = NSViewController
+  public typealias View = NSView
 #else
   #if swift (>=4.2)
     #error("Unsupported platform.")
@@ -34,12 +36,12 @@
 //
 
 /// protocol to instantiate Self from storyboard
-public protocol Instantiable: class {
+public protocol InstantiableController: class {
   static func instantiate(storyboardName: String) -> Self
 }
 
-extension Instantiable where Self: ViewController {
-  /// instantiate Self from Storyboard
+extension InstantiableController where Self: ViewController {
+  /// instantiate Self from a specific Storyboard
   public static func instantiate(storyboardName name: String) -> Self {
     #if canImport(UIKit)
     let storyboard = Storyboard(name: name, bundle: nil)
@@ -57,4 +59,42 @@ extension Instantiable where Self: ViewController {
 }
 
 // Apply conformance
-extension ViewController: Instantiable {}
+extension ViewController: InstantiableController {}
+
+
+/// Extension for View
+//
+//  USAGE:
+//  1. Create nib/xib file and class file you want to use, e.g. MyCustomView.xib and MyCustomView.swift
+//  2. Make sure the nib file name and class name are the same
+//  3. Make sure MyCustomView class is set in the nib/xib editor
+//  4. In code, instantiate view with:
+//
+//  let myView = MyView.instantiateFromNib()
+//
+
+/// protocol to instantiate Self from storyboard
+public protocol InstantiableView: class {
+  static func instantiateFromNib(owner: Any?) -> Self
+}
+
+extension InstantiableView where Self: View {
+  /// instantiate Self from Nib in Bundle
+  public static func instantiateFromNib(owner: Any? = nil) -> Self {
+    #if canImport(UIKit)
+    guard let instance = Bundle.main.loadNibNamed("\(Self.self)", owner: owner)?.first as? Self else {
+      fatalError("Could not instantiate from nib: \(Self.self)")
+    }
+    #elseif canImport(AppKit)
+    var objects: NSArray?
+    Bundle.main.loadNibNamed(NSNib.Name(rawValue: "\(Self.self)"), owner: owner, topLevelObjects: &objects)
+    guard let instance = objects?.first as? Self else {
+      fatalError("Could not instantiate from nib: \(Self.self)")
+    }
+    #endif
+    return instance
+  }
+}
+
+// Apply conformance
+extension View: InstantiableView {}
