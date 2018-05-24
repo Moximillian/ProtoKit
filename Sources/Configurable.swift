@@ -29,23 +29,22 @@ extension Configurable where Self: ViewController {
 //
 //  USAGE:
 //  1. Make your view controller conform to Configurable
-//  2. In your controller, define your Config type, it can also be named tuple => (index: Int, title: String)
-//  3. Implement configure function in your controller
+//  2. In your controller, decide your Config type, it could also be named tuple => (index: Int, title: String)
+//  3. Implement configure function in your controller, using your chosen concrete type for Config
 //
 //  final class MyViewController: UIViewController, Configurable {
 //
-//    typealias Config = Int
+//    func configure(with config: Int) {
+//      myValue = config
+//    }
 //
 //    private var myValue: Int = 0
 //
-//    func configure(with config: Config) {
-//      myValue = config
-//    }
 //
 //    ...
 //  }
 //
 //  4. Instantiate your controller from storyboard with configuration
 //
-//  let myVC = MyViewController.instantiate(config: 42)
+//  let myVC = MyViewController.instantiate(with: 42)
 //
