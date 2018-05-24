@@ -11,6 +11,7 @@
 		417AF12120B1658C000306F8 /* KVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417AF12020B1658C000306F8 /* KVO.swift */; };
 		417AF12320B16AE3000306F8 /* AssociatedObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417AF12220B16AE3000306F8 /* AssociatedObjectStore.swift */; };
 		4198A8232019DD9500A7772A /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4198A8222019DD9500A7772A /* Observer.swift */; };
+		41F5E97B20B74BCE009BDF9B /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F5E97A20B74BCE009BDF9B /* Configurable.swift */; };
 		OBJ_32 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_38 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* Package.swift */; };
 		OBJ_44 /* Closurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* Closurable.swift */; };
@@ -38,6 +39,7 @@
 		417AF12020B1658C000306F8 /* KVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVO.swift; sourceTree = "<group>"; };
 		417AF12220B16AE3000306F8 /* AssociatedObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociatedObjectStore.swift; sourceTree = "<group>"; };
 		4198A8222019DD9500A7772A /* Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
+		41F5E97A20B74BCE009BDF9B /* Configurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurable.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Closurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Closurable.swift; sourceTree = "<group>"; };
 		OBJ_11 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		OBJ_12 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				417AF12220B16AE3000306F8 /* AssociatedObjectStore.swift */,
 				417AF12020B1658C000306F8 /* KVO.swift */,
 				OBJ_10 /* Closurable.swift */,
+				41F5E97A20B74BCE009BDF9B /* Configurable.swift */,
 				OBJ_11 /* CoreDataStack.swift */,
 				OBJ_12 /* Error.swift */,
 				OBJ_13 /* Extensions.swift */,
@@ -250,6 +253,7 @@
 				417AF12120B1658C000306F8 /* KVO.swift in Sources */,
 				OBJ_45 /* CoreDataStack.swift in Sources */,
 				41076BE0208CFA9C0081D5E6 /* Instantiable.swift in Sources */,
+				41F5E97B20B74BCE009BDF9B /* Configurable.swift in Sources */,
 				OBJ_46 /* Error.swift in Sources */,
 				417AF12320B16AE3000306F8 /* AssociatedObjectStore.swift in Sources */,
 				OBJ_47 /* Extensions.swift in Sources */,
