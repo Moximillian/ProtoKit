@@ -11,11 +11,9 @@
 //
 
 /// Very simple dependency injection abstraction
-public protocol Configurable: InstantiableController {
+public protocol Configurable {
   associatedtype Config
   func configure(with config: Config)
-
-  static func instantiate(storyboardName name: String, with config: Self.Config) -> Self
 }
 
 extension Configurable where Self: ViewController {
