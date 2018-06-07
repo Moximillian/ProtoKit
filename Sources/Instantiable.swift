@@ -21,9 +21,7 @@
   public typealias ViewController = NSViewController
   public typealias View = NSView
 #else
-  #if swift (>=4.2)
-    #error("Unsupported platform.")
-  #endif
+  #error("Unsupported platform.")
 #endif
 
 /// Extension for ViewController

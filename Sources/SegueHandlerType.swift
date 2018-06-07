@@ -17,9 +17,7 @@
   import AppKit
   public typealias StoryboardSegue = NSStoryboardSegue
 #else
-  #if swift (>=4.2)
-    #error("Unsupported platform.")
-  #endif
+  #error("Unsupported platform.")
 #endif
 
 /// Protocol for Segue Identifiers

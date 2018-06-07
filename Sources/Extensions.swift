@@ -29,25 +29,7 @@
   public typealias Font = NSFont
   public typealias FontDescriptor = NSFontDescriptor
 #else
-  #if swift (>=4.2)
-    #error("Unsupported platform.")
-  #endif
-#endif
-
-#if swift (>=4.2)
-   #error("Remove enum count and use CaseIterable conformance instead")
-#else
-extension RawRepresentable where RawValue == Int {
-  /// Return the amount of elements in Int based enum or option set. Works only for sequentially numbered types.
-  public static var count: Int {
-    for idx in 0... {
-      guard Self(rawValue: idx) != nil else {
-        return idx
-      }
-    }
-    return 0
-  }
-}
+  #error("Unsupported platform.")
 #endif
 
 /// Extension for CGRect

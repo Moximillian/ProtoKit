@@ -25,9 +25,7 @@ extension NSObjectProtocol where Self: NSObject {
     associatedObjectStore.append(associatedObject)
     objc_setAssociatedObject(self, Unmanaged.passUnretained(self).toOpaque(), associatedObjectStore, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     #else
-      #if swift (>=4.2)
-        #error("Unsupported platform.")
-      #endif
+      #error("Unsupported platform.")
     #endif
   }
 }

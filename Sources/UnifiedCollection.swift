@@ -20,9 +20,7 @@
 #elseif canImport(AppKit)
   import AppKit
 #else
-  #if swift (>=4.2)
-    #error("Unsupported platform.")
-  #endif
+  #error("Unsupported platform.")
 #endif
 
 #if canImport(UIKit)

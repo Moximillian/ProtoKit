@@ -21,9 +21,7 @@
   public typealias Button = NSButton
   public typealias GestureRecognizer = NSGestureRecognizer
 #else
-  #if swift (>=4.2)
-    #error("Unsupported platform.")
-  #endif
+  #error("Unsupported platform.")
 #endif
 
 /// Closurable protocol
@@ -69,7 +67,7 @@ public final class ClosureContainer<T: Closurable> {
 extension Closurable where Self: Control {
 #if canImport(UIKit)
   /// Associates a target closure with the control.
-  public func addTarget(for controlEvents: UIControlEvents, closure: @escaping (Self) -> Void) {
+  public func addTarget(for controlEvents: UIControl.Event, closure: @escaping (Self) -> Void) {
     let container = getContainer(for: closure)
     addTarget(container, action: container.action, for: controlEvents)
   }
@@ -129,14 +127,14 @@ extension GestureRecognizer: Closurable {
 /// extension for UIBarButtonItem - actions with closure
 extension UIBarButtonItem: Closurable {
 
-  public convenience init(image: UIImage?, style: UIBarButtonItemStyle = .plain, closure: @escaping (UIBarButtonItem) -> Void) {
+  public convenience init(image: UIImage?, style: UIBarButtonItem.Style = .plain, closure: @escaping (UIBarButtonItem) -> Void) {
     self.init(image: image, style: style, target: nil, action: nil)
     let container = getContainer(for: closure)
     target = container
     action = container.action
   }
 
-  public convenience init(title: String?, style: UIBarButtonItemStyle = .plain, closure: @escaping (UIBarButtonItem) -> Void) {
+  public convenience init(title: String?, style: UIBarButtonItem.Style = .plain, closure: @escaping (UIBarButtonItem) -> Void) {
     self.init(title: title, style: style, target: nil, action: nil)
     let container = getContainer(for: closure)
     target = container
