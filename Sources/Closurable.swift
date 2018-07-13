@@ -25,10 +25,10 @@
 #endif
 
 /// Closurable protocol
-public protocol Closurable: class {}
+public protocol Closurable: NSObject {}
 // restrict protocol to only classes => can refer to the class instance in the protocol extension
 
-extension Closurable where Self: NSObject {
+extension Closurable {
 
   // Create container for closure, store it and return it
   public func getContainer(for closure: @escaping (Self) -> Void) -> ClosureContainer<Self> {

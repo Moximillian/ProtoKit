@@ -21,11 +21,11 @@
 #endif
 
 /// Protocol for Segue Identifiers
-public protocol SegueHandlerType {
+public protocol SegueHandlerType: ViewController {
   associatedtype Segues: RawRepresentable where Segues.RawValue == String
 }
 
-extension SegueHandlerType where Self: ViewController {
+extension SegueHandlerType {
   public func perform(segue: Segues, sender: Any? = nil) {
 #if canImport(UIKit)
     performSegue(withIdentifier: segue.rawValue, sender: sender)

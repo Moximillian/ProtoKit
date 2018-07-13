@@ -12,7 +12,7 @@
 
 import Foundation
 
-extension NSObjectProtocol where Self: NSObject {
+extension NSObject {
   func store(associatedObject: Any) {
     // store the container so that it can be called later, we do not need to explicitly retrieve it.
 
