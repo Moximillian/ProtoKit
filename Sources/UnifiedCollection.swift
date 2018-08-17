@@ -78,35 +78,35 @@ private class DefaultTitleView<Item>: UICollectionReusableView & UnifiedTitleCon
 /// protocol for configuring UnifiedCellType. This should be conformed with the implemented cell class
 public protocol UnifiedCellConfigurable: UnifiedCellType {
   associatedtype Item
-  // Set default value for the "Section" associated type, SectionDataType exposes the variables to conformers
-  associatedtype Section: SectionDataType = SectionData<Item> where Item == Section.Item
   func configure(item: Item, collection: Collection, indexPath: IndexPath)
 }
 
 extension UnifiedCellConfigurable where Self: UITableViewCell {
   /// provide datasource for this type of cell
-  public static func dataSource(sections: [Section]) -> UITableViewDataSource {
+  public static func dataSource(sections: [SectionData<Item>]) -> UITableViewDataSource {
     return UnifiedDataSource(factory: UnifiedDataSourceFactory<Self, DefaultTitleView<Item>>(sections: sections))
   }
 
   /// provide datasource for this type of cell, fancy pants version
-  public static func dataSource(_ variadicSections: Section...) -> UITableViewDataSource {
+  public static func dataSource(_ variadicSections: SectionData<Item>...) -> UITableViewDataSource {
     return dataSource(sections: variadicSections)
   }
 }
 
 extension UnifiedCellConfigurable where Self: UICollectionViewCell {
   /// provide datasource for this type of cell
-  public static func dataSource<Title: UICollectionReusableView & UnifiedTitleConfigurable>
-    (titleType: Title.Type, sections: [Section]) -> UICollectionViewDataSource
-    where Item == Title.Item {
+  public static func dataSource<Title>(titleType: Title.Type,
+                                       sections: [SectionData<Item>]) -> UICollectionViewDataSource
+    where Title: UICollectionReusableView & UnifiedTitleConfigurable,
+          Item == Title.Item {
     return UnifiedDataSource(factory: UnifiedDataSourceFactory<Self, Title>(sections: sections))
   }
 
   /// provide datasource for this type of cell, fancy pants version
-  public static func dataSource<Title: UICollectionReusableView & UnifiedTitleConfigurable>
-    (titleType: Title.Type, _ variadicSections: Section...) -> UICollectionViewDataSource
-    where Item == Title.Item {
+  public static func dataSource<Title>(titleType: Title.Type,
+                                       _ variadicSections: SectionData<Item>...) -> UICollectionViewDataSource
+    where Title: UICollectionReusableView & UnifiedTitleConfigurable,
+          Item == Title.Item {
     return dataSource(titleType: titleType, sections: variadicSections)
   }
 }
@@ -119,17 +119,10 @@ public protocol UnifiedTitleConfigurable {
   func configure(item: Item, collection: UICollectionView, kind: String, indexPath: IndexPath)
 }
 
-// MARK: - Section data (source data container, both protocol and struct)
-
-public protocol SectionDataType {
-  associatedtype Item
-  var items: [Item] { get }
-  var headerTitle: String? { get }
-  var footerTitle: String? { get }
-}
+// MARK: - Section data (source data container)
 
 /// Factory valuetype for section protocol
-public struct SectionData<Item>: SectionDataType {
+public struct SectionData<Item> {
   public var items: [Item]
   public let headerTitle: String?
   public let footerTitle: String?
@@ -153,9 +146,9 @@ private struct UnifiedDataSourceFactory<Cell: UnifiedCellConfigurable,
                                         Title: UICollectionReusableView & UnifiedTitleConfigurable>
                                         where Cell.Item == Title.Item {
 
-  private var sections: [Cell.Section]
+  private var sections: [SectionData<Cell.Item>]
 
-  init(sections: [Cell.Section]) {
+  init(sections: [SectionData<Cell.Item>]) {
     self.sections = sections
   }
 
