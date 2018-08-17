@@ -48,7 +48,8 @@ extension InstantiableController where Self: ViewController {
     }
     #elseif canImport(AppKit)
     let storyboard = Storyboard(name: .init(name), bundle: nil)
-    guard let viewController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "\(Self.self)")) as? Self else {
+    let identifier = NSStoryboard.SceneIdentifier(rawValue: "\(Self.self)")
+    guard let viewController = storyboard.instantiateController(withIdentifier: identifier) as? Self else {
       fatalError("Couldn’t instantiate view controller with identifier \(Self.self) ")
     }
     #endif
@@ -58,7 +59,6 @@ extension InstantiableController where Self: ViewController {
 
 // Apply conformance
 extension ViewController: InstantiableController {}
-
 
 /// Extension for View
 //

@@ -62,7 +62,8 @@ public final class ClosureContainer<T: Closurable> {
 
 // MARK: - closurable for UIControl and NSControl
 
-// Extend protocol instead of the class directly, to target closure parameter to specific subclass, not the parent class.
+// Extend protocol instead of the class directly, to target closure parameter to specific subclass,
+// not the parent class.
 // Extension for UIControl (including UIButton and UIPageControl) - actions with closure
 extension Closurable where Self: Control {
 #if canImport(UIKit)
@@ -127,14 +128,18 @@ extension GestureRecognizer: Closurable {
 /// extension for UIBarButtonItem - actions with closure
 extension UIBarButtonItem: Closurable {
 
-  public convenience init(image: UIImage?, style: UIBarButtonItem.Style = .plain, closure: @escaping (UIBarButtonItem) -> Void) {
+  public convenience init(image: UIImage?,
+                          style: UIBarButtonItem.Style = .plain,
+                          closure: @escaping (UIBarButtonItem) -> Void) {
     self.init(image: image, style: style, target: nil, action: nil)
     let container = getContainer(for: closure)
     target = container
     action = container.action
   }
 
-  public convenience init(title: String?, style: UIBarButtonItem.Style = .plain, closure: @escaping (UIBarButtonItem) -> Void) {
+  public convenience init(title: String?,
+                          style: UIBarButtonItem.Style = .plain,
+                          closure: @escaping (UIBarButtonItem) -> Void) {
     self.init(title: title, style: style, target: nil, action: nil)
     let container = getContainer(for: closure)
     target = container

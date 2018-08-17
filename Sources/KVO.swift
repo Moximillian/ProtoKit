@@ -30,10 +30,10 @@ class Disposable {
 }
 
 extension NSObjectProtocol where Self: NSObject {
-  
+
   /// observe a variable (as keypath) from this instance, use the new value as argument for the closure
   /// *** NOTE: observed value MUST be declared `@objc dynamic` ***
-  func observe<Value>(_ keyPath: KeyPath<Self, Value>, onChange: @escaping (Value) -> ()) -> Disposable {
+  func observe<Value>(_ keyPath: KeyPath<Self, Value>, onChange: @escaping (Value) -> Void) -> Disposable {
     let observation = observe(keyPath, options: [.initial, .new]) { _, change in
       // The guard is because of https://bugs.swift.org/browse/SR-6066
       guard let newValue = change.newValue else { return }
@@ -44,17 +44,19 @@ extension NSObjectProtocol where Self: NSObject {
 
   /// observe a variable (as keypath) from this instance, bind it to target instance's variable (keypath)
   /// *** NOTE: observed value MUST be declared `@objc dynamic` ***
-  public func bind<Value, Target: NSObject>(_ sourceKeyPath: KeyPath<Self, Value>, to target: Target, at targetKeyPath: ReferenceWritableKeyPath<Target, Value>) {
+  public func bind<Value, Target: NSObject>(_ sourceKeyPath: KeyPath<Self, Value>,
+                                            to target: Target,
+                                            at targetKeyPath: ReferenceWritableKeyPath<Target, Value>) {
     let disposable = observe(sourceKeyPath) { [weak target] in target?[keyPath: targetKeyPath] = $0 }
     target.store(associatedObject: disposable)
   }
 }
 
-
 /*
  //  -------- USAGE ----------
 
- // 1. create e.g. a model or viewmodel (must inherit from NSObject or its subclass) that you want to observe. Observed variable must be "@obj dynamic".
+ // 1. create e.g. a model or viewmodel (must inherit from NSObject or its subclass) that you want to observe.
+ // Observed variable must be "@obj dynamic".
 
  final class Model: NSObject {
    @objc dynamic var value: Int = 0

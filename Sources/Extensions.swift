@@ -65,7 +65,10 @@ extension Color {
     let scanner = Scanner(string: hex)
     scanner.scanLocation = 1  // bypass '#'
     scanner.scanHexInt32(&rgbValue)
-    self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16)/255.0, green: CGFloat((rgbValue & 0xFF00) >> 8)/255.0, blue: CGFloat(rgbValue & 0xFF)/255.0, alpha: 1.0)
+    self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16)/255.0,
+              green: CGFloat((rgbValue & 0xFF00) >> 8)/255.0,
+              blue: CGFloat(rgbValue & 0xFF)/255.0,
+              alpha: 1.0)
   }
 }
 
@@ -139,8 +142,11 @@ extension UITableView {
 
 /// Extensions for UICollectionView
 extension UICollectionView {
-  public func dequeueReusableSupplementaryView<T: UICollectionReusableView>(ofKind kind: String, for indexPath: IndexPath) -> T {
-    guard let view = dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(T.self)", for: indexPath) as? T else {
+  public func dequeueReusableSupplementaryView<T: UICollectionReusableView>(ofKind kind: String,
+                                                                            for indexPath: IndexPath) -> T {
+    guard let view = dequeueReusableSupplementaryView(ofKind: kind,
+                                                      withReuseIdentifier: "\(T.self)",
+                                                      for: indexPath) as? T else {
       fatalError("Could not dequeue collectionview supplementary view with identifier: \(T.self)")
     }
     return view

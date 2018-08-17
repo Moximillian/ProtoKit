@@ -19,11 +19,15 @@ extension NSObject {
     #if canImport(UIKit)
     accessibilityElements = accessibilityElements ?? []
     accessibilityElements!.append(associatedObject)
-    
+
     #elseif canImport(AppKit)
-    var associatedObjectStore = objc_getAssociatedObject(self, Unmanaged.passUnretained(self).toOpaque()) as? [Any] ?? []
+    var associatedObjectStore = objc_getAssociatedObject(self,
+                                                         Unmanaged.passUnretained(self).toOpaque()) as? [Any] ?? []
     associatedObjectStore.append(associatedObject)
-    objc_setAssociatedObject(self, Unmanaged.passUnretained(self).toOpaque(), associatedObjectStore, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    objc_setAssociatedObject(self,
+                             Unmanaged.passUnretained(self).toOpaque(),
+                             associatedObjectStore,
+                             .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     #else
       #error("Unsupported platform.")
     #endif

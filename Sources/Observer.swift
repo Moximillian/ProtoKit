@@ -58,7 +58,9 @@ extension Observer {
 
   /// post notification that uses predefined (typed) value
   public static func post<T>(_ typedNotification: TypedNotification<T>, value: T) {
-    NotificationCenter.default.post(name: typedNotification.name, object: nil, userInfo: [typedNotification.name: value])
+    NotificationCenter.default.post(name: typedNotification.name,
+                                    object: nil,
+                                    userInfo: [typedNotification.name: value])
   }
 }
 

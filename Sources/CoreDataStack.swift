@@ -25,7 +25,9 @@ extension SortableManagedObject where Self: NSManagedObject {
 
   @available(iOS 10.0, macOS 10.12, *)
   public static func sortedFetchRequest() -> NSFetchRequest<Self> {
-    let request = Self.fetchRequest() as! NSFetchRequest<Self>
+    guard let request = Self.fetchRequest() as? NSFetchRequest<Self> else {
+      fatalError("Cannot create fetch request")
+    }
     request.sortDescriptors = defaultSortDescriptors
     return request
   }
