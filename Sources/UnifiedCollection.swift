@@ -68,6 +68,26 @@ extension UICollectionView: UnifiedCollectionType {
   }
 }
 
+// MARK: - Section data (source data container)
+
+/// Factory valuetype for section protocol
+public struct SectionData<Item> {
+  public var items: [Item]
+  public let headerTitle: String?
+  public let footerTitle: String?
+
+  /// fancy pants convenience init
+  public init(_ items: Item..., headerTitle: String? = nil, footerTitle: String? = nil) {
+    self.init(items: items, headerTitle: headerTitle, footerTitle: footerTitle)
+  }
+
+  public init(items: [Item], headerTitle: String? = nil, footerTitle: String? = nil) {
+    self.items = items
+    self.headerTitle = headerTitle
+    self.footerTitle = footerTitle
+  }
+}
+
 // MARK: - Unified Cell Configurable (protocol)
 
 // default (non-used) TitleView for UITableView
@@ -117,26 +137,6 @@ extension UnifiedCellConfigurable where Self: UICollectionViewCell {
 public protocol UnifiedTitleConfigurable {
   associatedtype Item
   func configure(item: Item, collection: UICollectionView, kind: String, indexPath: IndexPath)
-}
-
-// MARK: - Section data (source data container)
-
-/// Factory valuetype for section protocol
-public struct SectionData<Item> {
-  public var items: [Item]
-  public let headerTitle: String?
-  public let footerTitle: String?
-
-  /// fancy pants convenience init
-  public init(_ items: Item..., headerTitle: String? = nil, footerTitle: String? = nil) {
-    self.init(items: items, headerTitle: headerTitle, footerTitle: footerTitle)
-  }
-
-  public init(items: [Item], headerTitle: String? = nil, footerTitle: String? = nil) {
-    self.items = items
-    self.headerTitle = headerTitle
-    self.footerTitle = footerTitle
-  }
 }
 
 // MARK: - Unified DataSource Factory (struct)

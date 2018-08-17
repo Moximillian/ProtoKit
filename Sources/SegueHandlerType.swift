@@ -43,7 +43,7 @@ extension SegueHandlerType {
     guard
       let rawValue = identifier,
       let segueIdentifier = Segues(rawValue: rawValue) else {
-        fatalError("Unknown segue: \(String(describing: segue.identifier))")
+        fatalError("Unknown segue: \(segue.identifier ?? "")")
     }
     return segueIdentifier
   }
