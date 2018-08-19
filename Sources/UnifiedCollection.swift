@@ -104,7 +104,7 @@ public protocol UnifiedCellConfigurable: UnifiedCellType {
 extension UnifiedCellConfigurable where Self: UITableViewCell {
   /// provide datasource for this type of cell
   public static func dataSource(sections: [SectionData<Item>]) -> UITableViewDataSource {
-    return UnifiedDataSource(factory: UnifiedDataSourceFactory<Self, DefaultTitleView<Item>>(sections: sections))
+    return TableDataSource(factory: UnifiedDataSourceFactory<Self, DefaultTitleView<Item>>(sections: sections))
   }
 
   /// provide datasource for this type of cell, fancy pants version
@@ -119,7 +119,7 @@ extension UnifiedCellConfigurable where Self: UICollectionViewCell {
                                        sections: [SectionData<Item>]) -> UICollectionViewDataSource
     where Title: UICollectionReusableView & UnifiedTitleConfigurable,
           Item == Title.Item {
-    return UnifiedDataSource(factory: UnifiedDataSourceFactory<Self, Title>(sections: sections))
+    return CollectionDataSource(factory: UnifiedDataSourceFactory<Self, Title>(sections: sections))
   }
 
   /// provide datasource for this type of cell, fancy pants version
@@ -168,38 +168,38 @@ private struct UnifiedDataSourceFactory<Cell: UnifiedCellConfigurable,
 
 // Objective-C does not allow for class level generics, so provide data via native functions defined in protocol.
 /// Unified functions that provide for both UITableViewDataSource and UICollectionViewDataSource
-private protocol UnifiedDataSourceProvider {
+private protocol UnifiedDataProvider {
   func numberOfSections() -> Int
   func numberOfItems(in section: Int) -> Int
   func headerTitle(in section: Int) -> String?
   func footerTitle(in section: Int) -> String?
 }
 
-private protocol TableViewDataSourceProvider {
+private protocol TableDataProvider: UnifiedDataProvider {
   func cell(for collection: UITableView, at indexPath: IndexPath) -> UITableViewCell
 }
 
-private protocol CollectionViewDataSourceProvider {
+private protocol CollectionDataProvider: UnifiedDataProvider {
   func cell(for collection: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell
   func title(for collection: UICollectionView, of kind: String, at indexPath: IndexPath) -> UICollectionReusableView
 }
 
 // MARK: - UnifiedDataSourceFactory implementation of DataSourceProviders
 
-extension UnifiedDataSourceFactory: UnifiedDataSourceProvider {
+extension UnifiedDataSourceFactory: UnifiedDataProvider {
   func numberOfSections() -> Int { return sections.count }
   func numberOfItems(in section: Int) -> Int { return sections[section].items.count }
   func headerTitle(in section: Int) -> String? { return sections[section].headerTitle }
   func footerTitle(in section: Int) -> String? { return sections[section].footerTitle }
 }
 
-extension UnifiedDataSourceFactory: TableViewDataSourceProvider where Cell: UITableViewCell {
+extension UnifiedDataSourceFactory: TableDataProvider where Cell: UITableViewCell {
   func cell(for collection: UITableView, at indexPath: IndexPath) -> UITableViewCell {
     return cellFor(collection, at: indexPath)
   }
 }
 
-extension UnifiedDataSourceFactory: CollectionViewDataSourceProvider where Cell: UICollectionViewCell {
+extension UnifiedDataSourceFactory: CollectionDataProvider where Cell: UICollectionViewCell {
   func cell(for collection: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
     return cellFor(collection, at: indexPath)
   }
@@ -211,24 +211,19 @@ extension UnifiedDataSourceFactory: CollectionViewDataSourceProvider where Cell:
   }
 }
 
-// MARK: - UnifiedDataSource (Objective-C class)
+// MARK: - Generic UnifiedDataSource (Objective-C class)
 
-/// Objective-C compatible (non-generic) datasource (internal implementation)
-fileprivate final class UnifiedDataSource: NSObject {
+private class UnifiedDataSource<Factory>: NSObject {
 
-  // keep reference to the factory that contains the data
-  // FIXME: when Swift supports generalized existentials, try UnifiedDataSourceFactory here
-  private let factory: UnifiedDataSourceProvider
+  fileprivate let factory: Factory
 
-  init(factory: UnifiedDataSourceProvider) {
+  init(factory: Factory) {
     self.factory = factory
   }
-  lazy private var tableProvider = factory as? TableViewDataSourceProvider
-  lazy private var collectionProvider = factory as? CollectionViewDataSourceProvider
 }
 
-/// UITableViewDataSource implementation for UnifiedDataSource
-extension UnifiedDataSource: UITableViewDataSource {
+/// UITableViewDataSource implementation for UnifiedDataSource (has to be non-generic)
+fileprivate final class TableDataSource: UnifiedDataSource<TableDataProvider>, UITableViewDataSource {
 
   func numberOfSections(in tableView: UITableView) -> Int {
     return factory.numberOfSections()
@@ -247,12 +242,14 @@ extension UnifiedDataSource: UITableViewDataSource {
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    return tableProvider?.cell(for: tableView, at: indexPath) ?? UITableViewCell()
+    return factory.cell(for: tableView, at: indexPath)
   }
 }
 
-/// UICollectionViewDataSource implementation for UnifiedDataSource
-extension UnifiedDataSource: UICollectionViewDataSource {
+/// UICollectionViewDataSource implementation for UnifiedDataSource (has to be non-generic)
+fileprivate final class CollectionDataSource: UnifiedDataSource<CollectionDataProvider>,
+                                              UICollectionViewDataSource {
+
   func numberOfSections(in collectionView: UICollectionView) -> Int {
     return factory.numberOfSections()
   }
@@ -264,11 +261,11 @@ extension UnifiedDataSource: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView,
                       viewForSupplementaryElementOfKind kind: String,
                       at indexPath: IndexPath) -> UICollectionReusableView {
-    return collectionProvider?.title(for: collectionView, of: kind, at: indexPath) ?? UICollectionReusableView()
+    return factory.title(for: collectionView, of: kind, at: indexPath)
   }
 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    return collectionProvider?.cell(for: collectionView, at: indexPath) ?? UICollectionViewCell()
+    return factory.cell(for: collectionView, at: indexPath)
   }
 }
 
