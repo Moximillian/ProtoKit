@@ -25,48 +25,50 @@
 
 #if canImport(UIKit)
 
+// MARK: - Unified Collection Type (protocol)
+
+/// protocol for unified UITableView and UICollectionView
+public protocol UnifiedCollectionType {}
+extension UITableView: UnifiedCollectionType {}
+extension UICollectionView: UnifiedCollectionType {}
+
 // MARK: - Unified Cell Type (protocol)
 
 /// protocol for unified UITableViewCell and UICollectionViewCell
 public protocol UnifiedCellType {
-  associatedtype Collection: UnifiedCollectionType
+  /// Unified dequeReusableCell
+  static func dequeueReusable(in collection: UnifiedCollectionType, for indexPath: IndexPath) -> Self
 }
 
-extension UITableViewCell: UnifiedCellType {
-  public typealias Collection = UITableView
-}
-
-extension UICollectionViewCell: UnifiedCellType {
-  public typealias Collection = UICollectionView
-}
-
-// MARK: - Unified Collection Type (protocol)
-
-/// protocol for unified UITableView and UICollectionView
-public protocol UnifiedCollectionType {
-  /// unified generic way to queue a table/collection cell of specific type
-  func dequeueReusableCell<T: UnifiedCellType>(for indexPath: IndexPath) -> T
-}
-
-extension UITableView: UnifiedCollectionType {
-  /// unified generic way to queue a UITableViewCell of specific type
-  public func dequeueReusableCell<T: UnifiedCellType>(for indexPath: IndexPath) -> T {
-    guard let cell = dequeueReusableCell(withIdentifier: String(describing: T.self), for: indexPath) as? T else {
-      fatalError("Could not dequeue tableview cell with identifier: \(T.self)")
+// extend protocol instead of concrete type to have Self available
+extension UnifiedCellType where Self: UITableViewCell {
+  public static func dequeueReusable(in collection: UnifiedCollectionType, for indexPath: IndexPath) -> Self {
+    guard
+      let collection = collection as? UITableView,
+      let cell = collection.dequeueReusableCell(withIdentifier: Self.identifier, for: indexPath) as? Self
+      else {
+        fatalError("Could not dequeue tableview cell with identifier: " + Self.identifier)
     }
     return cell
   }
 }
 
-extension UICollectionView: UnifiedCollectionType {
-  /// unified generic way to queue a UICollectionViewCell of specific type
-  public func dequeueReusableCell<T: UnifiedCellType>(for indexPath: IndexPath) -> T {
-    guard let cell = dequeueReusableCell(withReuseIdentifier: String(describing: T.self), for: indexPath) as? T else {
-      fatalError("Could not dequeue collectionview cell with identifier: \(T.self)")
+// extend protocol instead of concrete type to have Self available
+extension UnifiedCellType where Self: UICollectionViewCell {
+
+  public static func dequeueReusable(in collection: UnifiedCollectionType, for indexPath: IndexPath) -> Self {
+    guard
+      let collection = collection as? UICollectionView,
+      let cell = collection.dequeueReusableCell(withReuseIdentifier: Self.identifier, for: indexPath) as? Self else {
+      fatalError("Could not dequeue collectionview cell with identifier: " + Self.identifier)
     }
     return cell
   }
 }
+
+// apply conformances
+extension UITableViewCell: UnifiedCellType {}
+extension UICollectionViewCell: UnifiedCellType {}
 
 // MARK: - Section data (source data container)
 
@@ -92,13 +94,22 @@ public struct SectionData<Item> {
 
 // default (non-used) TitleView for UITableView
 private class DefaultTitleView<Item>: UICollectionReusableView & UnifiedTitleConfigurable {
-  public func configure(item: Item, collection: UICollectionView, kind: String, indexPath: IndexPath) {}
+  public func configure(item: Item, kind: String, indexPath: IndexPath) {}
 }
 
 /// protocol for configuring UnifiedCellType. This should be conformed with the implemented cell class
 public protocol UnifiedCellConfigurable: UnifiedCellType {
   associatedtype Item
-  func configure(item: Item, collection: Collection, indexPath: IndexPath)
+  func configure(item: Item, indexPath: IndexPath)
+}
+
+extension UnifiedCellConfigurable {
+  /// Dequeue and configure cells
+  static func dequeueAndConfigure(item: Item, in collection: UnifiedCollectionType, for indexPath: IndexPath) -> Self {
+    let cell: Self = dequeueReusable(in: collection, for: indexPath)
+    cell.configure(item: item, indexPath: indexPath)
+    return cell
+  }
 }
 
 extension UnifiedCellConfigurable where Self: UITableViewCell {
@@ -136,7 +147,7 @@ extension UnifiedCellConfigurable where Self: UICollectionViewCell {
 /// protocol for unified UICollectionReusableView. This should be conformed with the implemented cell class
 public protocol UnifiedTitleConfigurable {
   associatedtype Item
-  func configure(item: Item, collection: UICollectionView, kind: String, indexPath: IndexPath)
+  func configure(item: Item, kind: String, indexPath: IndexPath)
 }
 
 // MARK: - Unified DataSource Factory (struct)
@@ -155,12 +166,6 @@ private struct UnifiedDataSourceFactory<Cell: UnifiedCellConfigurable,
   // Common helpers
   private func item(at indexPath: IndexPath) -> Cell.Item {
     return sections[indexPath.section].items[indexPath.row]
-  }
-
-  private func cellFor(_ collection: Cell.Collection, at indexPath: IndexPath) -> Cell {
-    let cell: Cell = collection.dequeueReusableCell(for: indexPath)
-    cell.configure(item: item(at: indexPath), collection: collection, indexPath: indexPath)
-    return cell
   }
 }
 
@@ -195,18 +200,18 @@ extension UnifiedDataSourceFactory: UnifiedDataProvider {
 
 extension UnifiedDataSourceFactory: TableDataProvider where Cell: UITableViewCell {
   func cell(for collection: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-    return cellFor(collection, at: indexPath)
+    return Cell.dequeueAndConfigure(item: item(at: indexPath), in: collection, for: indexPath)
   }
 }
 
 extension UnifiedDataSourceFactory: CollectionDataProvider where Cell: UICollectionViewCell {
   func cell(for collection: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
-    return cellFor(collection, at: indexPath)
+    return Cell.dequeueAndConfigure(item: item(at: indexPath), in: collection, for: indexPath)
   }
 
   func title(for collection: UICollectionView, of kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     let view: Title = collection.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
-    view.configure(item: item(at: indexPath), collection: collection, kind: kind, indexPath: indexPath)
+    view.configure(item: item(at: indexPath), kind: kind, indexPath: indexPath)
     return view
   }
 }
