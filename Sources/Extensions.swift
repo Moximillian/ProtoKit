@@ -32,13 +32,18 @@
   #error("Unsupported platform.")
 #endif
 
-/// Extension for CGRect
+extension NSObjectProtocol {
+  /// Identifier derived from the name of the class
+  public static var identifier: String { return String(describing: Self.self) }
+}
+
+// Extension for CGRect
 extension CGRect {
   public var mid: CGPoint { return CGPoint(x: self.midX, y: self.midY) } // computed property, calculated every time
 }
 
 #if os(iOS)
-/// Extensions for UIApplication (iOS only feature)
+// Extensions for UIApplication (iOS only feature)
 extension Application {
   public static var statusbarHeight: CGFloat {
     let statusBarSize = Application.shared.statusBarFrame.size
@@ -47,7 +52,7 @@ extension Application {
 }
 #endif
 
-/// Extensions for UIColor
+// Extensions for UIColor
 extension Color {
   /// Create UIColor with 0-255 value range (RGBA)
   public convenience init(_ red: Int, _ green: Int, _ blue: Int, _ alpha: CGFloat) {
@@ -72,7 +77,7 @@ extension Color {
   }
 }
 
-/// UIColor extension for human readable object values
+// UIColor extension for human readable object values
 extension Color: CustomReflectable {
   public var customMirror: Mirror {
     var red: CGFloat = 0
@@ -95,7 +100,7 @@ extension Color: CustomReflectable {
   }
 }
 
-/// UIImage assets
+// UIImage assets
 extension Image {
 
   // extensions cannot store properties, has to use computed property, calculated every time
@@ -109,7 +114,7 @@ extension Image {
   }
 }
 
-/// UIImageView assets
+// UIImageView assets
 extension ImageView {
 
   // extensions cannot store properties, has to use computed property, calculated every time
@@ -122,7 +127,7 @@ extension ImageView {
 
 #if canImport(UIKit)
 
-/// Extensions for UITableView
+// Extensions for UITableView
 extension UITableView {
   public func dequeueReusableHeaderFooterView<T: UITableViewHeaderFooterView>() -> T {
     guard let cell = dequeueReusableHeaderFooterView(withIdentifier: "\(T.self)") as? T else {
@@ -140,7 +145,7 @@ extension UITableView {
   }
 }
 
-/// Extensions for UICollectionView
+// Extensions for UICollectionView
 extension UICollectionView {
   public func dequeueReusableSupplementaryView<T: UICollectionReusableView>(ofKind kind: String,
                                                                             for indexPath: IndexPath) -> T {
