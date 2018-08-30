@@ -47,30 +47,18 @@ public struct SectionData<Item> {
 
 // MARK: - Unified Cell Configurable (protocol)
 
-// default (non-used) TitleView for UITableView
-private class DefaultTitleView<Item>: UICollectionReusableView & UnifiedTitleConfigurable {
-  public func configure(item: Item, kind: String, indexPath: IndexPath) {}
-}
-
-/// protocol for configuring UnifiedCellType. This should be conformed with the implemented cell class
-public protocol UnifiedCellConfigurable: UnifiedCellType {
+/// protocol for unified configuring of a cell. This should be conformed with the implemented cell class
+public protocol UnifiedCellConfigurable {
   associatedtype Item
   func configure(item: Item, indexPath: IndexPath)
 }
 
-extension UnifiedCellConfigurable {
-  /// Dequeue and configure cells
-  static func dequeueAndConfigure(item: Item, in collection: UnifiedCollectionType, for indexPath: IndexPath) -> Self {
-    let cell: Self = dequeueReusable(in: collection, for: indexPath)
-    cell.configure(item: item, indexPath: indexPath)
-    return cell
-  }
-}
+// MARK: - conformances for UnifiedCellConfigurable
 
 extension UnifiedCellConfigurable where Self: UITableViewCell {
   /// provide datasource for this type of cell
   public static func dataSource(sections: [SectionData<Item>]) -> UITableViewDataSource {
-    return TableDataSource(factory: UnifiedDataSourceFactory<Self, DefaultTitleView<Item>>(sections: sections))
+    return TableDataSource<Self>(sections: sections)
   }
 
   /// provide datasource for this type of cell, fancy pants version
@@ -83,16 +71,14 @@ extension UnifiedCellConfigurable where Self: UICollectionViewCell {
   /// provide datasource for this type of cell
   public static func dataSource<Title>(titleType: Title.Type,
                                        sections: [SectionData<Item>]) -> UICollectionViewDataSource
-    where Title: UICollectionReusableView & UnifiedTitleConfigurable,
-          Item == Title.Item {
-    return CollectionDataSource(factory: UnifiedDataSourceFactory<Self, Title>(sections: sections))
+                                      where Title: TitleType, Item == Title.Item {
+    return CollectionDataSource<Self, Title>(sections: sections)
   }
 
   /// provide datasource for this type of cell, fancy pants version
   public static func dataSource<Title>(titleType: Title.Type,
                                        _ variadicSections: SectionData<Item>...) -> UICollectionViewDataSource
-    where Title: UICollectionReusableView & UnifiedTitleConfigurable,
-          Item == Title.Item {
+                                      where Title: TitleType, Item == Title.Item {
     return dataSource(titleType: titleType, sections: variadicSections)
   }
 }
@@ -105,12 +91,16 @@ public protocol UnifiedTitleConfigurable {
   func configure(item: Item, kind: String, indexPath: IndexPath)
 }
 
-// MARK: - Unified DataSource Factory (struct)
+// MARK: - typealiases for TableCellType, CollectionCellType and TitleType
+
+public typealias TableCellType = UITableViewCell & UnifiedCellConfigurable
+public typealias CollectionCellType = UICollectionViewCell & UnifiedCellConfigurable
+public typealias TitleType = UICollectionReusableView & UnifiedTitleConfigurable
+
+// MARK: - Unified DataSource (parent class)
 
 /// Factory for creating datasources
-private struct UnifiedDataSourceFactory<Cell: UnifiedCellConfigurable,
-                                        Title: UICollectionReusableView & UnifiedTitleConfigurable>
-                                        where Cell.Item == Title.Item {
+private class UnifiedDataSource<Cell: UnifiedCellConfigurable>: NSObject {
 
   private var sections: [SectionData<Cell.Item>]
 
@@ -119,113 +109,70 @@ private struct UnifiedDataSourceFactory<Cell: UnifiedCellConfigurable,
   }
 
   // Common helpers
-  private func item(at indexPath: IndexPath) -> Cell.Item {
+  fileprivate func item(at indexPath: IndexPath) -> Cell.Item {
     return sections[indexPath.section].items[indexPath.row]
   }
+  fileprivate func numberOfSections() -> Int { return sections.count }
+  fileprivate func numberOfItems(in section: Int) -> Int { return sections[section].items.count }
+  fileprivate func headerTitle(in section: Int) -> String? { return sections[section].headerTitle }
+  fileprivate func footerTitle(in section: Int) -> String? { return sections[section].footerTitle }
 }
 
-// MARK: - Datasource Providers (protocols)
+// MARK: - Table Data Source, inheriting from Unified Data Source
 
-// Objective-C does not allow for class level generics, so provide data via native functions defined in protocol.
-/// Unified functions that provide for both UITableViewDataSource and UICollectionViewDataSource
-private protocol UnifiedDataProvider {
-  func numberOfSections() -> Int
-  func numberOfItems(in section: Int) -> Int
-  func headerTitle(in section: Int) -> String?
-  func footerTitle(in section: Int) -> String?
-}
-
-private protocol TableDataProvider: UnifiedDataProvider {
-  func cell(for collection: UITableView, at indexPath: IndexPath) -> UITableViewCell
-}
-
-private protocol CollectionDataProvider: UnifiedDataProvider {
-  func cell(for collection: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell
-  func title(for collection: UICollectionView, of kind: String, at indexPath: IndexPath) -> UICollectionReusableView
-}
-
-// MARK: - UnifiedDataSourceFactory implementation of DataSourceProviders
-
-extension UnifiedDataSourceFactory: UnifiedDataProvider {
-  func numberOfSections() -> Int { return sections.count }
-  func numberOfItems(in section: Int) -> Int { return sections[section].items.count }
-  func headerTitle(in section: Int) -> String? { return sections[section].headerTitle }
-  func footerTitle(in section: Int) -> String? { return sections[section].footerTitle }
-}
-
-extension UnifiedDataSourceFactory: TableDataProvider where Cell: UITableViewCell {
-  func cell(for collection: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-    return Cell.dequeueAndConfigure(item: item(at: indexPath), in: collection, for: indexPath)
-  }
-}
-
-extension UnifiedDataSourceFactory: CollectionDataProvider where Cell: UICollectionViewCell {
-  func cell(for collection: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
-    return Cell.dequeueAndConfigure(item: item(at: indexPath), in: collection, for: indexPath)
-  }
-
-  func title(for collection: UICollectionView, of kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    let view: Title = collection.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
-    view.configure(item: item(at: indexPath), kind: kind, indexPath: indexPath)
-    return view
-  }
-}
-
-// MARK: - Generic UnifiedDataSource (Objective-C class)
-
-private class UnifiedDataSource<Factory>: NSObject {
-
-  fileprivate let factory: Factory
-
-  init(factory: Factory) {
-    self.factory = factory
-  }
-}
-
-/// UITableViewDataSource implementation for UnifiedDataSource (has to be non-generic)
-fileprivate final class TableDataSource: UnifiedDataSource<TableDataProvider>, UITableViewDataSource {
+/// UITableViewDataSource implementation for UnifiedDataSource
+fileprivate final class TableDataSource<Cell: TableCellType>: UnifiedDataSource<Cell>, UITableViewDataSource {
 
   func numberOfSections(in tableView: UITableView) -> Int {
-    return factory.numberOfSections()
+    return numberOfSections()
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return factory.numberOfItems(in: section)
+    return numberOfItems(in: section)
   }
 
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return factory.headerTitle(in: section)
+    return headerTitle(in: section)
   }
 
   func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-    return factory.footerTitle(in: section)
+    return footerTitle(in: section)
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    return factory.cell(for: tableView, at: indexPath)
+    let cell: Cell = Cell.dequeueReusable(in: tableView)
+    cell.configure(item: item(at: indexPath), indexPath: indexPath)
+    return cell
   }
 }
 
-/// UICollectionViewDataSource implementation for UnifiedDataSource (has to be non-generic)
-fileprivate final class CollectionDataSource: UnifiedDataSource<CollectionDataProvider>,
-                                              UICollectionViewDataSource {
+// MARK: - Collection Data Source, inheriting from Unified Data Source
+
+/// UICollectionViewDataSource implementation for UnifiedDataSource
+fileprivate final class CollectionDataSource<Cell: CollectionCellType, Title: TitleType>:
+                                            UnifiedDataSource<Cell>, UICollectionViewDataSource
+                                            where Cell.Item == Title.Item {
 
   func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return factory.numberOfSections()
+    return numberOfSections()
   }
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return factory.numberOfItems(in: section)
+    return numberOfItems(in: section)
   }
 
   func collectionView(_ collectionView: UICollectionView,
                       viewForSupplementaryElementOfKind kind: String,
                       at indexPath: IndexPath) -> UICollectionReusableView {
-    return factory.title(for: collectionView, of: kind, at: indexPath)
+    let view: Title = Title.dequeueReusable(in: collectionView, ofKind: kind, for: indexPath)
+    view.configure(item: item(at: indexPath), kind: kind, indexPath: indexPath)
+    return view
   }
 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    return factory.cell(for: collectionView, at: indexPath)
+    let cell: Cell = Cell.dequeueReusable(in: collectionView, for: indexPath)
+    cell.configure(item: item(at: indexPath), indexPath: indexPath)
+    return cell
   }
 }
 
@@ -276,6 +223,6 @@ fileprivate final class CollectionDataSource: UnifiedDataSource<CollectionDataPr
 
  // 6. provide the datasource to your table view (or collectionview)
 
- tableView.dataSource = self.dataSource  // remember to keep reference to the dataSource in your viewcontroller
+ tableView.dataSource = dataSource  // remember to keep reference to the dataSource in your viewcontroller
 
  */
