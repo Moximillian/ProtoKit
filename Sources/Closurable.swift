@@ -24,6 +24,8 @@
   #error("Unsupported platform.")
 #endif
 
+#if swift(>=5)
+
 /// Closurable protocol
 public protocol Closurable: NSObject {}
 // restrict protocol to only classes => can refer to the class instance in the protocol extension
@@ -37,6 +39,24 @@ extension Closurable {
     return container
   }
 }
+
+#else
+
+/// Closurable protocol
+public protocol Closurable: class {}
+// restrict protocol to only classes => can refer to the class instance in the protocol extension
+
+extension Closurable where Self: NSObject {
+
+  // Create container for closure, store it and return it
+  public func getContainer(for closure: @escaping (Self) -> Void) -> ClosureContainer<Self> {
+    let container = ClosureContainer(closure: closure, caller: self)
+    store(associatedObject: container)
+    return container
+  }
+}
+
+#endif
 
 /// Container class for closures, so that closure can be stored as an associated object
 public final class ClosureContainer<T: Closurable> {
