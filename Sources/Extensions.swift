@@ -129,12 +129,6 @@ extension ImageView {
 
 // Extensions for UITableView
 extension UITableView {
-  public func dequeueReusableHeaderFooterView<T: UITableViewHeaderFooterView>() -> T {
-    guard let cell = dequeueReusableHeaderFooterView(withIdentifier: "\(T.self)") as? T else {
-      fatalError("Could not dequeue tableview header/footer view with identifier: \(T.self)")
-    }
-    return cell
-  }
 
   public func register<T: UITableViewCell>(cell: T.Type) {
     register(T.self, forCellReuseIdentifier: "\(T.self)")
@@ -147,15 +141,6 @@ extension UITableView {
 
 // Extensions for UICollectionView
 extension UICollectionView {
-  public func dequeueReusableSupplementaryView<T: UICollectionReusableView>(ofKind kind: String,
-                                                                            for indexPath: IndexPath) -> T {
-    guard let view = dequeueReusableSupplementaryView(ofKind: kind,
-                                                      withReuseIdentifier: "\(T.self)",
-                                                      for: indexPath) as? T else {
-      fatalError("Could not dequeue collectionview supplementary view with identifier: \(T.self)")
-    }
-    return view
-  }
 
   public func register<T: UICollectionViewCell>(cell: T.Type) {
     register(T.self, forCellWithReuseIdentifier: "\(T.self)")
@@ -165,4 +150,54 @@ extension UICollectionView {
     register(T.self, forSupplementaryViewOfKind: kind, withReuseIdentifier: "\(T.self)")
   }
 }
+
+// NOTE: Only using generics ( -> T ) here because Self cannot be used in method body of a class
+//       (currenly would need protocols with "where Self: xxx" conformance)
+
+// extensions for UITableViewCell
+extension UITableViewCell {
+  public static func dequeueReusable<T: UITableViewCell>(in collection: UITableView) -> T {
+    guard let cell = collection.dequeueReusableCell(withIdentifier: T.identifier) as? T
+      else {
+        fatalError("Could not dequeue tableview cell with identifier: " + T.identifier)
+    }
+    return cell
+  }
+}
+
+// extensions for UITableViewCell
+extension UITableViewHeaderFooterView {
+  public static func dequeueReusable<T: UITableViewHeaderFooterView>(in collection: UITableView) -> T {
+    guard let view = collection.dequeueReusableHeaderFooterView(withIdentifier: T.identifier) as? T else {
+      fatalError("Could not dequeue tableview header footer view with identifier: " + T.identifier)
+    }
+    return view
+  }
+}
+
+// extensions for UICollectionViewCell
+extension UICollectionViewCell {
+  public static func dequeueReusable<T: UICollectionViewCell>(in collection: UICollectionView,
+                                                              for indexPath: IndexPath) -> T {
+    guard let cell = collection.dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as? T else {
+        fatalError("Could not dequeue collectionview cell with identifier: " + T.identifier)
+    }
+    return cell
+  }
+}
+
+// extensions for UICollectionReusableView
+extension UICollectionReusableView {
+  public static func dequeueReusable<T: UICollectionReusableView>(in collection: UICollectionView,
+                                                                  ofKind kind: String,
+                                                                  for indexPath: IndexPath) -> T {
+    guard let view = collection.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                 withReuseIdentifier: T.identifier,
+      for: indexPath) as? T else {
+        fatalError("Could not dequeue collectionview supplementary view with identifier: " + T.identifier)
+    }
+    return view
+  }
+}
+
 #endif

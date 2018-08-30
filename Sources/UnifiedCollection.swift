@@ -25,51 +25,6 @@
 
 #if canImport(UIKit)
 
-// MARK: - Unified Collection Type (protocol)
-
-/// protocol for unified UITableView and UICollectionView
-public protocol UnifiedCollectionType {}
-extension UITableView: UnifiedCollectionType {}
-extension UICollectionView: UnifiedCollectionType {}
-
-// MARK: - Unified Cell Type (protocol)
-
-/// protocol for unified UITableViewCell and UICollectionViewCell
-public protocol UnifiedCellType {
-  /// Unified dequeReusableCell
-  static func dequeueReusable(in collection: UnifiedCollectionType, for indexPath: IndexPath) -> Self
-}
-
-// extend protocol instead of concrete type to have Self available
-extension UnifiedCellType where Self: UITableViewCell {
-  public static func dequeueReusable(in collection: UnifiedCollectionType, for indexPath: IndexPath) -> Self {
-    guard
-      let collection = collection as? UITableView,
-      let cell = collection.dequeueReusableCell(withIdentifier: Self.identifier, for: indexPath) as? Self
-      else {
-        fatalError("Could not dequeue tableview cell with identifier: " + Self.identifier)
-    }
-    return cell
-  }
-}
-
-// extend protocol instead of concrete type to have Self available
-extension UnifiedCellType where Self: UICollectionViewCell {
-
-  public static func dequeueReusable(in collection: UnifiedCollectionType, for indexPath: IndexPath) -> Self {
-    guard
-      let collection = collection as? UICollectionView,
-      let cell = collection.dequeueReusableCell(withReuseIdentifier: Self.identifier, for: indexPath) as? Self else {
-      fatalError("Could not dequeue collectionview cell with identifier: " + Self.identifier)
-    }
-    return cell
-  }
-}
-
-// apply conformances
-extension UITableViewCell: UnifiedCellType {}
-extension UICollectionViewCell: UnifiedCellType {}
-
 // MARK: - Section data (source data container)
 
 /// Factory valuetype for section protocol
