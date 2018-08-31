@@ -32,11 +32,6 @@
   #error("Unsupported platform.")
 #endif
 
-extension NSObjectProtocol {
-  /// Identifier derived from the name of the class
-  public static var identifier: String { return String(describing: Self.self) }
-}
-
 // Extension for CGRect
 extension CGRect {
   public var mid: CGPoint { return CGPoint(x: self.midX, y: self.midY) } // computed property, calculated every time
