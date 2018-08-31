@@ -33,32 +33,23 @@
 //  let myVC = MyViewController.instantiate()
 //
 
-/// protocol to instantiate Self from storyboard
-public protocol InstantiableController: class {
-  static func instantiate(storyboardName: String) -> Self
-}
-
-extension InstantiableController where Self: ViewController {
+extension ViewController {
   /// instantiate Self from a specific Storyboard
   public static func instantiate(storyboardName name: String) -> Self {
+
     #if canImport(UIKit)
     let storyboard = Storyboard(name: name, bundle: nil)
-    guard let viewController = storyboard.instantiateViewController(withIdentifier: "\(Self.self)") as? Self else {
-      fatalError("Couldn’t instantiate view controller with identifier \(Self.self) ")
-    }
+    return asSelf(object: storyboard.instantiateViewController(withIdentifier: identifier),
+                  "Couldn’t instantiate view controller with identifier: " + identifier)
+
     #elseif canImport(AppKit)
     let storyboard = Storyboard(name: .init(name), bundle: nil)
-    let identifier = NSStoryboard.SceneIdentifier(rawValue: "\(Self.self)")
-    guard let viewController = storyboard.instantiateController(withIdentifier: identifier) as? Self else {
-      fatalError("Couldn’t instantiate view controller with identifier \(Self.self) ")
-    }
+    let sceneIdentifier = NSStoryboard.SceneIdentifier(rawValue: identifier)
+    return asSelf(object: storyboard.instantiateController(withIdentifier: sceneIdentifier),
+                  "Couldn’t instantiate view controller with identifier: " + identifier)
     #endif
-    return viewController
   }
 }
-
-// Apply conformance
-extension ViewController: InstantiableController {}
 
 /// Extension for View
 //
