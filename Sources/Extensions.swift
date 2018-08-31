@@ -122,23 +122,8 @@ extension ImageView {
 
 #if canImport(UIKit)
 
-// Extensions for UITableView
-extension UITableView {
+// MARK: - dequeues using asSelf workaround
 
-  public func register<T: UITableViewCell>(cell: T.Type) {
-    register(T.self, forCellReuseIdentifier: "\(T.self)")
-  }
-
-  public func register<T: UITableViewHeaderFooterView>(headerFooterView: T.Type) {
-    register(T.self, forHeaderFooterViewReuseIdentifier: "\(T.self)")
-  }
-}
-
-// Extensions for UICollectionView
-extension UICollectionView {
-
-  public func register<T: UICollectionViewCell>(cell: T.Type) {
-    register(T.self, forCellWithReuseIdentifier: "\(T.self)")
 // extensions for UITableViewCell
 extension UITableViewCell {
   public static func dequeueReusable(in table: UITableView) -> Self {
@@ -146,8 +131,8 @@ extension UITableViewCell {
                   "Could not dequeue tableview cell with identifier: " + identifier)
   }
 
-  public func register<T: UICollectionReusableView>(supplementaryView: T.Type, ofKind kind: String) {
-    register(T.self, forSupplementaryViewOfKind: kind, withReuseIdentifier: "\(T.self)")
+  public static func register(to table: UITableView) {
+    table.register(SelfType, forCellReuseIdentifier: identifier)
   }
 }
 
@@ -158,6 +143,8 @@ extension UITableViewHeaderFooterView {
                   "Could not dequeue tableview header footer view with identifier: " + identifier)
   }
 
+  public static func register(to table: UITableView) {
+    table.register(SelfType, forHeaderFooterViewReuseIdentifier: identifier)
   }
 }
 
@@ -166,6 +153,10 @@ extension UICollectionViewCell {
   public static func dequeueReusable(in collection: UICollectionView, for indexPath: IndexPath) -> Self {
     return asSelf(object: collection.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath),
                   "Could not dequeue collectionview cell with identifier: " + identifier)
+  }
+
+  public static func register(to collection: UICollectionView) {
+    collection.register(SelfType, forCellWithReuseIdentifier: identifier)
   }
 }
 
@@ -177,6 +168,10 @@ extension UICollectionReusableView {
                                                                       withReuseIdentifier: identifier,
                                                                       for: indexPath),
                   "Could not dequeue collectionview supplementary view with identifier: " + identifier)
+  }
+
+  public static func register(to collection: UICollectionView, for kind: String) {
+    collection.register(SelfType, forSupplementaryViewOfKind: kind, withReuseIdentifier: identifier)
   }
 }
 
