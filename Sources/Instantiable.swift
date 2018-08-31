@@ -62,28 +62,19 @@ extension ViewController {
 //  let myView = MyView.instantiateFromNib()
 //
 
-/// protocol to instantiate Self from storyboard
-public protocol InstantiableView: class {
-  static func instantiateFromNib(owner: Any?) -> Self
-}
-
-extension InstantiableView where Self: View {
+extension View {
   /// instantiate Self from Nib in Bundle
   public static func instantiateFromNib(owner: Any? = nil) -> Self {
+
     #if canImport(UIKit)
-    guard let instance = Bundle.main.loadNibNamed("\(Self.self)", owner: owner)?.first as? Self else {
-      fatalError("Could not instantiate from nib: \(Self.self)")
-    }
+    return asSelf(object: Bundle.main.loadNibNamed(identifier, owner: owner)?.first,
+                  "Could not instantiate from nib: " + identifier)
+
     #elseif canImport(AppKit)
     var objects: NSArray?
-    Bundle.main.loadNibNamed(NSNib.Name(rawValue: "\(Self.self)"), owner: owner, topLevelObjects: &objects)
-    guard let instance = objects?.first as? Self else {
-      fatalError("Could not instantiate from nib: \(Self.self)")
-    }
+    Bundle.main.loadNibNamed(NSNib.Name(rawValue: identifier), owner: owner, topLevelObjects: &objects)
+    return asSelf(object: objects?.first,
+                  "Could not instantiate from nib: " + identifier)
     #endif
-    return instance
   }
 }
-
-// Apply conformance
-extension View: InstantiableView {}
