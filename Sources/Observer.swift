@@ -47,9 +47,9 @@ public struct TypedNotification<ObjectType> {
 
 extension Observer {
   /// add listening notification that acts on predefined (typed) value
-  public func add<T>(_ typedNotification: TypedNotification<T>, using block: @escaping (T) -> Void) {
-    add(typedNotification.name) { notification in
-      guard let value = notification.userInfo?[typedNotification.name] as? T else {
+  public func add<T>(_ notification: TypedNotification<T>, using block: @escaping (T) -> Void) {
+    add(notification.name) { notification in
+      guard let value = notification.userInfo?[notification.name] as? T else {
         fatalError("Observer: invalid TypedNotification value type")
       }
       block(value)
@@ -57,10 +57,10 @@ extension Observer {
   }
 
   /// post notification that uses predefined (typed) value
-  public static func post<T>(_ typedNotification: TypedNotification<T>, value: T) {
-    NotificationCenter.default.post(name: typedNotification.name,
+  public static func post<T>(_ notification: TypedNotification<T>, value: T) {
+    NotificationCenter.default.post(name: notification.name,
                                     object: nil,
-                                    userInfo: [typedNotification.name: value])
+                                    userInfo: [notification.name: value])
   }
 }
 
@@ -69,9 +69,9 @@ extension Observer {
 
  // 1. define your notifications as TypedNotifications
 
- struct MyNotifications {
-   static var note1 = TypedNotification<Int>(title: "myNotification1")
-   static var note2 = TypedNotification<String>(title: "myNotification2")
+ extension TypedNotification {
+   static var note1: TypedNotification<Int> { return .init(title: "myNotification1") }
+   static var note2: TypedNotification<String> { return .init(title: "myNotification2") }
  }
 
 // 2a.For listening to notifications instantiate observer inside your viewcontroller
