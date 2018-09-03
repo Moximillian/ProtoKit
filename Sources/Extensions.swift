@@ -132,7 +132,7 @@ extension UITableViewCell {
   }
 
   public static func register(to table: UITableView) {
-    table.register(SelfType, forCellReuseIdentifier: identifier)
+    table.register(self, forCellReuseIdentifier: identifier)
   }
 }
 
@@ -144,7 +144,7 @@ extension UITableViewHeaderFooterView {
   }
 
   public static func register(to table: UITableView) {
-    table.register(SelfType, forHeaderFooterViewReuseIdentifier: identifier)
+    table.register(self, forHeaderFooterViewReuseIdentifier: identifier)
   }
 }
 
@@ -156,7 +156,7 @@ extension UICollectionViewCell {
   }
 
   public static func register(to collection: UICollectionView) {
-    collection.register(SelfType, forCellWithReuseIdentifier: identifier)
+    collection.register(self, forCellWithReuseIdentifier: identifier)
   }
 }
 
@@ -171,7 +171,7 @@ extension UICollectionReusableView {
   }
 
   public static func register(to collection: UICollectionView, for kind: String) {
-    collection.register(SelfType, forSupplementaryViewOfKind: kind, withReuseIdentifier: identifier)
+    collection.register(self, forSupplementaryViewOfKind: kind, withReuseIdentifier: identifier)
   }
 }
 

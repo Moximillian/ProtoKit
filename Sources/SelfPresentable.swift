@@ -22,11 +22,9 @@ import AppKit
 public protocol SelfPresentable {}
 
 extension SelfPresentable {
-  /// Type of Self exposed to classes
-  public static var SelfType: Self.Type { return Self.self }
 
   /// Identifier derived from the name of the class
-  public static var identifier: String { return String(describing: Self.self) }
+  public static var identifier: String { return String(describing: self) }
 
   /// Cast an object to Self or show error message
   public static func asSelf(object: Any?, _ errorMessage: String) -> Self {
