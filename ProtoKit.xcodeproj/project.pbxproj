@@ -7,26 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		41076BE0208CFA9C0081D5E6 /* Instantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41076BDF208CFA9C0081D5E6 /* Instantiable.swift */; };
-		417AF12120B1658C000306F8 /* KVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417AF12020B1658C000306F8 /* KVO.swift */; };
-		417AF12320B16AE3000306F8 /* AssociatedObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417AF12220B16AE3000306F8 /* AssociatedObjectStore.swift */; };
-		4198A8232019DD9500A7772A /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4198A8222019DD9500A7772A /* Observer.swift */; };
-		41CC76132139ABF100C2DEE6 /* SelfPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CC76122139ABF100C2DEE6 /* SelfPresentable.swift */; };
-		41F5E97B20B74BCE009BDF9B /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F5E97A20B74BCE009BDF9B /* Configurable.swift */; };
-		OBJ_32 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
-		OBJ_38 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* Package.swift */; };
-		OBJ_44 /* Closurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* Closurable.swift */; };
-		OBJ_45 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* CoreDataStack.swift */; };
-		OBJ_46 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* Error.swift */; };
-		OBJ_47 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* Extensions.swift */; };
-		OBJ_49 /* SegueHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* SegueHandlerType.swift */; };
-		OBJ_50 /* UnifiedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* UnifiedCollection.swift */; };
-		OBJ_52 /* Then.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Then::Then::Product" /* Then.framework */; };
-		OBJ_59 /* Then.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* Then.swift */; };
+		OBJ_36 /* AssociatedObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* AssociatedObjectStore.swift */; };
+		OBJ_37 /* Closurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* Closurable.swift */; };
+		OBJ_38 /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* Configurable.swift */; };
+		OBJ_39 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* CoreDataStack.swift */; };
+		OBJ_40 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* Error.swift */; };
+		OBJ_41 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* Extensions.swift */; };
+		OBJ_42 /* Instantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* Instantiable.swift */; };
+		OBJ_43 /* KVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* KVO.swift */; };
+		OBJ_44 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* Observer.swift */; };
+		OBJ_45 /* SegueHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* SegueHandlerType.swift */; };
+		OBJ_46 /* SelfPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* SelfPresentable.swift */; };
+		OBJ_47 /* UnifiedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* UnifiedCollection.swift */; };
+		OBJ_49 /* Then.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Then::Then::Product" /* Then.framework */; };
+		OBJ_57 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_62 /* Then.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* Then.swift */; };
+		OBJ_69 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* Package.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		418A3D371F7970C0009F46F5 /* PBXContainerItemProxy */ = {
+		417B31C1214C4FE40012AEDC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
@@ -36,35 +36,35 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		41076BDF208CFA9C0081D5E6 /* Instantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instantiable.swift; sourceTree = "<group>"; };
-		417AF12020B1658C000306F8 /* KVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVO.swift; sourceTree = "<group>"; };
-		417AF12220B16AE3000306F8 /* AssociatedObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociatedObjectStore.swift; sourceTree = "<group>"; };
-		4198A8222019DD9500A7772A /* Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
-		41CC76122139ABF100C2DEE6 /* SelfPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfPresentable.swift; sourceTree = "<group>"; };
-		41F5E97A20B74BCE009BDF9B /* Configurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurable.swift; sourceTree = "<group>"; };
-		OBJ_10 /* Closurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Closurable.swift; sourceTree = "<group>"; };
-		OBJ_11 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
-		OBJ_12 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
-		OBJ_13 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		OBJ_15 /* SegueHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueHandlerType.swift; sourceTree = "<group>"; };
-		OBJ_16 /* UnifiedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedCollection.swift; sourceTree = "<group>"; };
-		OBJ_22 /* Then.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Then.swift; sourceTree = "<group>"; };
-		OBJ_23 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/mox.soini/Code/ProtoKit/.build/checkouts/Then-9147344704269568239/Package.swift"; sourceTree = "<group>"; };
+		OBJ_10 /* AssociatedObjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociatedObjectStore.swift; sourceTree = "<group>"; };
+		OBJ_11 /* Closurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Closurable.swift; sourceTree = "<group>"; };
+		OBJ_12 /* Configurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurable.swift; sourceTree = "<group>"; };
+		OBJ_13 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		OBJ_14 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		OBJ_15 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		OBJ_16 /* Instantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instantiable.swift; sourceTree = "<group>"; };
+		OBJ_17 /* KVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVO.swift; sourceTree = "<group>"; };
+		OBJ_18 /* Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
+		OBJ_19 /* SegueHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueHandlerType.swift; sourceTree = "<group>"; };
+		OBJ_20 /* SelfPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfPresentable.swift; sourceTree = "<group>"; };
+		OBJ_21 /* UnifiedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedCollection.swift; sourceTree = "<group>"; };
+		OBJ_26 /* Then.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Then.swift; sourceTree = "<group>"; };
+		OBJ_27 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/mox.soini/Code/ProtoKit/.build/checkouts/Then-5723370585896597878/Package.swift"; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		"ProtoKit::ProtoKit::Product" /* ProtoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ProtoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Then::Then::Product" /* Then.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Then.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		OBJ_51 /* Frameworks */ = {
+		OBJ_48 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_52 /* Then.framework in Frameworks */,
+				OBJ_49 /* Then.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_60 /* Frameworks */ = {
+		OBJ_63 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
@@ -74,33 +74,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		OBJ_19 /* Dependencies */ = {
+		OBJ_22 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_20 /* Then 2.2.0 */,
+			);
+			name = Tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_23 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_24 /* Then 2.3.0 */,
 			);
 			name = Dependencies;
 			sourceTree = "<group>";
 		};
-		OBJ_20 /* Then 2.2.0 */ = {
+		OBJ_24 /* Then 2.3.0 */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_21 /* Then */,
-				OBJ_23 /* Package.swift */,
+				OBJ_25 /* Then */,
+				OBJ_27 /* Package.swift */,
 			);
-			name = "Then 2.2.0";
+			name = "Then 2.3.0";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_21 /* Then */ = {
+		OBJ_25 /* Then */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_22 /* Then.swift */,
+				OBJ_26 /* Then.swift */,
 			);
 			name = Then;
-			path = ".build/checkouts/Then-9147344704269568239/Sources/Then";
+			path = ".build/checkouts/Then-5723370585896597878/Sources/Then";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_24 /* Products */ = {
+		OBJ_28 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				"ProtoKit::ProtoKit::Product" /* ProtoKit.framework */,
@@ -113,27 +120,44 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
-				OBJ_9 /* Sources */,
-				OBJ_19 /* Dependencies */,
-				OBJ_24 /* Products */,
+				OBJ_7 /* Sources */,
+				OBJ_22 /* Tests */,
+				OBJ_23 /* Dependencies */,
+				OBJ_28 /* Products */,
 			);
 			sourceTree = "<group>";
+		};
+		OBJ_7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_8 /* ProtoKit */,
+			);
+			name = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_8 /* ProtoKit */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_9 /* Sources */,
+			);
+			name = ProtoKit;
+			sourceTree = SOURCE_ROOT;
 		};
 		OBJ_9 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				417AF12220B16AE3000306F8 /* AssociatedObjectStore.swift */,
-				417AF12020B1658C000306F8 /* KVO.swift */,
-				OBJ_10 /* Closurable.swift */,
-				41F5E97A20B74BCE009BDF9B /* Configurable.swift */,
-				OBJ_11 /* CoreDataStack.swift */,
-				OBJ_12 /* Error.swift */,
-				OBJ_13 /* Extensions.swift */,
-				41076BDF208CFA9C0081D5E6 /* Instantiable.swift */,
-				4198A8222019DD9500A7772A /* Observer.swift */,
-				OBJ_15 /* SegueHandlerType.swift */,
-				41CC76122139ABF100C2DEE6 /* SelfPresentable.swift */,
-				OBJ_16 /* UnifiedCollection.swift */,
+				OBJ_10 /* AssociatedObjectStore.swift */,
+				OBJ_11 /* Closurable.swift */,
+				OBJ_12 /* Configurable.swift */,
+				OBJ_13 /* CoreDataStack.swift */,
+				OBJ_14 /* Error.swift */,
+				OBJ_15 /* Extensions.swift */,
+				OBJ_16 /* Instantiable.swift */,
+				OBJ_17 /* KVO.swift */,
+				OBJ_18 /* Observer.swift */,
+				OBJ_19 /* SegueHandlerType.swift */,
+				OBJ_20 /* SelfPresentable.swift */,
+				OBJ_21 /* UnifiedCollection.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -143,16 +167,16 @@
 /* Begin PBXNativeTarget section */
 		"ProtoKit::ProtoKit" /* ProtoKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_40 /* Build configuration list for PBXNativeTarget "ProtoKit" */;
+			buildConfigurationList = OBJ_32 /* Build configuration list for PBXNativeTarget "ProtoKit" */;
 			buildPhases = (
-				OBJ_43 /* Sources */,
-				OBJ_51 /* Frameworks */,
-				4194D6FF21273B5D00C5AB2B /* ShellScript */,
+				OBJ_35 /* Sources */,
+				OBJ_48 /* Frameworks */,
+				4120B01D214C54050006F0BD /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				OBJ_53 /* PBXTargetDependency */,
+				OBJ_50 /* PBXTargetDependency */,
 			);
 			name = ProtoKit;
 			productName = ProtoKit;
@@ -161,9 +185,9 @@
 		};
 		"ProtoKit::SwiftPMPackageDescription" /* ProtoKitPackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_28 /* Build configuration list for PBXNativeTarget "ProtoKitPackageDescription" */;
+			buildConfigurationList = OBJ_53 /* Build configuration list for PBXNativeTarget "ProtoKitPackageDescription" */;
 			buildPhases = (
-				OBJ_31 /* Sources */,
+				OBJ_56 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -175,9 +199,9 @@
 		};
 		"Then::SwiftPMPackageDescription" /* ThenPackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_34 /* Build configuration list for PBXNativeTarget "ThenPackageDescription" */;
+			buildConfigurationList = OBJ_65 /* Build configuration list for PBXNativeTarget "ThenPackageDescription" */;
 			buildPhases = (
-				OBJ_37 /* Sources */,
+				OBJ_68 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -189,10 +213,10 @@
 		};
 		"Then::Then" /* Then */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_55 /* Build configuration list for PBXNativeTarget "Then" */;
+			buildConfigurationList = OBJ_58 /* Build configuration list for PBXNativeTarget "Then" */;
 			buildPhases = (
-				OBJ_58 /* Sources */,
-				OBJ_60 /* Frameworks */,
+				OBJ_61 /* Sources */,
+				OBJ_63 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -209,7 +233,7 @@
 		OBJ_1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 9999;
 				TargetAttributes = {
 					"ProtoKit::ProtoKit" = {
 						LastSwiftMigration = 1000;
@@ -227,20 +251,20 @@
 				en,
 			);
 			mainGroup = OBJ_5;
-			productRefGroup = OBJ_24 /* Products */;
+			productRefGroup = OBJ_28 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				"ProtoKit::SwiftPMPackageDescription" /* ProtoKitPackageDescription */,
-				"Then::SwiftPMPackageDescription" /* ThenPackageDescription */,
 				"ProtoKit::ProtoKit" /* ProtoKit */,
+				"ProtoKit::SwiftPMPackageDescription" /* ProtoKitPackageDescription */,
 				"Then::Then" /* Then */,
+				"Then::SwiftPMPackageDescription" /* ThenPackageDescription */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4194D6FF21273B5D00C5AB2B /* ShellScript */ = {
+		4120B01D214C54050006F0BD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -260,105 +284,74 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		OBJ_31 /* Sources */ = {
+		OBJ_35 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_32 /* Package.swift in Sources */,
+				OBJ_36 /* AssociatedObjectStore.swift in Sources */,
+				OBJ_37 /* Closurable.swift in Sources */,
+				OBJ_38 /* Configurable.swift in Sources */,
+				OBJ_39 /* CoreDataStack.swift in Sources */,
+				OBJ_40 /* Error.swift in Sources */,
+				OBJ_41 /* Extensions.swift in Sources */,
+				OBJ_42 /* Instantiable.swift in Sources */,
+				OBJ_43 /* KVO.swift in Sources */,
+				OBJ_44 /* Observer.swift in Sources */,
+				OBJ_45 /* SegueHandlerType.swift in Sources */,
+				OBJ_46 /* SelfPresentable.swift in Sources */,
+				OBJ_47 /* UnifiedCollection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_37 /* Sources */ = {
+		OBJ_56 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_38 /* Package.swift in Sources */,
+				OBJ_57 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_43 /* Sources */ = {
+		OBJ_61 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				4198A8232019DD9500A7772A /* Observer.swift in Sources */,
-				OBJ_44 /* Closurable.swift in Sources */,
-				417AF12120B1658C000306F8 /* KVO.swift in Sources */,
-				41CC76132139ABF100C2DEE6 /* SelfPresentable.swift in Sources */,
-				OBJ_45 /* CoreDataStack.swift in Sources */,
-				41076BE0208CFA9C0081D5E6 /* Instantiable.swift in Sources */,
-				41F5E97B20B74BCE009BDF9B /* Configurable.swift in Sources */,
-				OBJ_46 /* Error.swift in Sources */,
-				417AF12320B16AE3000306F8 /* AssociatedObjectStore.swift in Sources */,
-				OBJ_47 /* Extensions.swift in Sources */,
-				OBJ_49 /* SegueHandlerType.swift in Sources */,
-				OBJ_50 /* UnifiedCollection.swift in Sources */,
+				OBJ_62 /* Then.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_58 /* Sources */ = {
+		OBJ_68 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_59 /* Then.swift in Sources */,
+				OBJ_69 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		OBJ_53 /* PBXTargetDependency */ = {
+		OBJ_50 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Then::Then" /* Then */;
-			targetProxy = 418A3D371F7970C0009F46F5 /* PBXContainerItemProxy */;
+			targetProxy = 417B31C1214C4FE40012AEDC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		OBJ_29 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Debug;
-		};
 		OBJ_3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
@@ -367,37 +360,57 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "SWIFT_PACKAGE DEBUG";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				TVOS_DEPLOYMENT_TARGET = 12.0;
 				USE_HEADERMAP = NO;
 			};
 			name = Debug;
 		};
-		OBJ_30 /* Release */ = {
+		OBJ_33 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
-		OBJ_35 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 4.0;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = ProtoKit.xcodeproj/ProtoKit_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = ProtoKit;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				TARGET_NAME = ProtoKit;
 			};
 			name = Debug;
 		};
-		OBJ_36 /* Release */ = {
+		OBJ_34 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 4.0;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = ProtoKit.xcodeproj/ProtoKit_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = ProtoKit;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				TARGET_NAME = ProtoKit;
 			};
 			name = Release;
 		};
@@ -405,36 +418,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
@@ -443,55 +431,28 @@
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
-				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
 				TVOS_DEPLOYMENT_TARGET = 12.0;
 				USE_HEADERMAP = NO;
 			};
 			name = Release;
 		};
-		OBJ_41 /* Debug */ = {
+		OBJ_54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = ProtoKit.xcodeproj/ProtoKit_Info.plist;
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = ProtoKit;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
-				TARGET_NAME = ProtoKit;
+				LD = /usr/bin/true;
 			};
 			name = Debug;
 		};
-		OBJ_42 /* Release */ = {
+		OBJ_55 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = ProtoKit.xcodeproj/ProtoKit_Info.plist;
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = ProtoKit;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
-				TARGET_NAME = ProtoKit;
+				LD = /usr/bin/true;
 			};
 			name = Release;
 		};
-		OBJ_56 /* Debug */ = {
+		OBJ_59 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -501,18 +462,20 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ProtoKit.xcodeproj/Then_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = Then;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
 				TARGET_NAME = Then;
 			};
 			name = Debug;
 		};
-		OBJ_57 /* Release */ = {
+		OBJ_60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -522,14 +485,30 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ProtoKit.xcodeproj/Then_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = Then;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
 				TARGET_NAME = Then;
+			};
+			name = Release;
+		};
+		OBJ_66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+			};
+			name = Debug;
+		};
+		OBJ_67 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
 			};
 			name = Release;
 		};
@@ -543,43 +522,43 @@
 				OBJ_4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
-		OBJ_28 /* Build configuration list for PBXNativeTarget "ProtoKitPackageDescription" */ = {
+		OBJ_32 /* Build configuration list for PBXNativeTarget "ProtoKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_29 /* Debug */,
-				OBJ_30 /* Release */,
+				OBJ_33 /* Debug */,
+				OBJ_34 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
-		OBJ_34 /* Build configuration list for PBXNativeTarget "ThenPackageDescription" */ = {
+		OBJ_53 /* Build configuration list for PBXNativeTarget "ProtoKitPackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_35 /* Debug */,
-				OBJ_36 /* Release */,
+				OBJ_54 /* Debug */,
+				OBJ_55 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
-		OBJ_40 /* Build configuration list for PBXNativeTarget "ProtoKit" */ = {
+		OBJ_58 /* Build configuration list for PBXNativeTarget "Then" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_41 /* Debug */,
-				OBJ_42 /* Release */,
+				OBJ_59 /* Debug */,
+				OBJ_60 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
-		OBJ_55 /* Build configuration list for PBXNativeTarget "Then" */ = {
+		OBJ_65 /* Build configuration list for PBXNativeTarget "ThenPackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_56 /* Debug */,
-				OBJ_57 /* Release */,
+				OBJ_66 /* Debug */,
+				OBJ_67 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
