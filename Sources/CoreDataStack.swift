@@ -62,7 +62,7 @@ public final class CoreDataStack {
      application to it. This property is optional since there are legitimate
      error conditions that could cause the creation of the store to fail.
      */
-    $0.loadPersistentStores(completionHandler: { (storeDescription, error) in
+    $0.loadPersistentStores(completionHandler: { storeDescription, error in
       /*
        Typical reasons for an error here include:
        * The parent directory does not exist, cannot be created, or disallows writing.

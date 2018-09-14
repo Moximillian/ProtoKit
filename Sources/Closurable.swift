@@ -43,7 +43,7 @@ extension Closurable {
 #else
 
 /// Closurable protocol
-public protocol Closurable: class {}
+public protocol Closurable: AnyObject {}
 // restrict protocol to only classes => can refer to the class instance in the protocol extension
 
 extension Closurable where Self: NSObject {
