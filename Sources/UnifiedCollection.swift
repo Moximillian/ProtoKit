@@ -45,17 +45,17 @@ public struct SectionData<Item> {
   }
 }
 
-// MARK: - Unified Cell Configurable (protocol)
+// MARK: - Unified Cell (protocol)
 
 /// protocol for unified configuring of a cell. This should be conformed with the implemented cell class
-public protocol UnifiedCellConfigurable {
+public protocol UnifiedCell {
   associatedtype Item
   func configure(item: Item, indexPath: IndexPath)
 }
 
-// MARK: - conformances for UnifiedCellConfigurable
+// MARK: - conformances for UnifiedCell
 
-extension UnifiedCellConfigurable where Self: UITableViewCell {
+extension UnifiedCell where Self: UITableViewCell {
   /// provide datasource for this type of cell
   public static func dataSource(sections: [SectionData<Item>]) -> UITableViewDataSource {
     return TableDataSource<Self>(sections: sections)
@@ -67,40 +67,40 @@ extension UnifiedCellConfigurable where Self: UITableViewCell {
   }
 }
 
-extension UnifiedCellConfigurable where Self: UICollectionViewCell {
+extension UnifiedCell where Self: UICollectionViewCell {
   /// provide datasource for this type of cell
-  public static func dataSource<Title>(titleType: Title.Type,
-                                       sections: [SectionData<Item>]) -> UICollectionViewDataSource
-                                      where Title: TitleType, Item == Title.Item {
+  public static func dataSource<Title: TitleType>(titleType: Title.Type,
+                                                  sections: [SectionData<Item>])
+                                                  -> UICollectionViewDataSource where Item == Title.Item {
     return CollectionDataSource<Self, Title>(sections: sections)
   }
 
   /// provide datasource for this type of cell, fancy pants version
-  public static func dataSource<Title>(titleType: Title.Type,
-                                       _ variadicSections: SectionData<Item>...) -> UICollectionViewDataSource
-                                      where Title: TitleType, Item == Title.Item {
+  public static func dataSource<Title: TitleType>(titleType: Title.Type,
+                                                  _ variadicSections: SectionData<Item>...)
+                                                  -> UICollectionViewDataSource where Item == Title.Item {
     return dataSource(titleType: titleType, sections: variadicSections)
   }
 }
 
-// MARK: - Unified Title Configurable (protocol)
+// MARK: - Unified Title  (protocol)
 
 /// protocol for unified UICollectionReusableView. This should be conformed with the implemented cell class
-public protocol UnifiedTitleConfigurable {
+public protocol UnifiedTitle {
   associatedtype Item
   func configure(item: Item, kind: String, indexPath: IndexPath)
 }
 
 // MARK: - typealiases for TableCellType, CollectionCellType and TitleType
 
-public typealias TableCellType = UITableViewCell & UnifiedCellConfigurable
-public typealias CollectionCellType = UICollectionViewCell & UnifiedCellConfigurable
-public typealias TitleType = UICollectionReusableView & UnifiedTitleConfigurable
+public typealias TableCellType = UITableViewCell & UnifiedCell
+public typealias CollectionCellType = UICollectionViewCell & UnifiedCell
+public typealias TitleType = UICollectionReusableView & UnifiedTitle
 
 // MARK: - Unified DataSource (parent class)
 
 /// Factory for creating datasources
-private class UnifiedDataSource<Cell: UnifiedCellConfigurable>: NSObject {
+private class UnifiedDataSource<Cell: UnifiedCell>: NSObject {
 
   private var sections: [SectionData<Cell.Item>]
 
@@ -181,7 +181,7 @@ fileprivate final class CollectionDataSource<Cell: CollectionCellType, Title: Ti
 /*
  //  -------- USAGE ----------
 
- // 1. create your cell (e.g. MyCell) and conform to UnifiedCellConfigurable by providing configure -method.
+ // 1. create your cell (e.g. MyCell) and conform to UnifiedCell by providing configure -method.
  // In the method, provide your actual class/struct type of your Items (here is MyData Struct as simple example).
 
  struct MyData {
@@ -190,7 +190,7 @@ fileprivate final class CollectionDataSource<Cell: CollectionCellType, Title: Ti
  }
 
 
- final class MyCell: UITableViewCell, UnifiedCellConfigurable {
+ final class MyCell: UITableViewCell, UnifiedCell {
 
    // ...
 
