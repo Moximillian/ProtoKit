@@ -1,0 +1,11 @@
+disabled_rules:
+  - todo
+opt_in_rules:
+  - anyobject_protocol
+  - empty_count
+  - empty_string
+  - first_where
+  - overridden_super_call
+  - prohibited_super_call
+  - toggle_bool
+  - unneeded_parentheses_in_closure_argument
