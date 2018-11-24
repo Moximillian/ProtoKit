@@ -37,15 +37,13 @@ extension ViewController {
   /// instantiate Self from a specific Storyboard
   public static func instantiate(storyboardName name: String) -> Self {
 
-    #if canImport(UIKit)
     let storyboard = Storyboard(name: name, bundle: nil)
+    #if canImport(UIKit)
     return asSelf(object: storyboard.instantiateViewController(withIdentifier: identifier),
                   "Couldn’t instantiate view controller with identifier: " + identifier)
 
     #elseif canImport(AppKit)
-    let storyboard = Storyboard(name: .init(name), bundle: nil)
-    let sceneIdentifier = NSStoryboard.SceneIdentifier(rawValue: identifier)
-    return asSelf(object: storyboard.instantiateController(withIdentifier: sceneIdentifier),
+    return asSelf(object: storyboard.instantiateController(withIdentifier: identifier),
                   "Couldn’t instantiate view controller with identifier: " + identifier)
     #endif
   }
@@ -72,7 +70,7 @@ extension View {
 
     #elseif canImport(AppKit)
     var objects: NSArray?
-    Bundle.main.loadNibNamed(NSNib.Name(rawValue: identifier), owner: owner, topLevelObjects: &objects)
+    Bundle.main.loadNibNamed(identifier, owner: owner, topLevelObjects: &objects)
     return asSelf(object: objects?.first,
                   "Could not instantiate from nib: " + identifier)
     #endif

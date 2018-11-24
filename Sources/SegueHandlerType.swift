@@ -29,21 +29,12 @@ public protocol SegueHandlerType: ViewController {
 
 extension SegueHandlerType {
   public func perform(segue: Segues, sender: Any? = nil) {
-#if canImport(UIKit)
     performSegue(withIdentifier: segue.rawValue, sender: sender)
-#elseif canImport(AppKit)
-    performSegue(withIdentifier: .init(segue.rawValue), sender: sender)
-#endif
   }
 
   public func identifier(for segue: StoryboardSegue) -> Segues {
-#if canImport(UIKit)
-    let identifier: String? = segue.identifier
-#elseif canImport(AppKit)
-    let identifier: String? = segue.identifier?.rawValue
-#endif
     guard
-      let rawValue = identifier,
+      let rawValue = segue.identifier,
       let segueIdentifier = Segues(rawValue: rawValue) else {
         fatalError("Unknown segue: \(segue.identifier ?? "")")
     }
@@ -60,19 +51,11 @@ public protocol SegueHandlerType {
 
 extension SegueHandlerType where Self: ViewController {
   public func perform(segue: Segues, sender: Any? = nil) {
-    #if canImport(UIKit)
     performSegue(withIdentifier: segue.rawValue, sender: sender)
-    #elseif canImport(AppKit)
-    performSegue(withIdentifier: .init(segue.rawValue), sender: sender)
-    #endif
   }
 
   public func identifier(for segue: StoryboardSegue) -> Segues {
-    #if canImport(UIKit)
     let identifier: String? = segue.identifier
-    #elseif canImport(AppKit)
-    let identifier: String? = segue.identifier?.rawValue
-    #endif
     guard
       let rawValue = identifier,
       let segueIdentifier = Segues(rawValue: rawValue) else {
