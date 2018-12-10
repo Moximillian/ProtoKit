@@ -140,7 +140,7 @@ fileprivate final class TableDataSource<Cell: TableCellType>: UnifiedDataSource<
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell: Cell = Cell.dequeueReusable(in: tableView)
+    let cell = Cell.dequeueReusable(in: tableView)
     cell.configure(item: item(at: indexPath), indexPath: indexPath)
     return cell
   }
@@ -164,13 +164,13 @@ fileprivate final class CollectionDataSource<Cell: CollectionCellType, Title: Ti
   func collectionView(_ collectionView: UICollectionView,
                       viewForSupplementaryElementOfKind kind: String,
                       at indexPath: IndexPath) -> UICollectionReusableView {
-    let view: Title = Title.dequeueReusable(in: collectionView, ofKind: kind, for: indexPath)
+    let view = Title.dequeueReusable(in: collectionView, ofKind: kind, for: indexPath)
     view.configure(item: item(at: indexPath), kind: kind, indexPath: indexPath)
     return view
   }
 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell: Cell = Cell.dequeueReusable(in: collectionView, for: indexPath)
+    let cell = Cell.dequeueReusable(in: collectionView, for: indexPath)
     cell.configure(item: item(at: indexPath), indexPath: indexPath)
     return cell
   }
