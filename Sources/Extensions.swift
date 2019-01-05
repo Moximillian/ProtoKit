@@ -6,7 +6,7 @@
 //  https://github.com/moximillian/ProtoKit
 //
 //  License
-//  Copyright © 2015 Mox Soini
+//  Copyright © 2019 Mox Soini
 //  Released under an MIT license: http://opensource.org/licenses/MIT
 //
 
