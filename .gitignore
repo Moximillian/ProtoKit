@@ -25,7 +25,6 @@ xcuserdata
 # Swift Package Manager
 .build/
 Packages/
-Tests/
 /Package.resolved
 
 # Emacs
