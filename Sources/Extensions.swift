@@ -176,3 +176,66 @@ extension UICollectionReusableView {
 }
 
 #endif
+
+// https://ericasadun.com/2018/12/12/the-beauty-of-swift-5-string-interpolation/
+// https://ericasadun.com/2018/12/16/swift-5-interpolation-part-3-dates-and-number-formatters/
+
+#if swift(>=5)
+
+// extensions for string interpolation
+public extension String.StringInterpolation {
+
+  /// Date formatting interpolation
+  mutating func appendInterpolation(_ value: Date, _ formatter: DateFormatter) {
+    appendLiteral(formatter.string(from: value))
+  }
+
+  /// Provides `Optional` string interpolation without forcing the
+  /// use of `String(describing:)`.
+  mutating func appendInterpolation<T>(_ value: T?, default defaultValue: String) {
+    if let value = value {
+      appendInterpolation(value)
+    } else {
+      appendLiteral(String(describing: defaultValue))
+    }
+  }
+
+  // CGFloat Number formatting
+  mutating func appendInterpolation(_ value: CGFloat, _ formatter: NumberFormatter) {
+    switch value {
+    case 0..<10:
+      formatter.maximumFractionDigits = 1
+      formatter.minimumFractionDigits = 1
+    default: // case let v where v >= 10
+      formatter.maximumFractionDigits = 0
+    }
+    appendLiteral(formatter.string(from: value as NSNumber) ?? "")
+  }
+}
+
+public extension DateFormatter {
+  /// Returns an initialized `DateFormatter` instance
+  static func format(date: Style, time: Style) -> DateFormatter {
+    let formatter = DateFormatter()
+    formatter.locale = Locale.current
+    (formatter.dateStyle, formatter.timeStyle) = (date, time)
+    return formatter
+  }
+
+  /// Returns an initialized `DateFormatter` instance
+  static func format(_ dateFormat: String) -> DateFormatter {
+    return DateFormatter().then { $0.dateFormat = dateFormat }
+  }
+}
+
+public extension NumberFormatter {
+  static func format() -> NumberFormatter {
+    return NumberFormatter().then {
+      $0.numberStyle = .decimal
+      $0.decimalSeparator = ","
+      $0.usesGroupingSeparator = false
+    }
+  }
+}
+
+#endif
