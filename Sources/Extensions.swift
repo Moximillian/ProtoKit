@@ -184,6 +184,9 @@ extension UICollectionReusableView {
 
 // extensions for string interpolation
 public extension String.StringInterpolation {
+  public enum NumberFormat {
+    case compact
+  }
 
   /// Date formatting interpolation
   mutating func appendInterpolation(_ value: Date, _ formatter: DateFormatter) {
@@ -201,7 +204,14 @@ public extension String.StringInterpolation {
   }
 
   // CGFloat Number formatting
-  mutating func appendInterpolation(_ value: CGFloat, _ formatter: NumberFormatter) {
+  mutating func appendInterpolation(_ value: CGFloat, _ format: NumberFormat) {
+    let formatter = NumberFormatter()
+    switch format {
+    case .compact:
+      formatter.numberStyle = .decimal
+      formatter.decimalSeparator = ","
+      formatter.usesGroupingSeparator = false
+    }
     switch value {
     case 0..<10:
       formatter.maximumFractionDigits = 1
@@ -225,16 +235,6 @@ public extension DateFormatter {
   /// Returns an initialized `DateFormatter` instance
   static func format(_ dateFormat: String) -> DateFormatter {
     return DateFormatter().then { $0.dateFormat = dateFormat }
-  }
-}
-
-public extension NumberFormatter {
-  static func format() -> NumberFormatter {
-    return NumberFormatter().then {
-      $0.numberStyle = .decimal
-      $0.decimalSeparator = ","
-      $0.usesGroupingSeparator = false
-    }
   }
 }
 
