@@ -45,10 +45,27 @@ public struct SectionData<Item> {
   }
 }
 
+// MARK: - Unified Collection (protocol)
+
+/// protocol for unified Collection.
+/// This conformance is already implemented in UITableView and UICollectionView
+public protocol UnifiedCollection {}  // This should be kept as simple as possible to avoid implementation complexity.
+extension UITableView: UnifiedCollection {}
+extension UICollectionView: UnifiedCollection {}
+
+// MARK: - Dequeable Cell (protocol)
+
+/// protocol for unified dequeing of a cell.
+/// This conformance is already implemented in UITableViewCell and UICollectionViewCell
+public protocol DequeableCell {
+  associatedtype Collection: UnifiedCollection
+  static func dequeueReusable(in collection: Collection, for indexPath: IndexPath) -> Self
+}
+
 // MARK: - Unified Cell (protocol)
 
 /// protocol for unified configuring of a cell. This should be conformed with the implemented cell class
-public protocol UnifiedCell {
+public protocol UnifiedCell: DequeableCell {
   associatedtype Item
   func configure(item: Item, indexPath: IndexPath)
 }
@@ -116,6 +133,11 @@ private class UnifiedDataSource<Cell: UnifiedCell>: NSObject {
   fileprivate func numberOfItems(in section: Int) -> Int { return sections[section].items.count }
   fileprivate func headerTitle(in section: Int) -> String? { return sections[section].headerTitle }
   fileprivate func footerTitle(in section: Int) -> String? { return sections[section].footerTitle }
+  fileprivate func cell(for collection: Cell.Collection, at indexPath: IndexPath) -> Cell {
+    let cell = Cell.dequeueReusable(in: collection, for: indexPath)
+    cell.configure(item: item(at: indexPath), indexPath: indexPath)
+    return cell
+  }
 }
 
 // MARK: - Table Data Source, inheriting from Unified Data Source
@@ -140,9 +162,7 @@ fileprivate final class TableDataSource<Cell: TableCellType>: UnifiedDataSource<
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = Cell.dequeueReusable(in: tableView)
-    cell.configure(item: item(at: indexPath), indexPath: indexPath)
-    return cell
+    return cell(for: tableView, at: indexPath)
   }
 }
 
@@ -170,9 +190,7 @@ fileprivate final class CollectionDataSource<Cell: CollectionCellType, Title: Ti
   }
 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = Cell.dequeueReusable(in: collectionView, for: indexPath)
-    cell.configure(item: item(at: indexPath), indexPath: indexPath)
-    return cell
+    return cell(for: collectionView, at: indexPath)
   }
 }
 

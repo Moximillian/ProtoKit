@@ -125,9 +125,10 @@ extension ImageView {
 // MARK: - dequeues using asSelf workaround
 
 // extensions for UITableViewCell
-extension UITableViewCell {
-  public static func dequeueReusable(in table: UITableView) -> Self {
-    return asSelf(object: table.dequeueReusableCell(withIdentifier: identifier),
+extension UITableViewCell: DequeableCell {
+  public typealias Collection = UITableView
+  public static func dequeueReusable(in collection: UITableView, for indexPath: IndexPath) -> Self {
+    return asSelf(object: collection.dequeueReusableCell(withIdentifier: identifier, for: indexPath),
                   "Could not dequeue tableview cell with identifier: " + identifier)
   }
 
@@ -149,7 +150,8 @@ extension UITableViewHeaderFooterView {
 }
 
 // extensions for UICollectionViewCell
-extension UICollectionViewCell {
+extension UICollectionViewCell: DequeableCell {
+  public typealias Collection = UICollectionView
   public static func dequeueReusable(in collection: UICollectionView, for indexPath: IndexPath) -> Self {
     return asSelf(object: collection.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath),
                   "Could not dequeue collectionview cell with identifier: " + identifier)
