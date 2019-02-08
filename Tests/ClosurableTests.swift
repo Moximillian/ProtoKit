@@ -13,7 +13,7 @@
 import XCTest
 @testable import ProtoKit
 
-protocol Target: NSObject, Closurable {
+protocol Target: Closurable {
   var target: AnyObject? { get set }
   var action: Selector? { get set }
 }

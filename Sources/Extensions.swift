@@ -186,7 +186,7 @@ extension UICollectionReusableView {
 
 // extensions for string interpolation
 public extension String.StringInterpolation {
-  public enum NumberFormat {
+  enum NumberFormat {
     case compact
   }
 
