@@ -39,13 +39,18 @@ extension ViewController {
 
     let storyboard = Storyboard(name: name, bundle: nil)
     #if canImport(UIKit)
-    return asSelf(object: storyboard.instantiateViewController(withIdentifier: identifier),
-                  "Couldn’t instantiate view controller with identifier: " + identifier)
+    guard let viewController = storyboard.instantiateViewController(withIdentifier: identifier) as? Self else {
+      fatalError("Couldn’t instantiate view controller with identifier: " + identifier)
+    }
 
     #elseif canImport(AppKit)
-    return asSelf(object: storyboard.instantiateController(withIdentifier: identifier),
-                  "Couldn’t instantiate view controller with identifier: " + identifier)
+    guard let viewController = storyboard.instantiateController(withIdentifier: identifier) as? Self else {
+      fatalError("Couldn’t instantiate view controller with identifier: " + identifier)
+    }
+
     #endif
+    return viewController
+
   }
 }
 
@@ -65,14 +70,18 @@ extension View {
   public static func instantiateFromNib(owner: Any? = nil) -> Self {
 
     #if canImport(UIKit)
-    return asSelf(object: Bundle.main.loadNibNamed(identifier, owner: owner)?.first,
-                  "Could not instantiate from nib: " + identifier)
+    guard let view = Bundle.main.loadNibNamed(identifier, owner: owner)?.first as? Self else {
+      fatalError("Could not instantiate from nib: " + identifier)
+    }
 
     #elseif canImport(AppKit)
     var objects: NSArray?
     Bundle.main.loadNibNamed(identifier, owner: owner, topLevelObjects: &objects)
-    return asSelf(object: objects?.first,
-                  "Could not instantiate from nib: " + identifier)
+    guard let view = objects?.first as? Self else {
+      fatalError("Could not instantiate from nib: " + identifier)
+    }
     #endif
+
+    return view
   }
 }

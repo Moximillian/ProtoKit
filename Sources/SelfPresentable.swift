@@ -26,11 +26,6 @@ extension SelfPresentable {
   /// Identifier derived from the name of the class
   public static var identifier: String { return String(describing: self) }
 
-  /// Cast an object to Self or show error message
-  public static func asSelf(object: Any?, _ errorMessage: String) -> Self {
-    guard let object = object as? Self else { fatalError(errorMessage) }
-    return object
-  }
 }
 // Default conformances of SelfPresentable for ViewControllers and Views
 extension ViewController: SelfPresentable {}

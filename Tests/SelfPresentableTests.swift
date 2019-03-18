@@ -19,8 +19,6 @@ class SelfPresentableTests: XCTestCase {
 
   func testAsSelf() {
     XCTAssertEqual(TestClass.identifier, "TestClass")
-    let foo: Any = TestClass()
-    XCTAssertNoThrow(TestClass.asSelf(object: foo, "foo"))
   }
 
 }
