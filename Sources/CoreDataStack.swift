@@ -17,11 +17,11 @@ import Then
 
 // MARK: – Core Data Protocols and extensions
 
-public protocol SortableManagedObject: NSFetchRequestResult {
+public protocol SortableManagedObject: NSManagedObject {
   static var defaultSortDescriptors: [NSSortDescriptor] { get }
 }
 
-extension SortableManagedObject where Self: NSManagedObject {
+extension SortableManagedObject {
 
   @available(iOS 10.0, macOS 10.12, *)
   public static func sortedFetchRequest() -> NSFetchRequest<Self> {

@@ -20,8 +20,6 @@
   #error("Unsupported platform.")
 #endif
 
-#if swift(>=5)
-
 /// Protocol for Segue Identifiers
 public protocol SegueHandlerType: ViewController {
   associatedtype Segues: RawRepresentable where Segues.RawValue == String
@@ -41,28 +39,3 @@ extension SegueHandlerType {
     return segueIdentifier
   }
 }
-
-#else
-
-/// Protocol for Segue Identifiers
-public protocol SegueHandlerType {
-  associatedtype Segues: RawRepresentable where Segues.RawValue == String
-}
-
-extension SegueHandlerType where Self: ViewController {
-  public func perform(segue: Segues, sender: Any? = nil) {
-    performSegue(withIdentifier: segue.rawValue, sender: sender)
-  }
-
-  public func identifier(for segue: StoryboardSegue) -> Segues {
-    let identifier: String? = segue.identifier
-    guard
-      let rawValue = identifier,
-      let segueIdentifier = Segues(rawValue: rawValue) else {
-        fatalError("Unknown segue: \(segue.identifier ?? "")")
-    }
-    return segueIdentifier
-  }
-}
-
-#endif

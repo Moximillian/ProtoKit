@@ -190,8 +190,6 @@ extension UICollectionReusableView {
 // https://ericasadun.com/2018/12/12/the-beauty-of-swift-5-string-interpolation/
 // https://ericasadun.com/2018/12/16/swift-5-interpolation-part-3-dates-and-number-formatters/
 
-#if swift(>=5)
-
 // extensions for string interpolation
 public extension String.StringInterpolation {
   enum NumberFormat {
@@ -247,5 +245,3 @@ public extension DateFormatter {
     return DateFormatter().then { $0.dateFormat = dateFormat }
   }
 }
-
-#endif
