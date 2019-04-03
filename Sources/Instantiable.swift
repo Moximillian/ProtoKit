@@ -38,6 +38,10 @@ extension ViewController {
   public static func instantiate(storyboardName name: String) -> Self {
 
     let storyboard = Storyboard(name: name, bundle: nil)
+    #if swift(<5.1)
+    return asSelf(object: storyboard.instantiateViewController(withIdentifier: identifier),
+                  "Couldn’t instantiate view controller with identifier: " + identifier)
+    #else
     #if canImport(UIKit)
     guard let viewController = storyboard.instantiateViewController(withIdentifier: identifier) as? Self else {
       fatalError("Couldn’t instantiate view controller with identifier: " + identifier)
@@ -50,7 +54,7 @@ extension ViewController {
 
     #endif
     return viewController
-
+    #endif
   }
 }
 
@@ -69,6 +73,10 @@ extension View {
   /// instantiate Self from Nib in Bundle
   public static func instantiateFromNib(owner: Any? = nil) -> Self {
 
+    #if swift(<5.1)
+    return asSelf(object: Bundle.main.loadNibNamed(identifier, owner: owner)?.first,
+                  "Could not instantiate from nib: " + identifier)
+    #else
     #if canImport(UIKit)
     guard let view = Bundle.main.loadNibNamed(identifier, owner: owner)?.first as? Self else {
       fatalError("Could not instantiate from nib: " + identifier)
@@ -83,5 +91,6 @@ extension View {
     #endif
 
     return view
+    #endif
   }
 }

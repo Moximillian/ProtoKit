@@ -128,10 +128,15 @@ extension ImageView {
 extension UITableViewCell: DequeableCell {
   public typealias Collection = UITableView
   public static func dequeueReusable(in collection: UITableView, for indexPath: IndexPath) -> Self {
+    #if swift(<5.1)
+    return asSelf(object: collection.dequeueReusableCell(withIdentifier: identifier, for: indexPath),
+                  "Could not dequeue tableview cell with identifier: " + identifier)
+    #else
     guard let cell = collection.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? Self else {
       fatalError("Could not dequeue tableview cell with identifier: " + identifier)
     }
     return cell
+    #endif
   }
 
   public static func register(to table: UITableView) {
@@ -142,10 +147,15 @@ extension UITableViewCell: DequeableCell {
 // extensions for UITableViewCell
 extension UITableViewHeaderFooterView {
   public static func dequeueReusable(in table: UITableView) -> Self {
+    #if swift(<5.1)
+    return asSelf(object: table.dequeueReusableHeaderFooterView(withIdentifier: identifier),
+                  "Could not dequeue tableview header footer view with identifier: " + identifier)
+    #else
     guard let view = table.dequeueReusableHeaderFooterView(withIdentifier: identifier) as? Self else {
       fatalError("Could not dequeue tableview header footer view with identifier: " + identifier)
     }
     return view
+    #endif
   }
 
   public static func register(to table: UITableView) {
@@ -157,10 +167,15 @@ extension UITableViewHeaderFooterView {
 extension UICollectionViewCell: DequeableCell {
   public typealias Collection = UICollectionView
   public static func dequeueReusable(in collection: UICollectionView, for indexPath: IndexPath) -> Self {
+    #if swift(<5.1)
+    return asSelf(object: collection.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath),
+                  "Could not dequeue collectionview cell with identifier: " + identifier)
+    #else
     guard let cell = collection.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? Self else {
       fatalError("Could not dequeue collectionview cell with identifier: " + identifier)
     }
     return cell
+    #endif
   }
 
   public static func register(to collection: UICollectionView) {
@@ -172,12 +187,19 @@ extension UICollectionViewCell: DequeableCell {
 extension UICollectionReusableView {
   public static func dequeueReusable(in collection: UICollectionView, ofKind kind: String,
                                      for indexPath: IndexPath) -> Self {
+    #if swift(<5.1)
+    return asSelf(object: collection.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                      withReuseIdentifier: identifier,
+                                                                      for: indexPath),
+                  "Could not dequeue collectionview supplementary view with identifier: " + identifier)
+    #else
     guard let view = collection.dequeueReusableSupplementaryView(ofKind: kind,
                                                                  withReuseIdentifier: identifier,
                                                                  for: indexPath) as? Self else {
       fatalError("Could not dequeue collectionview supplementary view with identifier: " + identifier)
     }
     return view
+    #endif
   }
 
   public static func register(to collection: UICollectionView, for kind: String) {
