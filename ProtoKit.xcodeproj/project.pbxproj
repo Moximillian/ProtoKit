@@ -20,7 +20,7 @@
 		OBJ_41 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* Extensions.swift */; };
 		OBJ_42 /* Instantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* Instantiable.swift */; };
 		OBJ_43 /* KVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* KVO.swift */; };
-		OBJ_44 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* Observer.swift */; };
+		OBJ_44 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* NotificationService.swift */; };
 		OBJ_45 /* SegueHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* SegueHandlerType.swift */; };
 		OBJ_46 /* SelfPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* SelfPresentable.swift */; };
 		OBJ_47 /* UnifiedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* UnifiedCollection.swift */; };
@@ -62,7 +62,7 @@
 		OBJ_15 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		OBJ_16 /* Instantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instantiable.swift; sourceTree = "<group>"; };
 		OBJ_17 /* KVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVO.swift; sourceTree = "<group>"; };
-		OBJ_18 /* Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
+		OBJ_18 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		OBJ_19 /* SegueHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueHandlerType.swift; sourceTree = "<group>"; };
 		OBJ_20 /* SelfPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfPresentable.swift; sourceTree = "<group>"; };
 		OBJ_21 /* UnifiedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedCollection.swift; sourceTree = "<group>"; };
@@ -170,7 +170,7 @@
 				OBJ_15 /* Extensions.swift */,
 				OBJ_16 /* Instantiable.swift */,
 				OBJ_17 /* KVO.swift */,
-				OBJ_18 /* Observer.swift */,
+				OBJ_18 /* NotificationService.swift */,
 				OBJ_19 /* SegueHandlerType.swift */,
 				OBJ_20 /* SelfPresentable.swift */,
 				OBJ_21 /* UnifiedCollection.swift */,
@@ -275,16 +275,16 @@
 						ProvisioningStyle = Automatic;
 					};
 					"ProtoKit::ProtoKit" = {
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1000;
 					};
 					"Then::Then" = {
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
 			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "ProtoKit" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -358,7 +358,7 @@
 				OBJ_41 /* Extensions.swift in Sources */,
 				OBJ_42 /* Instantiable.swift in Sources */,
 				OBJ_43 /* KVO.swift in Sources */,
-				OBJ_44 /* Observer.swift in Sources */,
+				OBJ_44 /* NotificationService.swift in Sources */,
 				OBJ_45 /* SegueHandlerType.swift in Sources */,
 				OBJ_46 /* SelfPresentable.swift in Sources */,
 				OBJ_47 /* UnifiedCollection.swift in Sources */,
