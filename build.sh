@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 TRG=12.0
 PKG=ProtoKit
@@ -16,6 +16,30 @@ BUILDDIR="./.build/build-x86"
 SDK=iphonesimulator
 ARCH=x86_64
 xcodebuild -arch $ARCH -sdk $SDK $COMMONARGS TARGET_BUILD_DIR=$BUILDDIR FRAMEWORK_SEARCH_PATHS=$BUILDDIR VALID_ARCHS=$ARCH build
+
+## HEADER
+
+# merge PKG header file
+HEADER=./.build/$PKG.framework/Headers/$PKG-Swift.h
+cp ./.build/build-x86/$PKG.framework/Headers/$PKG-Swift.h $HEADER.x86
+mv $HEADER $HEADER.arm
+echo "#if TARGET_OS_SIMULATOR" > $HEADER
+cat $HEADER.x86 >> $HEADER
+echo "#else" >> $HEADER
+cat $HEADER.arm >> $HEADER
+echo "#endif" >> $HEADER
+
+# merge THEN header file
+HEADER=./.build/$THEN.framework/Headers/$THEN-Swift.h
+cp ./.build/build-x86/$THEN.framework/Headers/$THEN-Swift.h $HEADER.x86
+mv $HEADER $HEADER.arm
+echo "#if TARGET_OS_SIMULATOR" > $HEADER
+cat $HEADER.x86 >> $HEADER
+echo "#else" >> $HEADER
+cat $HEADER.arm >> $HEADER
+echo "#endif" >> $HEADER
+
+## MODULE
 
 # copy x86_64 module maps
 cp ./.build/build-x86/$PKG.framework/Modules/$PKG.swiftmodule/* ./.build/$PKG.framework/Modules/$PKG.swiftmodule/
