@@ -1,4 +1,4 @@
-// swift-tools-version:4.1
+// swift-tools-version:5.0
 import PackageDescription
 
 let package = Package(
@@ -11,6 +11,6 @@ let package = Package(
   ],
   targets: [
     .target(name: "ProtoKit", dependencies: ["Then"], path: ".", sources: ["Sources"])
-  ],
-  swiftLanguageVersions: [4]
+  ]
+  //  swiftLanguageVersions: [5]
 )
