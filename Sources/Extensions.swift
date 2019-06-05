@@ -80,7 +80,7 @@ extension Color: CustomReflectable {
     var blue: CGFloat = 0
     var alpha: CGFloat = 0
     self.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-    var rgb: [Int] = [Int(red*255), Int(green*255), Int(blue*255)]
+    let rgb: [Int] = [Int(red*255), Int(green*255), Int(blue*255)]
     return Mirror(self, children: [
       "RGBA": "(\(rgb[0]), \(rgb[1]), \(rgb[2]), \(alpha))"
       ])

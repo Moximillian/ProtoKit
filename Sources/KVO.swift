@@ -36,7 +36,7 @@ extension NSObjectProtocol where Self: NSObject {
   public func bind<Value, Target: NSObject>(_ sourceKeyPath: KeyPath<Self, Value>,
                                             to target: Target,
                                             at targetKeyPath: ReferenceWritableKeyPath<Target, Value>) {
-    
+
     let observation = observe(sourceKeyPath, options: [.initial, .new]) { [weak target] _, change in
       // The guard is because of https://bugs.swift.org/browse/SR-6066
       guard let newValue = change.newValue else { return }
