@@ -26,6 +26,8 @@ xcuserdata
 .build/
 Packages/
 /Package.resolved
+/*.xcodeproj
+.swiftpm/
 
 # Emacs
 *~

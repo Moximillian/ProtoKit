@@ -1,16 +1,26 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.1
 import PackageDescription
 
 let package = Package(
   name: "ProtoKit",
   products: [
-    .library(name: "ProtoKit", targets: ["ProtoKit"])
+    .library(
+      name: "ProtoKit",
+      targets: ["ProtoKit"]
+    )
   ],
   dependencies: [
-    .package(url: "https://github.com/devxoul/Then", from: "2.3.0")
+    .package(
+      url: "https://github.com/devxoul/Then",
+      from: "2.4.0"
+    )
   ],
   targets: [
-    .target(name: "ProtoKit", dependencies: ["Then"], path: ".", sources: ["Sources"])
+    .target(
+      name: "ProtoKit",
+      dependencies: ["Then"],
+      path: ".",
+      sources: ["Sources"]
+    )
   ]
-  //  swiftLanguageVersions: [5]
 )
