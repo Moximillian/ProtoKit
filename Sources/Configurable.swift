@@ -11,7 +11,7 @@
 //
 
 /// Very simple dependency injection abstraction
-public protocol Configurable: ViewController {
+public protocol Configurable: UnifiedViewController {
   associatedtype Config
   func configure(with config: Config)
 }

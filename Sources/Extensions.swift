@@ -12,22 +12,16 @@
 
 #if canImport(UIKit)
   import UIKit
-  public typealias Application = UIApplication
-  public typealias Color = UIColor
-  public typealias Image = UIImage
-  public typealias ImageView = UIImageView
-  public typealias Label = UILabel
-  public typealias Font = UIFont
-  public typealias FontDescriptor = UIFontDescriptor
+  public typealias UnifiedApplication = UIApplication
+  public typealias UnifiedColor = UIColor
+  public typealias UnifiedImage = UIImage
+  public typealias UnifiedImageView = UIImageView
 #elseif canImport(AppKit)
   import AppKit
-  public typealias Application = NSApplication
-  public typealias Color = NSColor
-  public typealias Image = NSImage
-  public typealias ImageView = NSImageView
-  public typealias Label = NSTextField
-  public typealias Font = NSFont
-  public typealias FontDescriptor = NSFontDescriptor
+  public typealias UnifiedApplication = NSApplication
+  public typealias UnifiedColor = NSColor
+  public typealias UnifiedImage = NSImage
+  public typealias UnifiedImageView = NSImageView
 #else
   #error("Unsupported platform.")
 #endif
@@ -39,16 +33,16 @@ extension CGRect {
 
 #if os(iOS)
 // Extensions for UIApplication (iOS only feature)
-extension Application {
+extension UnifiedApplication {
   public static var statusbarHeight: CGFloat {
-    let statusBarSize = Application.shared.statusBarFrame.size
+    let statusBarSize = UnifiedApplication.shared.statusBarFrame.size
     return min(CGFloat(statusBarSize.width), CGFloat(statusBarSize.height))
   }
 }
 #endif
 
 // Extensions for UIColor
-extension Color {
+extension UnifiedColor {
   /// Create UIColor with 0-255 value range (RGBA)
   public convenience init(_ red: Int, _ green: Int, _ blue: Int, _ alpha: CGFloat) {
     self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: alpha)
@@ -73,7 +67,7 @@ extension Color {
 }
 
 // UIColor extension for human readable object values
-extension Color: CustomReflectable {
+extension UnifiedColor: CustomReflectable {
   public var customMirror: Mirror {
     var red: CGFloat = 0
     var green: CGFloat = 0
@@ -96,10 +90,10 @@ extension Color: CustomReflectable {
 }
 
 // UIImage assets
-extension Image {
+extension UnifiedImage {
 
   // extensions cannot store properties, has to use computed property, calculated every time
-  public var templateImage: Image {
+  public var templateImage: UnifiedImage {
 #if canImport(UIKit)
     return withRenderingMode(.alwaysTemplate)
 #elseif canImport(AppKit)
@@ -110,13 +104,13 @@ extension Image {
 }
 
 // UIImageView assets
-extension ImageView {
+extension UnifiedImageView {
 
   // extensions cannot store properties, has to use computed property, calculated every time
   @available(iOS 10.0, macOS 10.12, *)
-  public var templateView: ImageView {
+  public var templateView: UnifiedImageView {
     guard let image = image else { return self }
-    return ImageView(image: image.templateImage)
+    return UnifiedImageView(image: image.templateImage)
   }
 }
 

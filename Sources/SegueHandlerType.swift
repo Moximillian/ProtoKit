@@ -12,16 +12,16 @@
 
 #if canImport(UIKit)
   import UIKit
-  public typealias StoryboardSegue = UIStoryboardSegue
+  public typealias UnifiedStoryboardSegue = UIStoryboardSegue
 #elseif canImport(AppKit)
   import AppKit
-  public typealias StoryboardSegue = NSStoryboardSegue
+  public typealias UnifiedStoryboardSegue = NSStoryboardSegue
 #else
   #error("Unsupported platform.")
 #endif
 
 /// Protocol for Segue Identifiers
-public protocol SegueHandlerType: ViewController {
+public protocol SegueHandlerType: UnifiedViewController {
   associatedtype Segues: RawRepresentable where Segues.RawValue == String
 }
 
@@ -30,7 +30,7 @@ extension SegueHandlerType {
     performSegue(withIdentifier: segue.rawValue, sender: sender)
   }
 
-  public func identifier(for segue: StoryboardSegue) -> Segues {
+  public func identifier(for segue: UnifiedStoryboardSegue) -> Segues {
     guard
       let rawValue = segue.identifier,
       let segueIdentifier = Segues(rawValue: rawValue) else {

@@ -12,14 +12,14 @@
 
 #if canImport(UIKit)
   import UIKit
-  public typealias Control = UIControl
-  public typealias Button = UIButton
-  public typealias GestureRecognizer = UIGestureRecognizer
+  public typealias UnifiedControl = UIControl
+  public typealias UnifiedButton = UIButton
+  public typealias UnifiedGestureRecognizer = UIGestureRecognizer
 #elseif canImport(AppKit)
   import AppKit
-  public typealias Control = NSControl
-  public typealias Button = NSButton
-  public typealias GestureRecognizer = NSGestureRecognizer
+  public typealias UnifiedControl = NSControl
+  public typealias UnifiedButton = NSButton
+  public typealias UnifiedGestureRecognizer = NSGestureRecognizer
 #else
   #error("Unsupported platform.")
 #endif
@@ -65,7 +65,7 @@ public final class ClosureContainer<T: Closurable> {
 // Extend protocol instead of the class directly, to target closure parameter to specific subclass,
 // not the parent class.
 // Extension for UIControl (including UIButton and UIPageControl) - actions with closure
-extension Closurable where Self: Control {
+extension Closurable where Self: UnifiedControl {
 #if canImport(UIKit)
   /// Associates a target closure with the control.
   public func addTarget(for controlEvents: UIControl.Event, closure: @escaping (Self) -> Void) {
@@ -83,13 +83,13 @@ extension Closurable where Self: Control {
 }
 
 // activate protocol extensions
-extension Control: Closurable {}
+extension UnifiedControl: Closurable {}
 
 #if canImport(UIKit)
 // Only needed for iOS/tvOS
-extension Button {
+extension UnifiedButton {
   /// Associates a target closure with the control. This specialized version assumes control event is .touchUpInside.
-  public func addTarget(closure: @escaping (Button) -> Void) {
+  public func addTarget(closure: @escaping (UnifiedButton) -> Void) {
     addTarget(for: .touchUpInside, closure: closure)
   }
 }
@@ -98,9 +98,9 @@ extension Button {
 // MARK: - closurable for UIGestureRecognizer
 
 /// extension for UIGestureRecognizer - actions with closure
-extension GestureRecognizer: Closurable {
+extension UnifiedGestureRecognizer: Closurable {
 
-  public convenience init(closure: @escaping (GestureRecognizer) -> Void) {
+  public convenience init(closure: @escaping (UnifiedGestureRecognizer) -> Void) {
     self.init()
     let container = getContainer(for: closure)
 #if canImport(UIKit)
@@ -111,7 +111,7 @@ extension GestureRecognizer: Closurable {
 #endif
   }
 
-  public func addTarget(closure: @escaping (GestureRecognizer) -> Void) {
+  public func addTarget(closure: @escaping (UnifiedGestureRecognizer) -> Void) {
     let container = getContainer(for: closure)
 #if canImport(UIKit)
     addTarget(container, action: container.action)

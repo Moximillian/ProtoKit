@@ -35,5 +35,5 @@ extension SelfPresentable {
   #endif
 }
 // Default conformances of SelfPresentable for ViewControllers and Views
-extension ViewController: SelfPresentable {}
-extension View: SelfPresentable {}
+extension UnifiedViewController: SelfPresentable {}
+extension UnifiedView: SelfPresentable {}

@@ -12,19 +12,19 @@
 
 #if canImport(UIKit)
   import UIKit
-  public typealias Storyboard = UIStoryboard
-  public typealias ViewController = UIViewController
-  public typealias View = UIView
+  public typealias UnifiedStoryboard = UIStoryboard
+  public typealias UnifiedViewController = UIViewController
+  public typealias UnifiedView = UIView
 #elseif canImport(AppKit)
   import AppKit
-  public typealias Storyboard = NSStoryboard
-  public typealias ViewController = NSViewController
-  public typealias View = NSView
+  public typealias UnifiedStoryboard = NSStoryboard
+  public typealias UnifiedViewController = NSViewController
+  public typealias UnifiedView = NSView
 #else
   #error("Unsupported platform.")
 #endif
 
-/// Extension for ViewController
+/// Extension for UnifiedViewController
 //
 //  USAGE:
 //  1. In storyboard, set viewcontroller's class as well as identifier to the class name (e.g. MyViewController)
@@ -33,11 +33,11 @@
 //  let myVC = MyViewController.instantiate()
 //
 
-extension ViewController {
+extension UnifiedViewController {
   /// instantiate Self from a specific Storyboard
   public static func instantiate(storyboardName name: String) -> Self {
 
-    let storyboard = Storyboard(name: name, bundle: nil)
+    let storyboard = UnifiedStoryboard(name: name, bundle: nil)
     #if swift(<5.1)
     #if canImport(UIKit)
     return asSelf(object: storyboard.instantiateViewController(withIdentifier: identifier),
@@ -48,7 +48,7 @@ extension ViewController {
     #endif
     #else
     #if canImport(UIKit)
-    guard let viewController = storyboard.instantiateViewController(withIdentifier: identifier) as? Self else {
+    guard let viewController = storyboard.instantiateViewController(withIdentifier: self.identifier) as? Self else {
       fatalError("Couldn’t instantiate view controller with identifier: " + identifier)
     }
 
@@ -74,7 +74,7 @@ extension ViewController {
 //  let myView = MyView.instantiateFromNib()
 //
 
-extension View {
+extension UnifiedView {
   /// instantiate Self from Nib in Bundle
   public static func instantiateFromNib(owner: Any? = nil) -> Self {
 
