@@ -97,7 +97,7 @@ extension UnifiedView {
     #elseif canImport(AppKit)
     var objects: NSArray?
     Bundle.main.loadNibNamed(identifier, owner: owner, topLevelObjects: &objects)
-    guard let view = objects?.first as? Self else {
+    guard let view = objects?.firstObject as? Self else {
       fatalError("Could not instantiate from nib: " + identifier)
     }
     #endif

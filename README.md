@@ -6,7 +6,8 @@
 
 ## Package
 
-ProtoKit is structured as a Package (Swift Package Manager), each swift file contains a specific feature / functionality. Because Swift Package Manager currently lacks support for iOS, a build.sh -script is provided to facilitate use of this framework.
+ProtoKit is structured as a Package (Swift Package Manager, SPM), each swift file contains a specific feature / functionality. 
+In Xcode 11 and later, there is native integration with SPM packages
 
 Current features are:
   * Extensions
@@ -21,19 +22,23 @@ Current features are:
     * UIStoryboard
     * UITableView
   * Closurable (UIControl, UIButton, UIBarButtonItem, UIPageControl, UIGestureRecognizer)
+  * Configurable
   * CoreDataStack
   * SourcedError (Custom ErrorType)
-  * Observer / TypedNotification (way to pass data via observing/notifying)
+  * KVO
+  * NotificationService / TypedNotification (way to pass data via observing/notifying)
   * SegueHandlerType
+  * SelfPresentable (casting as Self)
+  * Few SwiftUI extensions
   * Unified Collection (factory and related methods for creating UITableViewDataSources and UICollectionViewDataSources)
 
 ## Requirements
 
-ProtoKit version 3.0 and later requires:
-* iOS 11+ or tvOS 11+
-* Swift 4.1
-* Xcode 9.3
-* may work also for MacOS 10.11+, does not have support for Unified Collection
+ProtoKit version 5.0 and later requires:
+* iOS 12+ or tvOS 12+
+* Swift 5.0
+* Xcode 10.4
+* may work also for MacOS 10.14+, does not have support for Unified Collection
 * watchOS is not supported
 
 
