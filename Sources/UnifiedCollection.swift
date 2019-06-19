@@ -25,26 +25,6 @@
 
 #if canImport(UIKit)
 
-// MARK: - Section data (source data container)
-
-/// Factory valuetype for section protocol
-public struct SectionData<Item> {
-  public var items: [Item]
-  public let headerTitle: String?
-  public let footerTitle: String?
-
-  /// fancy pants convenience init
-  public init(_ items: Item..., headerTitle: String? = nil, footerTitle: String? = nil) {
-    self.init(items: items, headerTitle: headerTitle, footerTitle: footerTitle)
-  }
-
-  public init(items: [Item], headerTitle: String? = nil, footerTitle: String? = nil) {
-    self.items = items
-    self.headerTitle = headerTitle
-    self.footerTitle = footerTitle
-  }
-}
-
 // MARK: - Unified Collection (protocol)
 
 /// protocol for unified Collection.
