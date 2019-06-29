@@ -16,8 +16,15 @@ import SwiftUI
 
 @available(iOS 13.0, *)
 extension View {
+  /// Convert SwiftUI view into UIHostingController
+  public var uiHostingController: UIHostingController<Self> {
+    let host = UIHostingController(rootView: self)
+    host.view.frame.size = host.sizeThatFits(in: .zero)
+    return host
+  }
+
   /// Convert SwiftUI view into UIView
-  public var uiView: UIView { UIHostingController(rootView: self).view }
+  public var uiView: UIView { self.uiHostingController.view }
 }
 
 @available(iOS 13.0, macOS 10.15, *)
