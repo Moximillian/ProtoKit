@@ -14,10 +14,24 @@ import SwiftUI
 
 // MARK: - extensions
 
+@available(iOS 13.0, *)
+extension View {
+  /// Convert SwiftUI view into UIView
+  public var uiView: UIView { UIHostingController(rootView: self).view }
+}
+
+@available(iOS 13.0, macOS 10.15, *)
+extension View {
+  /// Type erase SwiftUI View to appease the TypeChecker gods
+  public var anyView: AnyView { AnyView(self) }
+}
+
 @available(iOS 13.0, macOS 10.15, *)
 extension EdgeInsets {
+  /// zero insets
   public static var zero: EdgeInsets { EdgeInsets(vertical: 0, horizontal: 0) }
 
+  /// set mirrored  insets for vertical and horizontal
   public init(vertical: Length, horizontal: Length) {
     self.init(top: vertical, leading: horizontal, bottom: vertical, trailing: horizontal)
   }
