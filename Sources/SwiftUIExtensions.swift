@@ -14,6 +14,8 @@ import SwiftUI
 
 // MARK: - extensions
 
+#if canImport(UIKit)
+
 @available(iOS 13.0, *)
 extension View {
   /// Convert SwiftUI view into UIHostingController
@@ -27,6 +29,8 @@ extension View {
   public var uiView: UIView { self.uiHostingController.view }
 }
 
+#endif
+
 @available(iOS 13.0, macOS 10.15, *)
 extension View {
   /// Type erase SwiftUI View to appease the TypeChecker gods
@@ -39,11 +43,12 @@ extension EdgeInsets {
   public static var zero: EdgeInsets { EdgeInsets(vertical: 0, horizontal: 0) }
 
   /// set mirrored  insets for vertical and horizontal
-  public init(vertical: Length, horizontal: Length) {
+  public init(vertical: CGFloat, horizontal: CGFloat) {
     self.init(top: vertical, leading: horizontal, bottom: vertical, trailing: horizontal)
   }
 }
 
+@available(iOS 13.0, macOS 10.15, *)
 extension Identifiable where Self: Hashable {
   /// This is a hack and should not be used in real apps, but ok enough for quick prototyping.
   /// Provides default implementation for "id"

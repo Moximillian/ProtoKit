@@ -13,6 +13,8 @@
 import XCTest
 @testable import ProtoKit
 
+#if canImport(UIKit)
+
 class UnifiedCollectionTests: XCTestCase {
   struct TestData {
     var value: Int
@@ -81,3 +83,5 @@ class UnifiedCollectionTests: XCTestCase {
     XCTAssertEqual(footerTitle, "\(section2.footerTitle!)")
   }
 }
+
+#endif
