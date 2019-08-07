@@ -11,27 +11,25 @@
 //
 
 /*
- * inspired by https://twitter.com/jaredsinclair/status/951536021459619840
+ * Updated to use Combine (Framework)
+ * originally inspired by https://twitter.com/jaredsinclair/status/951536021459619840
 */
 
 import Foundation
+import Combine
 
 /// Register Notification Observers using closure, comes with automatic observer removal
+@available(iOS 13.0, macOS 10.15, *)
 public final class NotificationService {
-  private var observers: [NSObjectProtocol] = []
-  private let queue: OperationQueue
-
-  public init(queue: OperationQueue = .main) {
-    self.queue = queue
-  }
+  private var cancellables: [AnyCancellable] = []
 
   deinit {
-    observers.forEach { NotificationCenter.default.removeObserver($0) }
+    cancellables.forEach { $0.cancel() }
   }
 
   private func listen(to name: Notification.Name, using block: @escaping (Notification) -> Void) {
-    let observer = NotificationCenter.default.addObserver(forName: name, object: nil, queue: queue, using: block)
-    observers.append(observer)
+    let cancellable = NotificationCenter.default.publisher(for: name).sink(receiveValue: block)
+    cancellables.append(cancellable)
   }
 }
 
@@ -44,11 +42,12 @@ public struct TypedNotification<ObjectType> {
   }
 }
 
+@available(iOS 13.0, macOS 10.15, *)
 extension NotificationService {
   /// add listening notification that acts on predefined (typed) value
   public func listen<T>(to notification: TypedNotification<T>, using block: @escaping (T) -> Void) {
     listen(to: notification.name) { notification in
-      guard let value = notification.userInfo?[notification.name] as? T else {
+      guard let value = notification.object as? T else {
         fatalError("Observer: invalid TypedNotification value type")
       }
       block(value)
@@ -57,9 +56,7 @@ extension NotificationService {
 
   /// post notification that uses predefined (typed) value
   public static func post<T>(_ notification: TypedNotification<T>, value: T) {
-    NotificationCenter.default.post(name: notification.name,
-                                    object: nil,
-                                    userInfo: [notification.name: value])
+    NotificationCenter.default.post(name: notification.name, object: value)
   }
 }
 
