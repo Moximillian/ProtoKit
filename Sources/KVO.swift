@@ -11,10 +11,12 @@
 //
 
 /*
- * Inspired by https://www.objc.io/blog/2018/04/24/bindings-with-kvo-and-keypaths/
+ * Updated to use Combine (Framework)
+ * Originally inspired by https://www.objc.io/blog/2018/04/24/bindings-with-kvo-and-keypaths/
  */
 
 import Foundation
+import Combine
 
 class Disposable {
   typealias DisposeFunction = () -> Void
@@ -33,16 +35,16 @@ extension NSObjectProtocol where Self: NSObject {
 
   /// observe a variable (as keypath) from this instance, bind it to target instance's variable (keypath)
   /// *** NOTE: observed value MUST be declared `@objc dynamic` ***
+  @available(iOS 13.0, macOS 10.15, *)
   public func bind<Value, Target: NSObject>(_ sourceKeyPath: KeyPath<Self, Value>,
-                                            to target: Target,
-                                            at targetKeyPath: ReferenceWritableKeyPath<Target, Value>) {
+                                             to target: Target,
+                                             at targetKeyPath: ReferenceWritableKeyPath<Target, Value>) {
 
-    let observation = observe(sourceKeyPath, options: [.initial, .new]) { [weak target] _, change in
-      // The guard is because of https://bugs.swift.org/browse/SR-6066
-      guard let newValue = change.newValue else { return }
-      target?[keyPath: targetKeyPath] = newValue
-    }
-    let disposable = Disposable { observation.invalidate() }
+
+    // NOTE: Target has to be NSObject only because of storing the associated object.
+    // publisher/assign works fine with swift classes as Targets.
+    let cancellable: AnyCancellable = publisher(for: sourceKeyPath).assign(to: targetKeyPath, on: target)
+    let disposable = Disposable { cancellable.cancel() }
     target.store(associatedObject: disposable)
   }
 }

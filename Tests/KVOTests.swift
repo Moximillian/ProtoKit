@@ -13,6 +13,7 @@
 import XCTest
 @testable import ProtoKit
 
+@available(iOS 13.0, macOS 10.15, *)
 class KVOTests: XCTestCase {
 
   final class Model: NSObject {
@@ -48,10 +49,9 @@ class KVOTests: XCTestCase {
     XCTAssertEqual(model.optional, "hello")
     XCTAssertEqual(target.targetOptional, "hello")
 
-    #warning ("optionalKVO not fully working")
     model.optional = nil
     XCTAssertEqual(model.optional, nil)
-    //XCTAssertEqual(target.targetOptional, nil)  // https://bugs.swift.org/browse/SR-6066
+    XCTAssertEqual(target.targetOptional, nil)
   }
 
 }
