@@ -23,6 +23,8 @@ import Combine
 public final class NotificationService {
   private var cancellables: [AnyCancellable] = []
 
+  public init() {}
+
   deinit {
     cancellables.forEach { $0.cancel() }
   }
