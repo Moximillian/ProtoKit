@@ -23,7 +23,7 @@ public protocol SortableManagedObject: NSManagedObject {
 
 extension SortableManagedObject {
 
-  @available(iOS 10.0, macOS 10.12, *)
+  @available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
   public static func sortedFetchRequest() -> NSFetchRequest<Self> {
     guard let request = Self.fetchRequest() as? NSFetchRequest<Self> else {
       fatalError("Cannot create fetch request")
@@ -35,7 +35,8 @@ extension SortableManagedObject {
   // TODO: can use also predicates (add as parameter with default value)
   // fetchRequest.predicate = Predicate(format: "SELF IN %@", objects as CVarArg)
 }
-@available(iOS 10.0, macOS 10.12, *)
+
+@available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
 extension NSPersistentContainer {
   public func getQueryGenerationViewContext() throws -> NSManagedObjectContext {
     let context = viewContext
@@ -54,7 +55,7 @@ public final class CoreDataStack {
     self.name = name
   }
 
-  @available(iOS 10.0, macOS 10.12, *)
+  @available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
   public lazy var persistentContainer: NSPersistentContainer = NSPersistentContainer(name: name).then {
     /*
      The persistent container for the application. This implementation
@@ -77,7 +78,7 @@ public final class CoreDataStack {
   }
 
   // MARK: - Core Data Saving support
-  @available(iOS 10.0, macOS 10.12, *)
+  @available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
   public func saveContext() {
     let context = persistentContainer.viewContext
     if context.hasChanges {

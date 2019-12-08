@@ -35,7 +35,7 @@ extension NSObjectProtocol where Self: NSObject {
 
   /// observe a variable (as keypath) from this instance, bind it to target instance's variable (keypath)
   /// *** NOTE: observed value MUST be declared `@objc dynamic` ***
-  @available(iOS 13.0, macOS 10.15, *)
+  @available(iOS 13.0, OSX 10.15, tvOS 13.0, *)
   public func bind<Value, Target: NSObject>(_ sourceKeyPath: KeyPath<Self, Value>,
                                              to target: Target,
                                              at targetKeyPath: ReferenceWritableKeyPath<Target, Value>) {

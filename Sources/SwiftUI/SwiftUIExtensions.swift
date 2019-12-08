@@ -12,11 +12,11 @@
 
 import SwiftUI
 
-// MARK: - extensions
+// MARK: - SwiftUI extensions for UIKit integration
 
 #if canImport(UIKit)
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, *)
 extension View {
   /// Convert SwiftUI view into UIHostingController
   public var uiHostingController: UIHostingController<Self> {
@@ -31,13 +31,38 @@ extension View {
 
 #endif
 
-@available(iOS 13.0, macOS 10.15, *)
+// MARK: - SwiftUI View related extensions
+
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, *)
 extension View {
   /// Type erase SwiftUI View to appease the TypeChecker gods
   public var anyView: AnyView { AnyView(self) }
 }
 
-@available(iOS 13.0, macOS 10.15, *)
+// Extension for GeometryProxy
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, *)
+extension GeometryProxy {
+  public var center: CGPoint { CGPoint(x: size.width / 2.0, y: size.height / 2.0) }
+}
+
+// Extension for Text
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, *)
+extension Text {
+
+  /// Changes the text to be resizable up to the frame height
+  ///
+  /// - Parameter weight: The font weight to use when displaying this text.
+  /// - Parameter design: The font design to use when displaying this text.
+  /// - Returns: resizable Text View.
+  public func resizableHeightFont(weight: Font.Weight = .regular, design: Font.Design = .default) -> some View {
+    GeometryReader { geometry in
+      return self.font(.system(size: geometry.size.height, weight: weight, design: design))
+        .aspectRatio(1, contentMode: .fill)
+    }
+  }
+}
+
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, *)
 extension EdgeInsets {
   /// zero insets
   public static var zero: EdgeInsets { EdgeInsets(vertical: 0, horizontal: 0) }
@@ -48,31 +73,13 @@ extension EdgeInsets {
   }
 }
 
-@available(iOS 13.0, macOS 10.15, *)
+// MARK: - SectionData extension to support Identifiable in SwiftUI
+
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, *)
 extension Identifiable where Self: Hashable {
   /// This is a hack and should not be used in real apps, but ok enough for quick prototyping.
   /// Provides default implementation for "id"
   public var id: Int { hashValue }
-}
-
-// MARK: - SectionData
-
-/// Abstracted data type for tables and collections
-public struct SectionData<Item> {
-  public var items: [Item]
-  public let headerTitle: String?
-  public let footerTitle: String?
-
-  /// fancy pants convenience init
-  public init(_ items: Item..., headerTitle: String? = nil, footerTitle: String? = nil) {
-    self.init(items: items, headerTitle: headerTitle, footerTitle: footerTitle)
-  }
-
-  public init(items: [Item], headerTitle: String? = nil, footerTitle: String? = nil) {
-    self.items = items
-    self.headerTitle = headerTitle
-    self.footerTitle = footerTitle
-  }
 }
 
 extension SectionData: Equatable where Item: Equatable {

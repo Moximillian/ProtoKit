@@ -19,7 +19,7 @@ import Foundation
 import Combine
 
 /// Register Notification Observers using closure, comes with automatic observer removal
-@available(iOS 13.0, macOS 10.15, *)
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, *)
 public final class NotificationService {
   private var cancellables: [AnyCancellable] = []
 
@@ -44,7 +44,7 @@ public struct TypedNotification<ObjectType> {
   }
 }
 
-@available(iOS 13.0, macOS 10.15, *)
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, *)
 extension NotificationService {
   /// add listening notification that acts on predefined (typed) value
   public func listen<T>(to notification: TypedNotification<T>, using block: @escaping (T) -> Void) {

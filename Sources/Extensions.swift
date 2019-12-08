@@ -26,9 +26,35 @@
   #error("Unsupported platform.")
 #endif
 
+// MARK: - Base type extensions
+
 // Extension for CGRect
 extension CGRect {
   public var mid: CGPoint { return CGPoint(x: self.midX, y: self.midY) } // computed property, calculated every time
+
+  public func radius(_ lineWidth: CGFloat) -> CGFloat {
+    return floor(min(midX, midY) - lineWidth / 2.0)
+  }
+}
+
+// MARK: - Unified extensions
+
+/// Abstracted data type for tables and collections
+public struct SectionData<Item> {
+  public var items: [Item]
+  public let headerTitle: String?
+  public let footerTitle: String?
+
+  /// fancy pants convenience init
+  public init(_ items: Item..., headerTitle: String? = nil, footerTitle: String? = nil) {
+    self.init(items: items, headerTitle: headerTitle, footerTitle: footerTitle)
+  }
+
+  public init(items: [Item], headerTitle: String? = nil, footerTitle: String? = nil) {
+    self.items = items
+    self.headerTitle = headerTitle
+    self.footerTitle = footerTitle
+  }
 }
 
 #if os(iOS)
@@ -206,6 +232,8 @@ extension UICollectionReusableView {
 // https://ericasadun.com/2018/12/12/the-beauty-of-swift-5-string-interpolation/
 // https://ericasadun.com/2018/12/16/swift-5-interpolation-part-3-dates-and-number-formatters/
 
+// MARK: - String interpolation extensions
+
 // extensions for string interpolation
 public extension String.StringInterpolation {
   enum NumberFormat {
@@ -261,3 +289,4 @@ public extension DateFormatter {
     return DateFormatter().then { $0.dateFormat = dateFormat }
   }
 }
+
