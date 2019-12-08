@@ -7,10 +7,19 @@
 ## Package
 
 ProtoKit is structured as a Package (Swift Package Manager, SPM), each swift file contains a specific feature / functionality. 
-In Xcode 11 and later, there is native integration with SPM packages
 
 Current features are:
-  * Extensions
+  * SwiftUI Views
+    * Arrow
+    * Line
+    * CircleShape (can be animated)
+    * ProgressText (can be animated)
+  * SwiftUI Extensions
+    * uiHostingController
+    * uiView
+    * anyView
+    * resizableHeightFont
+  * UIKit Extensions
     * Bundle
     * CGRect
     * UIApplication
@@ -29,16 +38,13 @@ Current features are:
   * NotificationService / TypedNotification (way to pass data via observing/notifying)
   * SegueHandlerType
   * SelfPresentable (casting as Self)
-  * Few SwiftUI extensions
   * Unified Collection (factory and related methods for creating UITableViewDataSources and UICollectionViewDataSources)
 
 ## Requirements
 
-ProtoKit version 5.0 and later requires:
-* iOS 12+ or tvOS 12+
-* Swift 5.0
-* Xcode 10.4
-* may work also for MacOS 10.14+, does not have support for Unified Collection
+ProtoKit version 6.0 and later requires:
+* iOS 13+ or tvOS 13+ or MacOS 10.15+
+* Xcode 11.2 (Swift 5.1)
 * watchOS is not supported
 
 
@@ -62,7 +68,7 @@ Unified Collection inspired by
 
 `ProtoKit` is released under an [MIT License][mitLink]. See `LICENSE` for details.
 
->**Copyright &copy; 2018-present Mox Soini.**
+>**Copyright &copy; 2019-present Mox Soini.**
 
 *Please provide attribution, it is greatly appreciated.*
 
