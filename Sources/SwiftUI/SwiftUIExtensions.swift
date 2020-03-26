@@ -45,23 +45,6 @@ extension GeometryProxy {
   public var center: CGPoint { CGPoint(x: size.width / 2.0, y: size.height / 2.0) }
 }
 
-// Extension for Text
-@available(iOS 13.0, OSX 10.15, tvOS 13.0, *)
-extension Text {
-
-  /// Changes the text to be resizable up to the frame height
-  ///
-  /// - Parameter weight: The font weight to use when displaying this text.
-  /// - Parameter design: The font design to use when displaying this text.
-  /// - Returns: resizable Text View.
-  public func resizableHeightFont(weight: Font.Weight = .regular, design: Font.Design = .default) -> some View {
-    GeometryReader { geometry in
-      return self.font(.system(size: geometry.size.height, weight: weight, design: design))
-        .aspectRatio(1, contentMode: .fill)
-    }
-  }
-}
-
 @available(iOS 13.0, OSX 10.15, tvOS 13.0, *)
 extension EdgeInsets {
   /// zero insets

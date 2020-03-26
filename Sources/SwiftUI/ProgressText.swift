@@ -37,7 +37,7 @@ public struct ProgressText: View {
       Rectangle()
         .foregroundColor(.clear)
         .frame(width: geometry.size.width, height: geometry.size.height)
-        .modifier(AnimatableProgress(value: self.value, weight: self.weight, design: self.design))
+        .modifier(AnimatableProgress(value: self.value, fontSize: geometry.size.height, weight: self.weight, design: self.design))
     }
   }
 }
@@ -45,6 +45,7 @@ public struct ProgressText: View {
 @available(iOS 13.0, OSX 10.15, tvOS 13.0, *)
 fileprivate struct AnimatableProgress: AnimatableModifier {
   var value: CGFloat
+  let fontSize: CGFloat
   let weight: Font.Weight
   let design: Font.Design
 
@@ -52,7 +53,7 @@ fileprivate struct AnimatableProgress: AnimatableModifier {
     content
       .overlay(
         Text(formatValue(self.value))
-        .resizableHeightFont(weight: weight, design: design)
+        .font(.system(size: fontSize, weight: weight, design: design))
         .foregroundColor(.accentColor)
       )
   }

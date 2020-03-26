@@ -18,7 +18,6 @@ Current features are:
     * uiHostingController
     * uiView
     * anyView
-    * resizableHeightFont
   * UIKit Extensions
     * Bundle
     * CGRect

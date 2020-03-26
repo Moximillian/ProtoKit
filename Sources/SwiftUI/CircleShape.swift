@@ -36,19 +36,19 @@ public struct CircleShape: View {
   }
 
   public var body: some View {
-    ZStack {
-      GeometryReader { geometry in
-        Circle()
-          .foregroundColor(self.fillColor)
+    GeometryReader { geometry in
+      Circle()
+        .foregroundColor(self.fillColor)
 
-        StrokeCircleBackground(lineWidth: self.lineWidth)
+        .overlay(StrokeCircleBackground(lineWidth: self.lineWidth)
           .stroke(self.strokeBackgroundColor, lineWidth: self.lineWidth)
-
-        StrokeCircle(lineWidth: self.lineWidth, progress: self.progress)
-          .transform(.init(rotationAngle: CGFloat(-.pi / Double(2.0))))
-          .transform(.init(translationX: geometry.center.x, y: geometry.center.y))
-          .stroke(Color.accentColor, style: .init(lineWidth: self.lineWidth, lineCap: .round))
-      }
+          
+          .overlay(StrokeCircle(lineWidth: self.lineWidth, progress: self.progress)
+            .transform(.init(rotationAngle: CGFloat(-.pi / Double(2.0))))
+            .transform(.init(translationX: geometry.center.x, y: geometry.center.y))
+            .stroke(Color.accentColor, style: .init(lineWidth: self.lineWidth, lineCap: .round))
+          )
+        )
     }
   }
 }
