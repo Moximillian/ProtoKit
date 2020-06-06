@@ -39,6 +39,16 @@ extension View {
   public var anyView: AnyView { AnyView(self) }
 }
 
+// Extension for Rectangle
+@available(iOS 13.0, *)
+extension Rectangle {
+  public static func using(width: CGFloat? = nil, height: CGFloat, opacity: Double = 1.0) -> some View {
+    return Rectangle()
+      .opacity(opacity)
+      .frame(width: width, height: height)
+  }
+}
+
 // Extension for GeometryProxy
 @available(iOS 13.0, OSX 10.15, tvOS 13.0, *)
 extension GeometryProxy {
