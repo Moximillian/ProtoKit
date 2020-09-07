@@ -40,7 +40,7 @@ extension View {
 }
 
 // Extension for Rectangle
-@available(iOS 13.0, *)
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, *)
 extension Rectangle {
   public static func using(width: CGFloat? = nil, height: CGFloat, opacity: Double = 1.0) -> some View {
     return Rectangle()
