@@ -106,18 +106,21 @@ private class UnifiedDataSource<Cell: UnifiedCell>: NSObject {
   }
 
   // Common helpers
+  fileprivate var numberOfSections: Int {
+    get { sections.count }
+  }
   fileprivate func item(at indexPath: IndexPath) -> Cell.Item {
     return sections[indexPath.section].items[indexPath.row]
   }
-  fileprivate func numberOfSections() -> Int { return sections.count }
   fileprivate func numberOfItems(in section: Int) -> Int { return sections[section].items.count }
   fileprivate func headerTitle(in section: Int) -> String? { return sections[section].headerTitle }
   fileprivate func footerTitle(in section: Int) -> String? { return sections[section].footerTitle }
-  fileprivate func cell(for collection: Cell.Collection, at indexPath: IndexPath) -> Cell {
-    let cell = Cell.dequeueReusable(in: collection, for: indexPath)
-    cell.configure(item: item(at: indexPath), indexPath: indexPath)
-    return cell
-  }
+  // DISABLED this function due to compiler crash in Xcode 12
+  //  fileprivate func cell(for collection: Cell.Collection, at indexPath: IndexPath) -> Cell {
+  //    let cell = Cell.dequeueReusable(in: collection, for: indexPath)
+  //    cell.configure(item: item(at: indexPath), indexPath: indexPath)
+  //    return cell
+  //  }
 }
 
 // MARK: - Table Data Source, inheriting from Unified Data Source
@@ -126,7 +129,7 @@ private class UnifiedDataSource<Cell: UnifiedCell>: NSObject {
 fileprivate final class TableDataSource<Cell: TableCellType>: UnifiedDataSource<Cell>, UITableViewDataSource {
 
   func numberOfSections(in tableView: UITableView) -> Int {
-    return numberOfSections()
+    return numberOfSections
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -142,7 +145,10 @@ fileprivate final class TableDataSource<Cell: TableCellType>: UnifiedDataSource<
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    return cell(for: tableView, at: indexPath)
+//    return cell(for: tableView, at: indexPath)
+    let cell = Cell.dequeueReusable(in: tableView, for: indexPath)
+    cell.configure(item: item(at: indexPath), indexPath: indexPath)
+    return cell
   }
 }
 
@@ -154,7 +160,7 @@ fileprivate final class CollectionDataSource<Cell: CollectionCellType, Title: Ti
                                             where Cell.Item == Title.Item {
 
   func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return numberOfSections()
+    return numberOfSections
   }
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -170,7 +176,10 @@ fileprivate final class CollectionDataSource<Cell: CollectionCellType, Title: Ti
   }
 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    return cell(for: collectionView, at: indexPath)
+//    return cell(for: collectionView, at: indexPath)
+    let cell = Cell.dequeueReusable(in: collectionView, for: indexPath)
+    cell.configure(item: item(at: indexPath), indexPath: indexPath)
+    return cell
   }
 }
 

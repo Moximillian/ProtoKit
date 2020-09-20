@@ -61,8 +61,8 @@ public struct SectionData<Item> {
 // Extensions for UIApplication (iOS only feature)
 extension UnifiedApplication {
   public static var statusbarHeight: CGFloat {
-    let statusBarSize = UnifiedApplication.shared.statusBarFrame.size
-    return min(CGFloat(statusBarSize.width), CGFloat(statusBarSize.height))
+    let statusBarSize = UnifiedApplication.shared.windows.last?.windowScene?.statusBarManager?.statusBarFrame
+    return min(CGFloat(statusBarSize?.width ?? 0), CGFloat(statusBarSize?.height ?? 0))
   }
 }
 #endif
@@ -80,15 +80,18 @@ extension UnifiedColor {
   }
 
   /// Create UIColor from hex string (#FF00FF)
-  public convenience init(hex: String) {
-    var rgbValue: UInt32 = 0
-    let scanner = Scanner(string: hex)
-    scanner.scanLocation = 1  // bypass '#'
-    scanner.scanHexInt32(&rgbValue)
-    self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16)/255.0,
-              green: CGFloat((rgbValue & 0xFF00) >> 8)/255.0,
-              blue: CGFloat(rgbValue & 0xFF)/255.0,
-              alpha: 1.0)
+  public convenience init(hex: String, alpha: CGFloat = 1.0) {
+    var hexString = hex
+    if hexString.hasPrefix("#") {
+      hexString = String(hex.dropFirst())
+    }
+
+    var rgbValue: UInt64 = 0
+    Scanner(string: hexString).scanHexInt64(&rgbValue)
+    self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+              green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+              blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+              alpha: alpha)
   }
 }
 
