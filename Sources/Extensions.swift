@@ -60,8 +60,16 @@ public struct SectionData<Item> {
 #if os(iOS)
 // Extensions for UIApplication (iOS only feature)
 extension UnifiedApplication {
+
+  /// TODO: change this into function with that has UIScene as parameter
   public static var statusbarHeight: CGFloat {
-    let statusBarSize = UnifiedApplication.shared.windows.last?.windowScene?.statusBarManager?.statusBarFrame
+    let statusBarSize = UnifiedApplication.shared.connectedScenes
+        .filter {$0.activationState == .foregroundActive }
+        .map {$0 as? UIWindowScene }
+        .compactMap { $0 }
+        .first?.windows
+        .filter({ $0.isKeyWindow }).first?
+        .windowScene?.statusBarManager?.statusBarFrame
     return min(CGFloat(statusBarSize?.width ?? 0), CGFloat(statusBarSize?.height ?? 0))
   }
 }
