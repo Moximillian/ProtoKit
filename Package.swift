@@ -25,12 +25,14 @@ let package = Package(
       name: "ProtoKit",
       dependencies: ["Then"],
       path: ".",
+      exclude: ["Tests", "README.md", "build.sh", "LICENSE"],
       sources: ["Sources"]
     ),
     .testTarget(
       name: "ProtoKitTests",
       dependencies: ["ProtoKit"],
       path: ".",
+      exclude: ["Sources", "README.md", "build.sh", "LICENSE"],
       sources: ["Tests"]
     )
   ]
