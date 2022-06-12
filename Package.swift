@@ -1,12 +1,12 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.7
 import PackageDescription
 
 let package = Package(
   name: "ProtoKit",
   platforms: [
-    .macOS(.v12),
-    .iOS(.v15),
-    .tvOS(.v15),
+    .macOS(.v13),
+    .iOS(.v16),
+    .tvOS(.v16),
   ],
   products: [
     .library(
@@ -17,7 +17,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/devxoul/Then",
-      from: "2.4.0"
+      from: "2.7.0"
     )
   ],
   targets: [
