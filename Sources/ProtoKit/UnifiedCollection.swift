@@ -38,8 +38,8 @@ extension UICollectionView: UnifiedCollection {}
 /// protocol for unified dequeing of a cell.
 /// This conformance is already implemented in UITableViewCell and UICollectionViewCell
 public protocol DequeableCell {
-  associatedtype Collection: UnifiedCollection
-  static func dequeueReusable(in collection: Collection, for indexPath: IndexPath) -> Self
+  associatedtype CollectionType: UnifiedCollection
+  static func dequeueReusable(in collection: CollectionType, for indexPath: IndexPath) -> Self
 }
 
 // MARK: - Unified Title  (protocol)
@@ -53,7 +53,7 @@ public protocol UnifiedTitle {
 // MARK: - Unified Cell (protocol)
 
 /// protocol for unified configuring of a cell. This should be conformed with the implemented cell class
-public protocol UnifiedCell {
+public protocol UnifiedCell: DequeableCell {
   associatedtype Item
   func configure(item: Item, indexPath: IndexPath)
 }
@@ -91,25 +91,18 @@ extension UnifiedCell where Self: UICollectionViewCell {
 // MARK: - Unified DataSource (parent class)
 
 /// Factory for creating datasources
-private class UnifiedDataSource<Cell: UnifiedCell & DequeableCell>: NSObject {
-
-  private var sections: [SectionData<Cell.Item>]
+private class UnifiedDataSource<Cell: UnifiedCell>: NSObject {
+  fileprivate var sections: [SectionData<Cell.Item>]
 
   init(sections: [SectionData<Cell.Item>]) {
     self.sections = sections
   }
 
   // Common helpers
-  fileprivate var numberOfSections: Int {
-    get { sections.count }
-  }
   fileprivate func item(at indexPath: IndexPath) -> Cell.Item {
     return sections[indexPath.section].items[indexPath.row]
   }
-  fileprivate func numberOfItems(in section: Int) -> Int { return sections[section].items.count }
-  fileprivate func headerTitle(in section: Int) -> String? { return sections[section].headerTitle }
-  fileprivate func footerTitle(in section: Int) -> String? { return sections[section].footerTitle }
-  fileprivate func cell(for collection: Cell.Collection, at indexPath: IndexPath) -> Cell {
+  fileprivate func cell(for collection: Cell.CollectionType, at indexPath: IndexPath) -> Cell {
     let cell = Cell.dequeueReusable(in: collection, for: indexPath)
     cell.configure(item: item(at: indexPath), indexPath: indexPath)
     return cell
@@ -124,19 +117,19 @@ fileprivate final class TableDataSource<
 >: UnifiedDataSource<Cell>, UITableViewDataSource {
 
   func numberOfSections(in tableView: UITableView) -> Int {
-    return numberOfSections
+    return sections.count
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return numberOfItems(in: section)
+    return sections[section].items.count
   }
 
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return headerTitle(in: section)
+    return sections[section].headerTitle
   }
 
   func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-    return footerTitle(in: section)
+    return sections[section].footerTitle
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -153,11 +146,11 @@ fileprivate final class CollectionDataSource<
 >: UnifiedDataSource<Cell>, UICollectionViewDataSource where Cell.Item == Title.Item {
 
   func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return numberOfSections
+    return sections.count
   }
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return numberOfItems(in: section)
+    return sections[section].items.count
   }
 
   func collectionView(_ collectionView: UICollectionView,
