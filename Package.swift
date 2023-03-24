@@ -1,4 +1,4 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.8
 import PackageDescription
 
 let package = Package(
@@ -17,7 +17,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/devxoul/Then",
-      from: "2.7.0"
+      from: "3.0.0"
     )
   ],
   targets: [
@@ -26,7 +26,11 @@ let package = Package(
       dependencies: ["Then"],
       path: ".",
       exclude: ["Tests", "README.md", "build.sh", "LICENSE"],
-      sources: ["Sources"]
+      sources: ["Sources"],
+      swiftSettings: [
+        .enableUpcomingFeature("ExistentialAny"),
+        .enableUpcomingFeature("ImplicitOpenExistentials")
+      ]
     ),
     .testTarget(
       name: "ProtoKitTests",

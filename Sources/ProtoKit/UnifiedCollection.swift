@@ -62,12 +62,12 @@ public protocol UnifiedCell: DequeableCell {
 
 extension UnifiedCell where Self: UITableViewCell {
   /// provide datasource for this type of cell
-  public static func dataSource(sections: [SectionData<Item>]) -> UITableViewDataSource {
+  public static func dataSource(sections: [SectionData<Item>]) -> some UITableViewDataSource {
     return TableDataSource<Self>(sections: sections)
   }
 
   /// provide datasource for this type of cell, fancy pants version
-  public static func dataSource(_ variadicSections: SectionData<Item>...) -> UITableViewDataSource {
+  public static func dataSource(_ variadicSections: SectionData<Item>...) -> some UITableViewDataSource {
     return dataSource(sections: variadicSections)
   }
 }
@@ -76,14 +76,14 @@ extension UnifiedCell where Self: UICollectionViewCell {
   /// provide datasource for this type of cell
   public static func dataSource<Title: UICollectionReusableView & UnifiedTitle>(titleType: Title.Type,
                                                   sections: [SectionData<Item>])
-                                                  -> UICollectionViewDataSource where Item == Title.Item {
+                                                  -> some UICollectionViewDataSource where Item == Title.Item {
     return CollectionDataSource<Self, Title>(sections: sections)
   }
 
   /// provide datasource for this type of cell, fancy pants version
   public static func dataSource<Title: UICollectionReusableView & UnifiedTitle>(titleType: Title.Type,
                                                   _ variadicSections: SectionData<Item>...)
-                                                  -> UICollectionViewDataSource where Item == Title.Item {
+                                                  -> some UICollectionViewDataSource where Item == Title.Item {
     return dataSource(titleType: titleType, sections: variadicSections)
   }
 }
